@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.jansampark.vashisthg">
+
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="16"/>
+
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme">
+        <activity android:label="@string/app_name" android:name="com.jansampark.vashisthg.SplashActivity" android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:label="@string/title_activity_main" android:name="com.jansampark.vashisthg.MainActivity">
+        </activity>
+        <activity android:label="@string/title_activity_issue" android:name="com.jansampark.vashisthg.IssueActivity" android:parentActivityName="MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value="MainActivity"/>
+        </activity>
+    </application>
+
+</manifest>

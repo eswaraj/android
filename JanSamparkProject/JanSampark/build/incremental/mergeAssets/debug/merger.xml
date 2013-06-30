@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="main" >
+        <source path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\debug\assets" />
+    </dataSet>
+
+</merger>

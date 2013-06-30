@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world"
+        android:id="@+id/textView"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Water"
+            android:id="@+id/main_water"
+            android:onClick="onWaterClick"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/textView"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Law And Order"
+            android:id="@+id/main_law"
+            android:onClick="onLawAndOrderClick"
+            android:layout_below="@+id/main_water"
+            android:layout_alignParentLeft="true"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Electricity"
+            android:id="@+id/main_electricity"
+            android:onClick="onElectricityClick"
+            android:layout_below="@+id/main_law"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="37dp"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_transportation"
+            android:onClick="onTransportationClick"
+            android:id="@+id/main_transportation"
+            android:layout_alignTop="@+id/main_electricity"
+            android:layout_alignLeft="@+id/main_law"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_road"
+            android:id="@+id/main_road"
+            android:onClick="onRoadClick"
+            android:layout_below="@+id/main_transportation"
+            android:layout_toLeftOf="@+id/main_electricity"/>
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sewage"
+            android:onClick="onSewageClick"
+            android:id="@+id/main_sewage"
+            android:layout_alignTop="@+id/main_road"
+            android:layout_toRightOf="@+id/main_water"/>
+
+</RelativeLayout>
