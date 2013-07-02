@@ -14,8 +14,43 @@
                 qualifiers="mdpi"
                 type="drawable" />
             <file
+                name="ic_issue_bullet"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_issue_bullet.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="ic_issue_issues"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_issue_issues.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="ic_issue_views"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_issue_views.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
                 name="ic_launcher"
                 path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_launcher.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="ic_main_annotation"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_main_annotation.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="ic_road"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_road.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="issue_water_banner"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\issue_water_banner.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="splash_1"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\splash_1.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
@@ -24,10 +59,35 @@
                 qualifiers="xxhdpi"
                 type="drawable" />
             <file
+                name="activity_issue"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\layout\activity_issue.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="activity_main"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\layout\activity_main.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="activity_splash"
                 path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\layout\activity_splash.xml"
                 qualifiers=""
                 type="layout" />
+            <file
+                name="fragment_issue_dummy"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\layout\fragment_issue_dummy.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="issue"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\menu\issue.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="main"
+                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\menu\main.xml"
+                qualifiers=""
+                type="menu" />
             <file
                 name="splash"
                 path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\menu\splash.xml"
@@ -38,19 +98,25 @@
                 qualifiers="" >
                 <dimen name="issue_top_banner_height" >144dp
                 </dimen>
-                <dimen name="issue_top_banner_title_size" >22sp
+                <dimen name="main_button_text" >11sp
+                </dimen>
+                <dimen name="issue_top_banner_title_size" >30sp
+                </dimen>
+                <dimen name="main_map_height" >160dp
                 </dimen>
                 <dimen name="activity_horizontal_margin" >16dp
                 </dimen>
                 <dimen name="activity_vertical_margin" >16dp
                 </dimen>
+                <dimen name="main_select_text" >20sp
+                </dimen>
             </file>
             <file
                 path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\values\strings.xml"
                 qualifiers="" >
-                <string name="main_water" >Water
-                </string>
                 <string name="title_section1" >Section 1
+                </string>
+                <string name="main_water" >Water
                 </string>
                 <string name="action_settings" >Settings
                 </string>
@@ -58,15 +124,15 @@
                 </string>
                 <string name="issue_views" >%d views
                 </string>
-                <string name="title_activity_main" >MainActivity
-                </string>
                 <string name="title_section2" >Section 2
+                </string>
+                <string name="title_activity_main" >MainActivity
                 </string>
                 <string name="title_activity_issue" >IssueActivity
                 </string>
-                <string name="main_law_and_order" >Law And Order
-                </string>
                 <string name="main_sewage" >Sewage
+                </string>
+                <string name="main_law_and_order" >Law And Order
                 </string>
                 <string name="main_transportation" >Transportation
                 </string>
@@ -128,56 +194,6 @@
                     <!-- API 11 theme customizations can go here. -->
                 </style>
             </file>
-            <file
-                name="splash_1"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\splash_1.png"
-                qualifiers="xhdpi"
-                type="drawable" />
-            <file
-                name="issue"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\menu\issue.xml"
-                qualifiers=""
-                type="menu" />
-            <file
-                name="fragment_issue_dummy"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\layout\fragment_issue_dummy.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="main"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\menu\main.xml"
-                qualifiers=""
-                type="menu" />
-            <file
-                name="activity_main"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\layout\activity_main.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="activity_issue"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\layout\activity_issue.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="issue_water_banner"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\issue_water_banner.png"
-                qualifiers="xhdpi"
-                type="drawable" />
-            <file
-                name="ic_issue_issues"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_issue_issues.png"
-                qualifiers="xhdpi"
-                type="drawable" />
-            <file
-                name="ic_issue_views"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_issue_views.png"
-                qualifiers="xhdpi"
-                type="drawable" />
-            <file
-                name="ic_issue_bullet"
-                path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\drawable-xhdpi\ic_issue_bullet.png"
-                qualifiers="xhdpi"
-                type="drawable" />
         </source>
         <source path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\build\res\rs\debug" />
     </dataSet>

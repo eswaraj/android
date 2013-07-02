@@ -4,7 +4,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="issue_top_banner_height">144dp</dimen>
-    <dimen name="issue_top_banner_title_size">22sp</dimen>
+    <dimen name="issue_top_banner_title_size">30sp</dimen>
+    <dimen name="main_button_text">11sp</dimen>
+    <dimen name="main_map_height">160dp</dimen>
+    <dimen name="main_select_text">20sp</dimen>
 
     <string name="action_settings">Settings</string>
     <string name="app_name">JanSampark</string>

@@ -63,6 +63,13 @@
                 android:layout_marginTop="48dp"
                 >
         </ImageView>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/issue_bullet"
+            android:background="@android:color/white"
+            android:layout_marginLeft="56dp"
+            />
     </RelativeLayout>
 
 </LinearLayout>

@@ -11,6 +11,7 @@
     <string name="title_activity_main">MainActivity</string>
 
 
+    <string name="main_select">Select Category</string>
     <string name="main_transportation">Transportation</string>
     <string name="main_water">Water</string>
     <string name="main_law_and_order">Law And Order</string>
