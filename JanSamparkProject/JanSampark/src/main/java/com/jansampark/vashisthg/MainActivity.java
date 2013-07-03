@@ -6,16 +6,24 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+
 public class MainActivity extends Activity {
 
     public static enum ISSUES {
         WATER
     }
 
+    private GoogleMap gMap = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(null == savedInstanceState) {
+            initMap((SupportMapFragment )findFragmentById(R.id.map));
+        }
     }
 
 
@@ -53,5 +61,35 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, IssueActivity.class);
         intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
         startActivity(intent);
+    }
+
+
+    public void initMap(SupportMapFragment mapFragment) {
+        View mapView = findViewById(R.id.map);
+
+        gMap = mapFragment.getMap();
+
+        MapHelper.setTransparent((ViewGroup)mapView);
+
+        /// REMOVE FOR DEBUG EMULATOR
+        gMap.setMyLocationEnabled(true);
+        gMap.getUiSettings().setMyLocationButtonEnabled(false);
+
+
+        /// REMOVE FOR DEBUG EMULATOR
+        mapHelper.showStartView(this);
+
+
+
+
+
+
+
+        // enable / disable 3d
+        SharedPreferences sharedPrefs = getSharedPreferences(SettingsFragment.SETTINGS_PREFS, Context.MODE_PRIVATE);
+        boolean threedOn = sharedPrefs.getBoolean(SettingsFragment.THREED_MODE_ON, SettingsFragment.THREED_ON);
+        gMap.getUiSettings().setTiltGesturesEnabled(threedOn);
+
+        Log.d(TAG, "Map initialized.");
     }
 }
