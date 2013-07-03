@@ -96,13 +96,17 @@
             <file
                 path="D:\Work\personal\JanSamparkAndroid\JanSamparkProject\JanSampark\src\main\res\values\dimens.xml"
                 qualifiers="" >
+                <dimen name="main_button_text" >13sp
+                </dimen>
                 <dimen name="issue_top_banner_height" >144dp
                 </dimen>
-                <dimen name="main_button_text" >11sp
+                <dimen name="main_button_margin" >24dp
+                </dimen>
+                <dimen name="main_map_height" >160dp
                 </dimen>
                 <dimen name="issue_top_banner_title_size" >30sp
                 </dimen>
-                <dimen name="main_map_height" >160dp
+                <dimen name="main_select_bottom_margin" >32dp
                 </dimen>
                 <dimen name="activity_horizontal_margin" >16dp
                 </dimen>
@@ -138,9 +142,11 @@
                 </string>
                 <string name="main_electricity" >Electricity
                 </string>
+                <string name="main_road" >Road
+                </string>
                 <string name="app_name" >JanSampark
                 </string>
-                <string name="main_road" >Road
+                <string name="main_select" >Select Category
                 </string>
                 <string name="hello_world" >Hello world!
                 </string>

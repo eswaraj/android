@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -20,13 +21,32 @@
                 android:layout_gravity="center"
 
                 android:src="@drawable/ic_main_annotation"/>
+
+        <fragment
+
+                  android:id="@+id/map"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  class="com.google.android.gms.maps.SupportMapFragment"
+                  map:mapType="normal"
+                  map:uiRotateGestures="true"
+                  map:uiScrollGestures="true"
+                  map:uiTiltGestures="true"
+                  map:uiZoomControls="false"
+                  map:uiZoomGestures="true"
+                  map:cameraZoom="14"
+
+                  map:cameraTargetLat="@string/nyc_union_square_lat"
+                  map:cameraTargetLng="@string/nyc_union_square_long"
+                  map:uiCompass="false"
+                />
     </FrameLayout>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView"
+            android:text="@string/main_select"
+            android:id="@+id/main_select"
             android:textSize="@dimen/main_select_text"
             android:layout_below="@+id/main_map_container"
             android:layout_centerHorizontal="true"/>
@@ -34,7 +54,8 @@
     <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/textView"
+            android:layout_below="@+id/main_select"
+            android:layout_marginTop="@dimen/main_select_bottom_margin"
             android:layout_alignParentLeft="true">
 
 
@@ -91,6 +112,7 @@
                 <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/main_button_margin"
                         android:text="@string/main_electricity"
                         android:id="@+id/main_electricity"
                         android:onClick="onElectricityClick"
@@ -104,6 +126,7 @@
                 <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/main_button_margin"
                         android:text="Law And Order"
                         android:id="@+id/main_law"
                         android:onClick="onLawAndOrderClick"
@@ -116,6 +139,7 @@
                 <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/main_button_margin"
                         android:text="Sewage"
                         android:onClick="onSewageClick"
                         android:id="@+id/main_sewage"
