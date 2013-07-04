@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <color name="app_bg">#efece5</color>
     <color name="tab_bg_normal">#2a2a2a</color>
     <color name="tab_bg_press">#222222</color>
+    <color name="tab_text_selected">#ffffff</color>
+    <color name="tab_text_unselected">#5b5b5b</color>
 </resources>

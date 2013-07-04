@@ -1,137 +1,123 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
 
-    tools:context=".MainActivity">
-
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/title_bar" />
 
     <FrameLayout
+        android:id="@+id/main_map_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_map_height" >
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/main_map_height"
-            android:layout_alignParentTop="true"
+            android:layout_height="match_parent" />
 
-            android:id="@+id/main_map_container">
-
-        
-
-        <fragment 
-          android:id="@+id/map"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:name="com.google.android.gms.maps.SupportMapFragment"
-          />
-        <View 
-           android:id="@+id/map_blocker"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          />
+        <View
+            android:id="@+id/map_blocker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/main_select"
-            android:id="@+id/main_select"
-            android:textSize="@dimen/main_select_text"
-            android:layout_below="@+id/main_map_container"
-            android:layout_centerHorizontal="true"/>
+        android:id="@+id/main_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/main_select"
+        android:textSize="@dimen/main_select_text" />
 
     <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/main_select_bottom_margin" >
+
+        <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/main_select"
-            android:layout_marginTop="@dimen/main_select_bottom_margin"
-            android:layout_alignParentLeft="true">
+            android:layout_column="0"
+            android:gravity="center"
+            tools:ignore="ObsoleteLayoutParam" >
 
-            <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_column="0"
-                android:gravity="center"
-                tools:ignore="ObsoleteLayoutParam" >
+            <Button
+                android:id="@+id/main_road"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@drawable/ic_road"
+                android:text="@string/main_road"
+                android:textSize="@dimen/main_button_text" />
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_road"
-                        android:id="@+id/main_road"
-                        android:onClick="onRoadClick"
-                        android:background="@null"
-                        android:drawableTop="@drawable/ic_road"
-                        android:textSize="@dimen/main_button_text"
-                        />
+            <Button
+                android:id="@+id/main_water"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@drawable/ic_road"
+                android:text="@string/main_water"
+                android:textSize="@dimen/main_button_text" />
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_water"
-                        android:id="@+id/main_water"
-                        android:onClick="onWaterClick"
-                        android:background="@null"
-                        android:drawableTop="@drawable/ic_road"
-                        android:textSize="@dimen/main_button_text"
-                        />
+            <Button
+                android:id="@+id/main_transportation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:drawableTop="@drawable/ic_road"
+                android:text="@string/main_transportation"
+                android:textSize="@dimen/main_button_text" />
+        </TableRow>
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_transportation"
-                        android:onClick="onTransportationClick"
-                        android:id="@+id/main_transportation"
-                        android:background="@null"
-                        android:drawableTop="@drawable/ic_road"
-                        android:textSize="@dimen/main_button_text"
-                        />
-            </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_column="1"
+            android:gravity="center" >
 
-            <TableRow
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center"
-                    android:layout_column="1">
+            <Button
+                android:id="@+id/main_electricity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/main_law"
+                android:layout_margin="@dimen/main_button_margin"
+                android:background="@null"
+                android:drawableTop="@drawable/ic_road"
+                android:text="@string/main_electricity"
+                android:textSize="@dimen/main_button_text" />
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/main_button_margin"
-                        android:text="@string/main_electricity"
-                        android:id="@+id/main_electricity"
-                        android:onClick="onElectricityClick"
-                        android:layout_below="@+id/main_law"
-                        android:background="@null"
-                        android:drawableTop="@drawable/ic_road"
-                        android:layout_alignParentRight="true"
-                        android:textSize="@dimen/main_button_text"
-                        />
+            <Button
+                android:id="@+id/main_law"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/main_water"
+                android:layout_margin="@dimen/main_button_margin"
+                android:background="@null"
+                android:drawableTop="@drawable/ic_road"
+                android:text="@string/main_law_and_order"
+                android:textSize="@dimen/main_button_text" />
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/main_button_margin"
-                        android:text="@string/main_law_and_order"
-                        android:id="@+id/main_law"
-                        android:onClick="onLawAndOrderClick"
-                        android:background="@null"
-                        android:drawableTop="@drawable/ic_road"
-                        android:textSize="@dimen/main_button_text"
-                        android:layout_below="@+id/main_water"
-                        android:layout_alignParentLeft="true"/>
-
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/main_button_margin"
-                        android:text="@string/main_sewage"
-                        android:onClick="onSewageClick"
-                        android:id="@+id/main_sewage"
-                        android:textSize="@dimen/main_button_text"
-                        android:background="@null"
-                        android:drawableTop="@drawable/ic_road"
-                        android:layout_alignTop="@+id/main_road"
-                        android:layout_toRightOf="@+id/main_water"/>
-            </TableRow>
-
+            <Button
+                android:id="@+id/main_sewage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/main_road"
+                android:layout_margin="@dimen/main_button_margin"
+                android:layout_toRightOf="@+id/main_water"
+                android:background="@null"
+                android:drawableTop="@drawable/ic_road"
+                android:text="@string/main_sewage"
+                android:textSize="@dimen/main_button_text" />
+        </TableRow>
     </TableLayout>
 
-</RelativeLayout>
+</LinearLayout>

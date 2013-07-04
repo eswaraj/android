@@ -1,37 +1,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context=".MainActivity">
-
-
-   
-
-    <include
-        android:id="@+id/main_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        layout="@layout/main_tabs" />
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
 
     <FrameLayout
         android:id="@+id/maink_frag_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/main_tabs"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true"
+        android:layout_weight="1" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/main_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="#ffffff" >
         </android.support.v4.view.ViewPager>
+        <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:background="@android:color/transparent" />
     </FrameLayout>
 
-
+    <include
+        android:id="@+id/main_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_tabs_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_weight="1"
+        layout="@layout/main_tabs" />
 
 </RelativeLayout>

@@ -1,4 +1,19 @@
 <resources>
     <!-- Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw600dp devices (e.g. 7" tablets) here. -->
+         
+         <dimen name="issue_top_banner_height">144dp</dimen>
+    <dimen name="issue_top_banner_title_size">30sp</dimen>
+
+    <dimen name="title_bar_height">64dp</dimen>
+    <dimen name="title_bar_button_width">80dp</dimen>
+    
+    <dimen name="main_map_height">200dp</dimen>
+    <dimen name="main_select_text">24sp</dimen>
+    <dimen name="main_select_bottom_margin">32dp</dimen>
+    <dimen name="main_button_text">13sp</dimen>
+    <dimen name="main_button_margin">32dp</dimen>
+    <dimen name="bottom_tabs_height">64dp</dimen>
+    <dimen name="bottom_tabs_text">16sp</dimen>
+    <dimen name="bottom_tab_one_side_padding">16dp</dimen>
 </resources>

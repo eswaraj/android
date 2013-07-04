@@ -11,8 +11,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
+import android.widget.ImageButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,7 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.jansampark.vashisthg.MainActivity.ISSUES;
 
-public class MainIssueFragment extends Fragment{
+public class MainIssueFragment extends Fragment {
 
     private LocationManager locationManager;
     
@@ -43,86 +46,129 @@ public class MainIssueFragment extends Fragment{
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if(null == savedInstanceState) {
-                
-        }     
-        
-      
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);                  
     }
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		initMap((SupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));      
-		 showLocation();
+		showLocation();
+		initButtonListeners();
+		initTitleBar();
 	}
 	
-	 public void initMap(SupportMapFragment mapFragment) {
-	        gMap = mapFragment.getMap();
-	        
-	        /// REMOVE FOR DEBUG EMULATOR
-	        gMap.setMyLocationEnabled(false);
-	        UiSettings uiSettings = gMap.getUiSettings();
-	        uiSettings.setMyLocationButtonEnabled(false);
-	        uiSettings.setTiltGesturesEnabled(false);
-	        uiSettings.setZoomGesturesEnabled(false);
-	        uiSettings.setZoomControlsEnabled(false);
-	        uiSettings.setRotateGesturesEnabled(false);
-	        uiSettings.setMyLocationButtonEnabled(false);
-	        uiSettings.setCompassEnabled(false);
+	private void initButtonListeners() {
+		getActivity().findViewById(R.id.main_electricity).setOnClickListener(buttonListener);		
+		getActivity().findViewById(R.id.main_law).setOnClickListener(buttonListener);
+		getActivity().findViewById(R.id.main_road).setOnClickListener(buttonListener);
+		getActivity().findViewById(R.id.main_sewage).setOnClickListener(buttonListener);
+		getActivity().findViewById(R.id.main_transportation).setOnClickListener(buttonListener);
+		getActivity().findViewById(R.id.main_water).setOnClickListener(buttonListener);
+	}
+	
+	private void initTitleBar() {
+		((ImageButton)getActivity().findViewById(R.id.title_bar_left_button)).setImageResource(R.drawable.ic_info);
+	}
 
-	        
-	        gMap.setOnMapClickListener(null);        
-	        
-	        View mapBlocker = getActivity().findViewById(R.id.map_blocker);
-	        mapBlocker.setOnTouchListener(new OnTouchListener() {
-				
-				@Override
-				public boolean onTouch(View arg0, MotionEvent arg1) {
-					return true;
-				}
-			});
-	    }
+	public void initMap(SupportMapFragment mapFragment) {
+		gMap = mapFragment.getMap();
+
+		// / REMOVE FOR DEBUG EMULATOR
+		gMap.setMyLocationEnabled(false);
+		UiSettings uiSettings = gMap.getUiSettings();
+		uiSettings.setMyLocationButtonEnabled(false);
+		uiSettings.setTiltGesturesEnabled(false);
+		uiSettings.setZoomGesturesEnabled(false);
+		uiSettings.setZoomControlsEnabled(false);
+		uiSettings.setRotateGesturesEnabled(false);
+		uiSettings.setMyLocationButtonEnabled(false);
+		uiSettings.setCompassEnabled(false);
+
+		gMap.setOnMapClickListener(null);
+
+		View mapBlocker = getActivity().findViewById(R.id.map_blocker);
+		mapBlocker.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				return true;
+			}
+		});
+	}
 	    
-	    private void showLocation() {
-	    	 String locationProvider = LocationManager.NETWORK_PROVIDER;
-	         Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-	         LatLng lastKnownLatLng = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-	         
-	         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15));                 
-	         gMap.addMarker(new MarkerOptions()
-	         .position(lastKnownLatLng)       
-	         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_main_annotation)));
-	    }
-	    
-	    public void onSewageClick(View view) {
+	private void showLocation() {
+		String locationProvider = LocationManager.NETWORK_PROVIDER;
+		Location lastKnownLocation = locationManager
+				.getLastKnownLocation(locationProvider);
+		LatLng lastKnownLatLng = new LatLng(lastKnownLocation.getLatitude(),
+				lastKnownLocation.getLongitude());
 
-	    }
+		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15));
+		gMap.addMarker(new MarkerOptions().position(lastKnownLatLng).icon(
+				BitmapDescriptorFactory
+						.fromResource(R.drawable.ic_main_annotation)));
+	}
 
-	    public void onTransportationClick(View view) {
+	public void onSewageClick(View view) {
 
-	    }
+	}
 
-	    public void onWaterClick(View view) {
-	        openIssueActivity(ISSUES.WATER);
-	    }
+	public void onTransportationClick(View view) {
 
-	    public void onRoadClick(View view) {
+	}
 
-	    }
+	public void onWaterClick(View view) {
+		openIssueActivity(ISSUES.WATER);
+	}
 
-	    public void onElectricityClick(View view) {
+	public void onRoadClick(View view) {
 
-	    }
+	}
 
-	    public void onLawAndOrderClick(View view) {
+	public void onElectricityClick(View view) {
 
-	    }
+	}
 
-	    private void openIssueActivity(ISSUES issue) {
-	        Intent intent = new Intent(getActivity(), IssueActivity.class);
-	        intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
-	        startActivity(intent);
-	    }
+	public void onLawAndOrderClick(View view) {
+
+	}
+
+	private void openIssueActivity(ISSUES issue) {
+		Intent intent = new Intent(getActivity(), IssueActivity.class);
+		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
+		startActivity(intent);
+	}
+	android.view.View.OnClickListener buttonListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View view) {						
+			int id = view.getId();
+			
+			switch (id) {
+			case R.id.main_road:
+				onRoadClick(view);
+				break;
+			case R.id.main_law:
+				onLawAndOrderClick(view);
+				break;
+			case R.id.main_electricity:
+				onElectricityClick(view);
+				break;
+			case R.id.main_sewage:
+				onSewageClick(view);
+				break;
+			case R.id.main_transportation:
+				onTransportationClick(view);
+				break;
+			case R.id.main_water:
+				onWaterClick(view);
+				break;
+
+			default:
+				break;
+			}
+		}
+	};
+	
 }
