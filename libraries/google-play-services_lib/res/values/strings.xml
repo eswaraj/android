@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Title of confirmation dialog informing user that they need to install
         Google Play services (from Play Store) [CHAR LIMIT=40] -->
@@ -58,7 +58,7 @@
 
   <!-- Auth client code resources (prefix with auth_client --><skip />
   <!--  Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=70] -->
-  <string name="auth_client_availability_notification_title">Install/Update/Enable Google Play services</string>
+  <string name="auth_client_availability_notification_title" tools:ignore="MissingTranslation">Install/Update/Enable Google Play services</string>
 
   <!--  Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=42] -->
   <string name="auth_client_play_services_err_notification_msg">Google Play services error</string>
