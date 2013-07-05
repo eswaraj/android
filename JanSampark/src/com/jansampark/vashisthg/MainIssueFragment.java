@@ -19,12 +19,15 @@ import android.widget.ImageButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.GoogleMapOptionsCreator;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.jansampark.vashisthg.MainActivity.ISSUES;
+import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
 
 public class MainIssueFragment extends Fragment {
 
@@ -52,7 +55,7 @@ public class MainIssueFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		initMap((SupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));      
+		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));      
 		showLocation();
 		initButtonListeners();
 		initTitleBar();
@@ -71,7 +74,7 @@ public class MainIssueFragment extends Fragment {
 		((ImageButton)getActivity().findViewById(R.id.title_bar_left_button)).setImageResource(R.drawable.ic_info);
 	}
 
-	public void initMap(SupportMapFragment mapFragment) {
+	public void initMap(CustomSupportMapFragment mapFragment) {
 		gMap = mapFragment.getMap();
 
 		// / REMOVE FOR DEBUG EMULATOR
@@ -84,6 +87,8 @@ public class MainIssueFragment extends Fragment {
 		uiSettings.setRotateGesturesEnabled(false);
 		uiSettings.setMyLocationButtonEnabled(false);
 		uiSettings.setCompassEnabled(false);
+		
+		
 
 		gMap.setOnMapClickListener(null);
 
