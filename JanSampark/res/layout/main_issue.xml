@@ -9,7 +9,7 @@
 
     <include
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/title_bar_height"
         layout="@layout/title_bar" />
 
     <FrameLayout
@@ -36,12 +36,15 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/main_select"
+        android:layout_marginTop="@dimen/main_select_vertical_margin"
+        android:layout_marginBottom="@dimen/main_select_vertical_margin"
         android:textSize="@dimen/main_select_text" />
 
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="@dimen/main_select_bottom_margin" >
+        android:gravity="center"
+         >
 
         <TableRow
             android:layout_width="fill_parent"
@@ -55,8 +58,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:drawableTop="@drawable/ic_road"
+                android:drawableTop="@drawable/ic_issue_road"
                 android:text="@string/main_road"
+                android:textColor="@color/main_text"
                 android:textSize="@dimen/main_button_text" />
 
             <Button
@@ -64,8 +68,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:drawableTop="@drawable/ic_road"
+                android:drawableTop="@drawable/ic_issue_water"
                 android:text="@string/main_water"
+                android:textColor="@color/main_text"
                 android:textSize="@dimen/main_button_text" />
 
             <Button
@@ -73,8 +78,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:drawableTop="@drawable/ic_road"
+                android:drawableTop="@drawable/ic_issue_transport"
                 android:text="@string/main_transportation"
+                android:textColor="@color/main_text"
                 android:textSize="@dimen/main_button_text" />
         </TableRow>
 
@@ -92,8 +98,9 @@
                 android:layout_below="@+id/main_law"
                 android:layout_margin="@dimen/main_button_margin"
                 android:background="@null"
-                android:drawableTop="@drawable/ic_road"
+                android:drawableTop="@drawable/ic_issue_electricity"
                 android:text="@string/main_electricity"
+                android:textColor="@color/main_text"
                 android:textSize="@dimen/main_button_text" />
 
             <Button
@@ -104,8 +111,9 @@
                 android:layout_below="@+id/main_water"
                 android:layout_margin="@dimen/main_button_margin"
                 android:background="@null"
-                android:drawableTop="@drawable/ic_road"
+                android:drawableTop="@drawable/ic_issue_law"
                 android:text="@string/main_law_and_order"
+                android:textColor="@color/main_text"
                 android:textSize="@dimen/main_button_text" />
 
             <Button
@@ -116,8 +124,9 @@
                 android:layout_margin="@dimen/main_button_margin"
                 android:layout_toRightOf="@+id/main_water"
                 android:background="@null"
-                android:drawableTop="@drawable/ic_road"
+                android:drawableTop="@drawable/ic_issue_sewage"
                 android:text="@string/main_sewage"
+                android:textColor="@color/main_text"
                 android:textSize="@dimen/main_button_text" />
         </TableRow>
     </TableLayout>

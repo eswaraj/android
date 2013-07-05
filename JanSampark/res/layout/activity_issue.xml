@@ -9,10 +9,11 @@
 
 
     <RelativeLayout
+        	android:id="@+id/issue_banner"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/issue_top_banner_height"
             android:layout_gravity="center_horizontal|top"
-            android:background="@drawable/issue_water_banner">
+            android:background="@drawable/banner_water">
 
         <TextView
                 android:layout_width="wrap_content"
@@ -53,8 +54,8 @@
                 android:layout_marginTop="-12dp"
                 />
 
-        <ImageView
-                android:layout_width="wrap_content"
+        <View
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_issue_bullet"
                 android:id="@+id/issue_bullet"
@@ -62,14 +63,8 @@
                 android:layout_marginLeft="52dp"
                 android:layout_marginTop="48dp"
                 >
-        </ImageView>
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/issue_bullet"
-            android:background="@android:color/white"
-            android:layout_marginLeft="56dp"
-            />
+        </View>
+        
     </RelativeLayout>
 
 </LinearLayout>

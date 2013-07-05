@@ -10,7 +10,7 @@
     
     <dimen name="main_map_height">200dp</dimen>
     <dimen name="main_select_text">24sp</dimen>
-    <dimen name="main_select_bottom_margin">32dp</dimen>
+    <dimen name="main_select_vertical_margin">40dp</dimen>
     <dimen name="main_button_text">13sp</dimen>
     <dimen name="main_button_margin">32dp</dimen>
     <dimen name="bottom_tabs_height">64dp</dimen>

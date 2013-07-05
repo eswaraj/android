@@ -12,10 +12,6 @@ import android.widget.RadioGroup;
 public class MainActivity extends FragmentActivity  {
 	public static final String TAG = "Main";
 
-    public static enum ISSUES {
-        WATER
-    }
-    
     MainAnalyticsFragment analyticsFragment;
     MainIssueFragment issueFragment;
     private MyPagerAdapter adapter;
@@ -30,12 +26,11 @@ public class MainActivity extends FragmentActivity  {
         setContentView(R.layout.activity_main);
         viewPager = (ViewPager) findViewById(R.id.main_pager);
         footerTab = (RadioGroup) findViewById(R.id.main_tabs);
-        
-        
+                
         if(null == savedInstanceState) {
         	initFragments();
-        	initViewPagingAndTabs();
         }
+        initViewPagingAndTabs();
     }
     
     private void initFragments() {
@@ -48,10 +43,7 @@ public class MainActivity extends FragmentActivity  {
 		viewPager.setAdapter(adapter);
 		viewPager.setOnPageChangeListener(mOnPageChangeListener);
 		footerTab.setOnCheckedChangeListener(onCheckedChangeListener);	
-	}
-
-    
-
+	}    
     
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -97,10 +89,5 @@ public class MainActivity extends FragmentActivity  {
 				footerTab.check(R.id.tab_analytics);
 			}	
 		}
-	};
-
-    
-
-
- 
+	}; 
 }

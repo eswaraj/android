@@ -6,4 +6,6 @@
     <color name="tab_bg_press">#222222</color>
     <color name="tab_text_selected">#ffffff</color>
     <color name="tab_text_unselected">#5b5b5b</color>
+    
+    <color name="main_text">#a2a2a2</color>
 </resources>

@@ -4,8 +4,11 @@ package com.jansampark.vashisthg;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,12 +29,12 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.jansampark.vashisthg.MainActivity.ISSUES;
 import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
 
-public class MainIssueFragment extends Fragment {
+public class MainIssueFragment extends Fragment implements LocationListener{
 
     private LocationManager locationManager;
+    private LocationProvider locationProvider;
     
     private GoogleMap gMap = null;
     
@@ -55,7 +58,11 @@ public class MainIssueFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));      
+		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     
+		
+		String locationProvider = LocationManager.NETWORK_PROVIDER;
+		lastKnownLocation = locationManager
+				.getLastKnownLocation(locationProvider);
 		showLocation();
 		initButtonListeners();
 		initTitleBar();
@@ -79,6 +86,13 @@ public class MainIssueFragment extends Fragment {
 
 		// / REMOVE FOR DEBUG EMULATOR
 		gMap.setMyLocationEnabled(false);
+		
+		Criteria criteria = new Criteria();
+		String provider = locationManager.getBestProvider(criteria,true);
+		
+		locationManager.requestLocationUpdates(provider, 20000, 0,this);
+		
+		
 		UiSettings uiSettings = gMap.getUiSettings();
 		uiSettings.setMyLocationButtonEnabled(false);
 		uiSettings.setTiltGesturesEnabled(false);
@@ -101,13 +115,14 @@ public class MainIssueFragment extends Fragment {
 			}
 		});
 	}
+	
+	Location lastKnownLocation;
 	    
 	private void showLocation() {
-		String locationProvider = LocationManager.NETWORK_PROVIDER;
-		Location lastKnownLocation = locationManager
-				.getLastKnownLocation(locationProvider);
+		
 		LatLng lastKnownLatLng = new LatLng(lastKnownLocation.getLatitude(),
 				lastKnownLocation.getLongitude());
+		gMap.clear();
 
 		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15));
 		gMap.addMarker(new MarkerOptions().position(lastKnownLatLng).icon(
@@ -132,11 +147,11 @@ public class MainIssueFragment extends Fragment {
 	}
 
 	public void onElectricityClick(View view) {
-
+		openIssueActivity(ISSUES.ELECTRICITY);
 	}
 
 	public void onLawAndOrderClick(View view) {
-
+		
 	}
 
 	private void openIssueActivity(ISSUES issue) {
@@ -175,5 +190,28 @@ public class MainIssueFragment extends Fragment {
 			}
 		}
 	};
+
+
+	@Override
+	public void onLocationChanged(Location location) {
+		lastKnownLocation = location;
+		showLocation();
+		locationManager.removeUpdates((android.location.LocationListener) this);
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		
+	}
 	
 }
