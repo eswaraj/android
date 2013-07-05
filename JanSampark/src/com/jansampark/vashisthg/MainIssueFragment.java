@@ -2,9 +2,6 @@ package com.jansampark.vashisthg;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -20,23 +17,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.ImageButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.GoogleMapOptionsCreator;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
-import com.saulpower.piechart.adapter.PieChartAdapter;
-import com.saulpower.piechart.extra.FrictionDynamics;
-import com.saulpower.piechart.views.PieChartView;
-import com.saulpower.piechart.views.PieChartView.PieChartAnchor;
 
 public class MainIssueFragment extends Fragment implements LocationListener{
 

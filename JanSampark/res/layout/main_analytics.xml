@@ -7,15 +7,18 @@
 
     <FrameLayout
         android:id="@+id/pie_chart_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/main_pie_size"
+        android:layout_height="@dimen/main_pie_size"
         
          >
+         <RelativeLayout
 
-        <com.saulpower.piechart.views.PieChartView
-            android:id="@+id/chart"
-            android:layout_width="@dimen/main_pie_size"
-            android:layout_height="@dimen/main_pie_size" />
+       android:id="@+id/piechart_lay"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       
+       android:orientation="horizontal" >
+</RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,12 +28,7 @@
             android:orientation="vertical" >
         </LinearLayout>
 
-        <ImageView
-            android:layout_gravity="center"
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+
 
     </FrameLayout>
 

@@ -3,20 +3,20 @@ package com.jansampark.vashisthg;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.saulpower.piechart.adapter.PieChartAdapter;
-import com.saulpower.piechart.extra.FrictionDynamics;
-import com.saulpower.piechart.views.PieChartView;
-import com.saulpower.piechart.views.PieChartView.PieChartAnchor;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
+import com.jansampark.vashisthg.widget.DrawPieChart;
 
 public class MainAnalyticsFragment extends Fragment {
-	
-	private PieChartView pieChart;
+	RelativeLayout la;
+	DrawPieChart piView;
+        int[] vals;
+
 	
 	public static MainAnalyticsFragment newInstance(Bundle args) {
 		return new MainAnalyticsFragment();
@@ -32,22 +32,21 @@ public class MainAnalyticsFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		setPieChart();
 	}
+	
+	
 	private void setPieChart() {
-		List<Float> slices = new ArrayList<Float>();
-		
-		slices.add(0.20f);
-		slices.add(0.20f);
-		slices.add(0.20f);
-		slices.add(0.20f);
-		slices.add(0.10f);
-		slices.add(0.10f);
-		PieChartAdapter adapter = new PieChartAdapter(getActivity(), slices);
-		
-		pieChart = (PieChartView) getActivity().findViewById(R.id.chart);
-		pieChart.setDynamics(new FrictionDynamics(0.95f));
-		pieChart.setSnapToAnchor(PieChartAnchor.BOTTOM);
-		pieChart.setAdapter(adapter);
-		pieChart.onResume();
+		la = (RelativeLayout) getActivity().findViewById(R.id.piechart_lay);
+        getPieChart();
+	
 	}
+	
+	 public void  getPieChart(){
+//         vals[] = new vals[7];
+         vals = new int[]{12,14,23,35,23,56};
+         piView = new DrawPieChart(getActivity(), vals);
+         
+         la.removeAllViews();
+     la.addView(piView); 
+   }
 	
 }
