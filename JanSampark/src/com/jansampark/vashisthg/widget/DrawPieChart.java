@@ -1,5 +1,7 @@
 package com.jansampark.vashisthg.widget;
 
+import com.jansampark.vashisthg.R;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,8 +13,7 @@ import android.view.View;
 public class DrawPieChart extends View {
 
 	Paint paint = new Paint();
-        //  Here you can Add number of different color according to max different colors to be displayed on Piechart
-        int c[] = {Color.MAGENTA,Color.BLUE,Color.RED,Color.CYAN,Color.YELLOW,Color.GREEN};
+
 	Canvas mCanvas = new Canvas();
 	private int[] values;
 	Context context;
@@ -38,7 +39,7 @@ public class DrawPieChart extends View {
 		paint.setStyle(Style.FILL);
 		RectF rect = new RectF(20,20,x-20,y-20);
 		for (int i = 0; i < n; i++) {
-			paint.setColor(c[i]);
+			paint.setColor(getResources().getColor(COLOR[i]));
 			float thita =(t==0)?0: 360*values[i]/t;
 			canvas.drawArc(rect, cuurPos, thita, true, paint);
 			cuurPos = cuurPos+thita;
@@ -52,4 +53,13 @@ public class DrawPieChart extends View {
 		}
 		return total;
 	}
+ 	
+ 	public static int[] COLOR = new int[] {
+ 		            R.color.road,
+ 		            R.color.water,
+ 		           R.color.transportation,
+ 		            R.color.electricity,
+ 		            R.color.law,
+ 	            R.color.sewage
+ 		    };
 }
