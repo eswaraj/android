@@ -8,9 +8,10 @@
     <dimen name="issue_top_banner_height">144dp</dimen>
     <dimen name="issue_top_banner_title_size">30sp</dimen>
 
-    <dimen name="main_map_height">160dp</dimen>
+    <dimen name="main_map_height">120dp</dimen>
     <dimen name="main_select_text">20sp</dimen>
-    <dimen name="main_select_vertical_margin">16dp</dimen>
+    <dimen name="main_select_margin_top">16dp</dimen>
+    <dimen name="main_select_margin_bottom">8dp</dimen>
     <dimen name="main_button_text">13sp</dimen>
     <dimen name="main_button_margin">16dp</dimen>
     <dimen name="bottom_tabs_height">64dp</dimen>

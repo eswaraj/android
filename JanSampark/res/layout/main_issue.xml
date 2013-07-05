@@ -36,8 +36,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/main_select"
-        android:layout_marginTop="@dimen/main_select_vertical_margin"
-        android:layout_marginBottom="@dimen/main_select_vertical_margin"
+        android:layout_marginTop="@dimen/main_select_margin_top"
+        android:layout_marginBottom="@dimen/main_select_margin_bottom"
         android:textSize="@dimen/main_select_text" />
 
     <TableLayout
@@ -96,7 +96,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/main_law"
-                android:layout_margin="@dimen/main_button_margin"
+                android:layout_marginLeft="@dimen/main_button_margin"
+                android:layout_marginRight="@dimen/main_button_margin"
+                
                 android:background="@null"
                 android:drawableTop="@drawable/ic_issue_electricity"
                 android:text="@string/main_electricity"
@@ -109,7 +111,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/main_water"
-                android:layout_margin="@dimen/main_button_margin"
+                android:layout_marginLeft="@dimen/main_button_margin"
+                android:layout_marginRight="@dimen/main_button_margin"
+                
                 android:background="@null"
                 android:drawableTop="@drawable/ic_issue_law"
                 android:text="@string/main_law_and_order"
@@ -121,7 +125,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/main_road"
-                android:layout_margin="@dimen/main_button_margin"
+                android:layout_marginLeft="@dimen/main_button_margin"
+                android:layout_marginRight="@dimen/main_button_margin"
+               
                 android:layout_toRightOf="@+id/main_water"
                 android:background="@null"
                 android:drawableTop="@drawable/ic_issue_sewage"
