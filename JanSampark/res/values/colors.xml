@@ -8,4 +8,17 @@
     <color name="tab_text_unselected">#5b5b5b</color>
     
     <color name="main_text">#a2a2a2</color>
+    
+    
+     <color name="gray3">#B0B0B3</color>
+    <color name="gray4">#919195</color>
+    <color name="gray5">#737373</color>
+    <color name="gray7">#606060</color>
+    
+    <color name="electricity">#5bc6b6</color>
+    <color name="law">#6196dd</color>
+    <color name="water">#f7b753</color>
+    <color name="sewage">#876bc8</color>
+    <color name="transportation">#8cca5a</color>
+    <color name="road">#e76868</color>
 </resources>

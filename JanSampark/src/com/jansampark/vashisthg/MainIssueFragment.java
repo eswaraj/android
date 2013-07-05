@@ -2,6 +2,9 @@ package com.jansampark.vashisthg;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -30,6 +33,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
+import com.saulpower.piechart.adapter.PieChartAdapter;
+import com.saulpower.piechart.extra.FrictionDynamics;
+import com.saulpower.piechart.views.PieChartView;
+import com.saulpower.piechart.views.PieChartView.PieChartAnchor;
 
 public class MainIssueFragment extends Fragment implements LocationListener{
 
@@ -37,6 +44,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
     private LocationProvider locationProvider;
     
     private GoogleMap gMap = null;
+    
     
     
     public static MainIssueFragment newInstance(Bundle args) {
@@ -67,6 +75,8 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 		initButtonListeners();
 		initTitleBar();
 	}
+	
+	
 	
 	private void initButtonListeners() {
 		getActivity().findViewById(R.id.main_electricity).setOnClickListener(buttonListener);		
