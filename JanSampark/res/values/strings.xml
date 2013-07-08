@@ -26,6 +26,52 @@
     <string name="issue_complaint">Complaints</string>
     
     
+    <string-array name="issue_road">
+        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+    </string-array>
+    
+    <string-array name="issue_water">
+        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+    </string-array>
+    
+    <string-array name="issue_transport">
+        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+    </string-array>
+    
+    <string-array name="issue_electricity">
+        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+    </string-array>
+    
+    <string-array name="issue_law">
+        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+    </string-array>
   
+    <string-array name="issue_sewage">
+        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+    </string-array>
 
 </resources>

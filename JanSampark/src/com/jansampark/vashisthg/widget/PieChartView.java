@@ -8,6 +8,7 @@ import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.jansampark.vashisthg.ISSUES;
@@ -24,8 +25,11 @@ public class PieChartView extends GraphicalView {
 			throw new IllegalArgumentException(
 					"values sent are not equal to issues");
 		}
-		return ChartFactory.getPieChartView(context,
+		GraphicalView pieChartView = ChartFactory.getPieChartView(context,
 				getDataSet(context, values), getRenderer(context));
+		
+		pieChartView.zoomIn();
+		return pieChartView;
 	}
 
 	private static DefaultRenderer getRenderer(Context context) {
@@ -40,6 +44,10 @@ public class PieChartView extends GraphicalView {
 		}
 		defaultRenderer.setShowLabels(false);
 		defaultRenderer.setShowLegend(false);
+		Log.d(VIEW_LOG_TAG, "scale: " + defaultRenderer.getScale() + "");
+		Log.d(VIEW_LOG_TAG, "original_scale: " + defaultRenderer.getOriginalScale() +"");
+		defaultRenderer.setScale(1.33f);
+		defaultRenderer.setSelectableBuffer(0);
 		return defaultRenderer;
 	}
 

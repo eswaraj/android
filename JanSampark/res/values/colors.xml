@@ -21,4 +21,7 @@
     <color name="sewage">#876bc8</color>
     <color name="transportation">#8cca5a</color>
     <color name="road">#e76868</color>
+    
+    <color name="analytics_spinner_unselected">#efece5</color>
+    <color name="analytics_spinner_selected">#d64141</color>
 </resources>

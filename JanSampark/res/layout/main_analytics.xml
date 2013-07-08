@@ -5,65 +5,76 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:id="@+id/analytics_chooser_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/analytics_chooser_height"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ToggleButton
+            android:id="@+id/analytics_overall"
+            android:layout_width="@dimen/analytics_chooser_width"
+            android:layout_height="@dimen/analytics_chooser_height"
+            android:background="@drawable/analytics_choose"
+            
+             />
+
+        <Spinner
+            android:id="@+id/analytics_spinner"
+            android:layout_width="@dimen/analytics_chooser_width"
+            android:layout_height="@dimen/analytics_chooser_height"
+             android:background="@drawable/analytics_choose"/>
+    </LinearLayout>
+
     <FrameLayout
         android:id="@+id/pie_chart_container"
         android:layout_width="@dimen/main_pie_size"
-        android:layout_height="@dimen/main_pie_size"
-        
-         >
-         
-	<FrameLayout
-        android:id="@+id/pie_chart_holder"
-        android:layout_width="@dimen/main_pie_size"
-        android:layout_height="@dimen/main_pie_size"
-        
-         >
+        android:layout_height="@dimen/main_pie_size" >
 
-		
+        <FrameLayout
+            android:id="@+id/pie_chart_holder"
+            android:layout_width="@dimen/main_pie_size"
+            android:layout_height="@dimen/main_pie_size" >
+        </FrameLayout>
 
-	</FrameLayout>
-        
-	<LinearLayout
-	    
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_margin="48dp"
-	    android:background="@drawable/pie_chart_top"
-	    android:gravity="center"
-	    android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/main_pie_padding"
+            android:background="@drawable/pie_chart_top"
+            
+            android:gravity="center"
+            android:orientation="vertical" >
 
-		<TextView
-		    android:id="@+id/issue_num"
-		    android:textStyle="bold"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:textSize="@dimen/countdown_text"/>
+            <TextView
+                android:id="@+id/issue_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_text"
+                android:textStyle="bold" />
 
-		<TextView
-		    android:id="@+id/issue_label"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:textSize="@dimen/countdown_label_text"
-		    android:text="@string/issue_issue" />
+            <TextView
+                android:id="@+id/issue_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/issue_issue"
+                android:textSize="@dimen/countdown_label_text" />
 
-		<TextView
-		    android:id="@+id/complaint_num"
-		    android:textStyle="bold"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:textSize="@dimen/countdown_text"
-		     />
+            <TextView
+                android:id="@+id/complaint_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/countdown_text"
+                android:textStyle="bold" />
 
-		<TextView
-		    android:id="@+id/complaint_label"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:textSize="@dimen/countdown_label_text"
-		    android:text="@string/issue_complaint" />
-
-		</LinearLayout>
-
-
+            <TextView
+                android:id="@+id/complaint_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/issue_complaint"
+                android:textSize="@dimen/countdown_label_text" />
+        </LinearLayout>
     </FrameLayout>
 
     <TableLayout
