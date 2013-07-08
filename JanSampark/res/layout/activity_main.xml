@@ -5,21 +5,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity" >
+    
+    <include
+        android:id="@+id/main_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_alignParentTop="true"
+        layout="@layout/title_bar" />
 
     <FrameLayout
-        android:id="@+id/maink_frag_container"
+        android:id="@+id/main_frag_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/main_tabs"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_weight="1" >
+        android:layout_below="@+id/main_title_bar"
+        android:layout_above="@+id/main_tabs" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/main_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff" >
+            android:layout_height="match_parent" >
         </android.support.v4.view.ViewPager>
         <FrameLayout 
         android:layout_width="match_parent"

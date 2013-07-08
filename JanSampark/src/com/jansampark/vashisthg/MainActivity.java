@@ -87,7 +87,9 @@ public class MainActivity extends FragmentActivity  {
 				footerTab.check(R.id.tab_issue);
 			} else {
 				footerTab.check(R.id.tab_analytics);
-				analyticsFragment.onFragmentShown();
+				if(null != analyticsFragment) {
+					analyticsFragment.onFragmentShown();
+				}
 			}	
 		}
 	}; 

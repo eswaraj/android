@@ -7,10 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
-        layout="@layout/title_bar" />
+    
 
     <FrameLayout
         android:id="@+id/main_map_container"
