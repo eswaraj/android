@@ -21,6 +21,7 @@
     <string name="issue_issues">%d issues</string>
     <string name="tab_issues">Issues</string>
     <string name="tab_analytics">Analytics</string>
+    <string name="analytics_overall">Overall</string>
     
     <string name="issue_issue">Issues</string>
     <string name="issue_complaint">Complaints</string>
@@ -72,6 +73,11 @@
         <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
         <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
         <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
+    </string-array>
+    
+    <string-array name="demo_place">
+        <item>Mayur Vihar</item>
+        <item>Preet Vihar</item>
     </string-array>
 
 </resources>

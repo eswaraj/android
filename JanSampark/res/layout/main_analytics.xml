@@ -17,14 +17,15 @@
             android:layout_width="@dimen/analytics_chooser_width"
             android:layout_height="@dimen/analytics_chooser_height"
             android:background="@drawable/analytics_choose"
-            
+            android:textOn="@string/analytics_overall"
+            android:textOff="@string/analytics_overall"
              />
 
         <Spinner
             android:id="@+id/analytics_spinner"
             android:layout_width="@dimen/analytics_chooser_width"
             android:layout_height="@dimen/analytics_chooser_height"
-             android:background="@drawable/analytics_choose"/>
+            android:background="@drawable/analytics_choose"/>
     </LinearLayout>
 
     <FrameLayout
