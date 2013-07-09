@@ -12,20 +12,34 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <ToggleButton
-            android:id="@+id/analytics_overall"
-            android:layout_width="@dimen/analytics_chooser_width"
-            android:layout_height="@dimen/analytics_chooser_height"
-            android:background="@drawable/analytics_choose"
-            android:textOn="@string/analytics_overall"
-            android:textOff="@string/analytics_overall"
-             />
+        <RadioGroup
+            android:id="@+id/analytics_group"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-        <Spinner
-            android:id="@+id/analytics_spinner"
-            android:layout_width="@dimen/analytics_chooser_width"
-            android:layout_height="@dimen/analytics_chooser_height"
-            android:background="@drawable/analytics_choose"/>
+            <RadioButton
+                android:id="@+id/analytics_overall"
+                android:layout_width="@dimen/analytics_chooser_width"
+                android:layout_height="wrap_content"
+                android:background="@drawable/analytics_choose_left"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@color/analytics_radio_text"
+                android:text="@string/analytics_overall"
+                android:textOff="@string/analytics_overall"
+                android:textOn="@string/analytics_overall" />
+
+            <RadioButton
+                android:id="@+id/analytics_spinner"
+                android:layout_width="@dimen/analytics_chooser_width"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@color/analytics_radio_text"
+                
+                android:background="@drawable/analytics_choose_right" />
+        </RadioGroup>
     </LinearLayout>
 
     <FrameLayout
@@ -44,7 +58,6 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/main_pie_padding"
             android:background="@drawable/pie_chart_top"
-            
             android:gravity="center"
             android:orientation="vertical" >
 

@@ -26,7 +26,7 @@ public class MainAnalyticsFragment extends Fragment {
 	CompoundButton overallButton;
 	MyCount issueCounter;
 	MyCount complaintCounter;
-	Spinner spinner;
+	//Spinner spinner;
 
 	int[] vals;
 
@@ -49,7 +49,7 @@ public class MainAnalyticsFragment extends Fragment {
 	private void setViews() {
 		setButtons();
 		setPieChart();
-		setLocationSpinner();
+		//setLocationSpinner();
 	}
 
 	@Override
@@ -137,35 +137,35 @@ public class MainAnalyticsFragment extends Fragment {
 				R.id.analytics_overall);
 	}
 
-	private void setLocationSpinner() {
-		spinner = (Spinner) getActivity().findViewById(
-				R.id.analytics_spinner);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-				getActivity(), R.array.demo_place,
-				android.R.layout.simple_spinner_item);
-		// Specify the layout to use when the list of choices appears
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinner.setAdapter(adapter);
-		setLocationSpinnerListener();
-		
-	}
-	
-	private void setLocationSpinnerListener() {
-		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				overallButton.setChecked(false);
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-
-			}
-
-		});
-	}
+//	private void setLocationSpinner() {
+//		spinner = (Spinner) getActivity().findViewById(
+//				R.id.analytics_spinner);
+//		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+//				getActivity(), R.array.demo_place,
+//				android.R.layout.simple_spinner_item);
+//		// Specify the layout to use when the list of choices appears
+//		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//		// Apply the adapter to the spinner
+//		spinner.setAdapter(adapter);
+//		setLocationSpinnerListener();
+//		
+//	}
+//	
+//	private void setLocationSpinnerListener() {
+//		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//			@Override
+//			public void onItemSelected(AdapterView<?> arg0, View arg1,
+//					int arg2, long arg3) {
+//				overallButton.setChecked(false);
+//			}
+//
+//			@Override
+//			public void onNothingSelected(AdapterView<?> arg0) {
+//
+//			}
+//
+//		});
+//	}
 
 }
