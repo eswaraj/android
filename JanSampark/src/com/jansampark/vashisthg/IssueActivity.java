@@ -3,6 +3,7 @@ package com.jansampark.vashisthg;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -14,6 +15,7 @@ public class IssueActivity extends Activity {
     
     private View issueBanner;
     private TextView issueNameTV;
+    private ListView issueList;
 
     private ISSUES issue;
 
@@ -29,6 +31,7 @@ public class IssueActivity extends Activity {
         }
 
         setIssueBannerAndText();
+        setListView();
     }
     
     private void setViews() {
@@ -70,6 +73,12 @@ public class IssueActivity extends Activity {
         }
         issueBanner.setBackgroundResource(bannerResource);
         issueNameTV.setText(nameResource);
+    }
+    
+    private void setListView() {
+    	issueList = (ListView) findViewById(R.id.issue_list);
+    	IssueAdapter adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue);
+    	issueList.setAdapter(adapter);
     }
     
     @Override

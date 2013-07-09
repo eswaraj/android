@@ -8,8 +8,5 @@ public enum ISSUES {
     LAW,
     ROAD,
     SEWAGE,
-    TRANSPORT;
-    
-    
-    
+    TRANSPORT;    
 }

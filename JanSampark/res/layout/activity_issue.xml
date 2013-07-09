@@ -2,11 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context=".IssueActivity"
-    android:orientation="vertical">
-
-
+    android:orientation="vertical"
+    tools:context=".IssueActivity" >
 
     <RelativeLayout
         	android:id="@+id/issue_banner"
@@ -66,5 +63,11 @@
         </View>
         
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/issue_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
 
 </LinearLayout>

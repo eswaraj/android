@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <integer-array name="water_index">
+        <item>1</item>
+        <item>2</item>
+        <item>11</item>
+        <item>12</item>
+        <item>21</item>
+        <item>22</item>
+        <item>31</item>
+        <item>32</item>
+        <item>41</item>
+        <item>0</item>
+    </integer-array>
+    
+    <integer-array name="electricity_index">
+        <item>1</item>
+        <item>2</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>21</item>
+        <item>22</item>
+        <item>31</item>
+        <item>41</item>
+        <item>42</item>
+        <item>0</item>
+    </integer-array>
+    
+    <integer-array name="transportation_index">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>11</item>
+        <item>12</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>31</item>
+        <item>32</item>
+        <item>41</item>
+        <item>0</item>
+    </integer-array>
+   <integer-array name="road_index">
+        <item>1</item>
+        <item>2</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>31</item>
+        <item>41</item>
+        <item>42</item>
+        <item>0</item>
+    </integer-array>
+    
+    <integer-array name="sewage_index">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>21</item>
+        <item>22</item>
+        <item>31</item>
+        <item>41</item>
+        <item>0</item>
+    </integer-array>
+    <integer-array name="lawandorder_index">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>11</item>
+        <item>12</item>
+        <item>21</item>
+        <item>22</item>
+        <item>31</item>
+        <item>32</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>0</item>
+    </integer-array>
+    
+    <string-array name="basic_items_index">
+        <item>48</item>
+        <item>53</item>
+        <item>49</item>
+        <item>52</item>
+        <item>51</item>
+        <item>50</item>
+    </string-array>
+</resources>

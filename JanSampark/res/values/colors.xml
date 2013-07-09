@@ -24,4 +24,7 @@
     
     <color name="analytics_spinner_unselected">#efece5</color>
     <color name="analytics_spinner_selected">#d64141</color>
+    
+    <color name="lack_of_infra">#ff0000</color>
+    <color name="lack_of_main">#ffffff</color>
 </resources>

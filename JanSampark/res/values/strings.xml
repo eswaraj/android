@@ -27,57 +27,133 @@
     <string name="issue_complaint">Complaints</string>
     
     
-    <string-array name="issue_road">
-        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-    </string-array>
     
-    <string-array name="issue_water">
-        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-    </string-array>
-    
-    <string-array name="issue_transport">
-        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-    </string-array>
-    
-    <string-array name="issue_electricity">
-        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-    </string-array>
-    
-    <string-array name="issue_law">
-        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-    </string-array>
-  
-    <string-array name="issue_sewage">
-        <item>Bad Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Wet Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me kachra, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Road me bomb, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-        <item>Enrocachmet on Road, lorem ipsum doler sir amet, lorem ipsum doler sir amet.</item>
-    </string-array>
     
     <string-array name="demo_place">
         <item>Mayur Vihar</item>
         <item>Preet Vihar</item>
     </string-array>
+    
+    <string-array name="infra">
+        <item>Lack of infrastructure</item>
+        <item>Lack of maintainance</item>
+        <item>Lack of Quality of staff</item>
+        <item>Poor Pricing</item>
+        <item>Awareness</item>
+        <item>Others</item>
+    </string-array>
+    
+    
+    <string-array name="lawandorder">
+        <item>No close by police station in my area.</item>
+        <item>Rowdiness in on the rise in the neighbourhood.</item>
+        <item>My area feels very insecure.</item>
+        <item>judgements are dragging for long , improve the judiciary.</item>
+        <item>police station not well maintained, gives gloomy feeling. </item>
+        <item>court compounds not well maintained. </item>
+        <item>police station staff not co-operative.</item>
+        <item>Quality of lawyers detriorating</item>
+        <item>courts are becoming totally unaffordable do something.</item>
+        <item>Increase constable/Inspector salary ,, bribes on rise.</item>
+        <item>police is not working to hard to reach to people.</item>
+        <item>High level of distrust on police.</item>
+        <item>should not be there a police awareness day , once in 3 months , where citizen should be encouraged  to review there police stations , if they are happy with service of staff.</item>
+        <item>court system sucks, i want to bow out of contract of signing the constitution.</item>
+        <item>should not there be a court awareness day , once in 3 months , where citizens should be encouraged  to review there courts , to check that they are  happy with service of the  staff.</item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+    <string-array name="lawandorder_index">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>11</item>
+        <item>12</item>
+        <item>21</item>
+        <item>22</item>
+        <item>31</item>
+        <item>32</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="water">
+        <item>No municipality water in this area.</item>
+        <item>we have to heavily rely on tankers for water supply, please look into it.</item>
+        <item>water pipes leaking all over the place , water contamination dangers.</item>
+        <item>Municipality water tastes  bad/oily.</item>
+        <item>Water department staff very rude .</item>
+        <item>Water department staff totally outdated .. Stoneage</item>
+        <item>water bills are too high.</item>
+        <item>water becoming totally inaffordable.</item>
+        <item>Don\'t know how water comes to the city , please launch a water awareness day.</item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+  
+    <string-array name="electricity">
+        <item>Enough these power cuts, increase power generation capacity.</item>
+        <item>No 24x7 power in my area.</item>
+        <item>power stations and transformers not well maintained,making my area look dirty.</item>
+        <item>transformers unprotected. Blast every now and then .</item>
+        <item>powerlines are hanging too low in my neighbourhood.</item>
+        <item>Electricity department staffs are rude.</item>
+        <item>Electricity  department staff totally outdated .. Stoneage</item>
+        <item>power too costly , totally not affordable,  reduce prices.</item>
+        <item>No initative from power department on educating customer.</item>
+        <item>why we do not have electricity awareness day,  I want to know what I pay for.</item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+
+    <string-array name="transportation">
+        <item>No public buses on this route</item>
+        <item>No public buses in my area.</item>
+        <item>Traffic  Congestion too much we need metro tracks.</item>
+        <item>Public buses not sufficient.</item>
+        <item>this point  has become congestion  hotspot do something.</item>
+        <item>public buses not clean.</item>
+        <item>Upgrade public buses  with wifi</item>
+        <item>Autorickshaw refusal menance here</item>
+        <item>Public buses conductor being rude.</item>
+        <item>autorickshaw misbehavior menance here.</item>
+        <item>Please have a training programme before giving auto licenses.</item>
+        <item>Autorickshaw not following meters ... overcharging.</item>
+        <item>Reduce public bus fare </item>
+        <item>As citizen want to how bus system work please launch a awareness campaign</item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+
+    <string-array name="road">
+        <item>What will we do without roads ,, no roads here city sucks.</item>
+        <item>No roads in my area.</item>
+        <item>there  are potholes everywhere on this road</item>
+        <item>road is  in bad shape.</item>
+        <item>these Roads are dirty all the time do somethings</item>
+        <item>Road tax too much .</item>
+        <item>How these road tender get allocate , as citizen we need to know , please launch a awareness programme</item>
+        <item>No cleanliness , launch an awareness programme on how citizens can help.</item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+    
+    <string-array name="sewage">
+        <item>No Sewage pipe in my area .</item>
+        <item>No close by municipality Garbage truck in my area.</item>
+        <item>please  increase the garbage truck capacity.</item>
+        <item>sewage is over flowing everywhere.</item>
+        <item>lot of manholes left open.</item>
+        <item>lot of garbage is left unaddressed.</item>
+        <item>my surrounding has become a garbage yard , please take care of it. </item>
+        <item>garbage has made environment like hell , is this the city we dreamt of.</item>
+        <item>Sewage / Sanitation department staff very rude.</item>
+        <item>Sewage/Sanitation  department staff totally outdated .. Stoneage</item>
+        <item>sewage charges are too much. </item>
+        <item>Streets are dirty all the time , please launch awareness programme. Explain how citizens can help</item>
+        <item>@string/otherTypeOfComplaint</item>
+    </string-array>
+
+    
+    <string name="otherTypeOfComplaint">Others</string>
 
 </resources>

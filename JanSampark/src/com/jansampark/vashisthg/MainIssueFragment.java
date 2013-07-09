@@ -130,11 +130,11 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	}
 
 	public void onSewageClick(View view) {
-
+		openIssueActivity(ISSUES.SEWAGE);
 	}
 
 	public void onTransportationClick(View view) {
-
+		openIssueActivity(ISSUES.TRANSPORT);
 	}
 
 	public void onWaterClick(View view) {
@@ -142,7 +142,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	}
 
 	public void onRoadClick(View view) {
-
+		openIssueActivity(ISSUES.ROAD);
 	}
 
 	public void onElectricityClick(View view) {
@@ -150,7 +150,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	}
 
 	public void onLawAndOrderClick(View view) {
-		
+		openIssueActivity(ISSUES.LAW);
 	}
 
 	private void openIssueActivity(ISSUES issue) {
