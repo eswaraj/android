@@ -60,7 +60,7 @@ public class IssueItem implements Parcelable {
 		issueName = in.readString();
 	}
 
-	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+	public static final Parcelable.Creator<IssueItem> CREATOR = new Parcelable.Creator<IssueItem>() {
 		public IssueItem createFromParcel(Parcel in) {
 			return new IssueItem(in);
 		}

@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * Created by chandramouli on 1/7/13.
+ * Created by gaurav vashisth on 1/7/13.
  */
 public class IssueActivity extends Activity {
 
@@ -96,8 +96,8 @@ public class IssueActivity extends Activity {
 
 		@Override
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-			Intent intent = new Intent(IssueActivity.this, IssueSummaryActivity.class);
-			intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position));
+			Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
+			intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position));
 			startActivity(intent);			
 		}
 	};

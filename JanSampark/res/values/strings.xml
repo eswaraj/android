@@ -6,8 +6,9 @@
 
     <string name="title_activity_issue">IssueActivity</string>
 
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_issue_summary">IssueSummaryActivity</string>
+    <string name="title_activity_main">Main Activity</string>
+    <string name="title_activity_issue_summary">Issue Summary</string>
+    <string name="title_activity_issue_details">Issue Details</string>
 
 
     <string name="main_select">Select Category</string>

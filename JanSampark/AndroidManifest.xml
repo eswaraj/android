@@ -68,6 +68,10 @@
             android:label="@string/title_activity_issue_summary" >
         </activity>
         <activity
+            android:name="com.jansampark.vashisthg.IssueDetailsActivity"
+            android:label="@string/title_activity_issue_details" >
+        </activity>
+        <activity
             android:name="com.jansampark.vashisthg.IssueActivity"
             android:label="@string/title_activity_issue"
             android:parentActivityName="MainActivity" >

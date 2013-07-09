@@ -2,7 +2,6 @@ package com.jansampark.vashisthg;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 
 public class IssueUtils {
 	
