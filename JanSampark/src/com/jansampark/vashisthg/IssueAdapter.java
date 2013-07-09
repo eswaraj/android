@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.jansampark.vashisthg.IssueFactory.IssueItem;
 
 public class IssueAdapter extends BaseAdapter {
 	
@@ -51,7 +50,7 @@ public class IssueAdapter extends BaseAdapter {
 
 	@Override
 	public long getItemId(int position) {
-		return issueItems.get(position).getIssueId();
+		return issueItems.get(position).getTemplateId();
 	}
 
 	@Override
@@ -72,8 +71,8 @@ public class IssueAdapter extends BaseAdapter {
 		IssueItem item = (IssueItem)getItem(position);
 		
 		holder.title.setText(item.getIssueName());
-		holder.type.setText(IssueFactory.getIssueTypeString(context, item.getIssueId()));
-		int color = IssueFactory.getIssueTypeColor(context, item.getIssueId());
+		holder.type.setText(IssueFactory.getIssueTypeString(context, item.getTemplateId()));
+		int color = IssueFactory.getIssueTypeColor(context, item.getTemplateId());
 		
 		holder.type.setTextColor(color);
 		holder.colorView.setBackgroundColor(color);

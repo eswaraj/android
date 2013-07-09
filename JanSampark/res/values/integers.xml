@@ -90,12 +90,19 @@
         <item>0</item>
     </integer-array>
     
-    <string-array name="basic_items_index">
-        <item>48</item>
-        <item>53</item>
-        <item>49</item>
-        <item>52</item>
-        <item>51</item>
-        <item>50</item>
-    </string-array>
+    <integer-array name="basic_items_index">
+        <item>@integer/water</item>
+        <item>@integer/lawandorder</item>
+        <item>@integer/electricity</item>
+        <item>@integer/transportation</item>
+        <item>@integer/road</item>
+        <item>@integer/sewage</item>
+    </integer-array>
+    
+    <integer name="water">48</integer>
+    <integer name="lawandorder">53</integer>
+    <integer name="electricity">49</integer>
+    <integer name="transportation">52</integer>
+    <integer name="road">51</integer>
+    <integer name="sewage">50</integer>
 </resources>

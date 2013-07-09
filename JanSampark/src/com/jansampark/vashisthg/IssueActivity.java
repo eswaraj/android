@@ -1,8 +1,11 @@
 package com.jansampark.vashisthg;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +21,7 @@ public class IssueActivity extends Activity {
     private ListView issueList;
 
     private ISSUES issue;
+    IssueAdapter adapter ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +81,9 @@ public class IssueActivity extends Activity {
     
     private void setListView() {
     	issueList = (ListView) findViewById(R.id.issue_list);
-    	IssueAdapter adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue);
+    	adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue);
     	issueList.setAdapter(adapter);
+    	issueList.setOnItemClickListener(listItemClickListener);
     }
     
     @Override
@@ -86,4 +91,14 @@ public class IssueActivity extends Activity {
     	super.onSaveInstanceState(outState);
     	outState.putSerializable(EXTRA_ISSUE, issue);
     }
+    
+    private OnItemClickListener listItemClickListener = new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+			Intent intent = new Intent(IssueActivity.this, IssueSummaryActivity.class);
+			intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position));
+			startActivity(intent);			
+		}
+	};
 }

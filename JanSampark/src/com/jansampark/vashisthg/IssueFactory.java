@@ -10,36 +10,8 @@ import android.graphics.Color;
 
 public class IssueFactory {
 	
-	public static class IssueItem {
-		private String issueName;
-//		private Type issueType;
-		private int issueId;
-		public String getIssueName() {
-			return issueName;
-		}
-		public void setIssueName(String issueName) {
-			this.issueName = issueName;
-		}
-//		public Type getType() {
-//			return issueType;
-//		}
-//		public void setType(Type type) {
-//			this.issueType = type;
-//		}
-		public int getIssueId() {
-			return issueId;
-		}
-		public void setIssueId(int issueId) {
-			this.issueId = issueId;
-		}
-	
-	}
-	
-	
-	
-	
 	public static List<IssueItem> getIssuesFor(Context context, ISSUES issue)  {
-		List<IssueItem> issueItems = new ArrayList<IssueFactory.IssueItem>();
+		List<IssueItem> issueItems = new ArrayList<IssueItem>();
 		Resources resources = context.getResources();
 		
 		
@@ -78,51 +50,26 @@ public class IssueFactory {
 			throw new IllegalArgumentException("wrong issue specified");
 		}
 		
+		int issueId = getIssueId(context, issue);
 		
 		for(int i = 0; i < issues.length; i++) {
 			IssueItem item = new IssueItem();
-			item.issueName = issues[i];						
-			item.issueId = type[i];
+			item.setIssueName(issues[i]);						
+			item.setTemplateId(type[i]);
+			item.setIssueId(issueId);
 			issueItems.add(item);
 		}						
 		return issueItems;
-	}
+	}	
 	
-	public static Type getIssueType(int index) {
-		int type = index/10;
-		Type issueType;
-		switch (type) {
-		case 0:
-			issueType = Type.LACK_IN_INFRA;
-			break;
-		case 1:
-			issueType = Type.LACK_IN_MAIN;
-			break;
-		case 2:
-			issueType = Type.LACK_OF_QUALITY_STAFF;
-			break;
-		case 4:
-			issueType = Type.POOR_PRICING;
-			break;
-		case 5:
-			issueType = Type.AWARENESS;
-			break;
-		case 6:
-		default:
-			issueType = Type.OTHERS;
-			break;						
-		}
-		return issueType;
-	}
-	
-	public static String getIssueTypeString(Context context,int issueId) {
-		int type = issueId/10;		
+	public static String getIssueTypeString(Context context, int templateId) {
+		int type = templateId/10;		
 		String[] typeArray = context.getResources().getStringArray(R.array.infra);		
 		return typeArray[type];
 	}
 	
-	public static int getIssueTypeColor(Context context, int issueId) {
-		int type = issueId/10;
+	public static int getIssueTypeColor(Context context, int templateId) {
+		int type = templateId/10;
 		int color;
 		switch (type) {
 		case 0:
@@ -145,8 +92,37 @@ public class IssueFactory {
 			color = Color.BLACK;
 			break;						
 		}
-		return color;
-		
+		return color;		
 	}
+	
+	public static int getIssueId(Context context, ISSUES issue) {
+		int issueId;
+		Resources resources = context.getResources();
+		switch (issue) {
+		case WATER:
+			issueId = resources.getInteger(R.integer.water);
+			break;
+		case ELECTRICITY:
+			issueId = resources.getInteger(R.integer.electricity);			
+			break;
+		case LAW:
+			issueId = resources.getInteger(R.integer.lawandorder);
+			break;
+		case ROAD:
+			issueId = resources.getInteger(R.integer.road);
+			break;
+		case SEWAGE:
+			issueId = resources.getInteger(R.integer.sewage);
+			break;
+		case TRANSPORT:
+			issueId = resources.getInteger(R.integer.transportation);
+			break;
+
+		default:
+			throw new IllegalArgumentException("wrong issue specified");
+		}
+		return issueId;
+	}
+	
 	
 }
