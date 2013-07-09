@@ -34,6 +34,25 @@
         <item>Preet Vihar</item>
     </string-array>
     
+    
+    <string-array name="basic_items">
+        <item>Water</item>
+        <item>Law and Order</item>
+        <item>Electricity</item>
+        <item>Transportation</item>
+        <item>Road</item>
+        <item>Sewage</item>
+    </string-array>
+    <string-array name="basic_items_vals">
+        <item>water</item>
+        <item>lawandorder</item>
+        <item>electricity</item>
+        <item>transportation</item>
+        <item>road</item>
+        <item>sewage</item>
+    </string-array>
+    
+    
     <string-array name="infra">
         <item>Lack of infrastructure</item>
         <item>Lack of maintainance</item>
