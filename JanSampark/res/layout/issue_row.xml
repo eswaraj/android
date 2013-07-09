@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/issue_row_text_left_padding"
+         android:paddingRight="@dimen/issue_row_text_right_padding"
         android:orientation="vertical" >
 
         <TextView
