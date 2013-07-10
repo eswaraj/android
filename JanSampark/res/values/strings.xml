@@ -28,6 +28,17 @@
     <string name="issue_issue">Issues</string>
     <string name="issue_complaint">Complaints</string>
     
+    <string name="issue_details_category_label">Issue Category</string>
+    <string name="issue_details_name_label">Issue Name</string>
+    <string name="issue_details_system_label">System Level</string>
+    <string name="issue_details_description_label">Description</string>
+    <string name="issue_details_attach_label">Attach Photo</string>
+    <string name="issue_details_take_label">Take Photo</string>
+    <string name="issue_details_post">Post</string>
+    <string name="issue_details_remove_label">Remove Photo</string>
+    <string name="issue_details_retake_label">Retake Photo</string>
+    <string name="issue_details_edit_description_button">Edit</string>
+    <string name="issue_details_add_description_button">Add Description</string>
     
     
     

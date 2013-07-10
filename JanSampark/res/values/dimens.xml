@@ -35,5 +35,15 @@
     <dimen name="issue_row_text_type">14sp</dimen>
     <dimen name="issue_row_min_height">72dp</dimen>
     
+    <dimen name="issue_details_text">18sp</dimen>
+    <dimen name="issue_details_small_text">14sp</dimen>
+    <dimen name="issue_details_text_top_margin">32dp</dimen>
+    
+    <dimen name="issue_details_edit_description_width">64dp</dimen>
+    <dimen name="issue_details_edit_description_height">32dp</dimen>
+    <dimen name="issue_details_edit_description_left_drawable_padding">0dp</dimen>
+    <dimen name="issue_details_edit_description_padding">4dp</dimen>
+    <dimen name="issue_details_add_desctiption_height">48dp</dimen>
+    
     
 </resources>
