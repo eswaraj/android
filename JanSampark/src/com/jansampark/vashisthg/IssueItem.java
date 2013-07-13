@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class IssueItem implements Parcelable {
-	private int issueId;	
+	private int issueCategory;	
 	private int templateId;
 	private String issueName;
 	
@@ -32,12 +32,12 @@ public class IssueItem implements Parcelable {
 		this.templateId = issueId;
 	}
 
-	public int getIssueId() {
-		return issueId;
+	public int getIssueCategory() {
+		return issueCategory;
 	}
 
-	public void setIssueId(int issueId) {
-		this.issueId = issueId;
+	public void setIssueCategory(int issueId) {
+		this.issueCategory = issueId;
 	}
 
 	@Override
@@ -48,14 +48,14 @@ public class IssueItem implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(issueId);
+		dest.writeInt(issueCategory);
 		dest.writeInt(templateId);
 		dest.writeString(issueName);
 	}
 	
 	private void readFromParcel(Parcel in) {  
 		// We just need to read back each // field in the order that it was // written to the parcel 
-		issueId = in.readInt(); 
+		issueCategory = in.readInt(); 
 		templateId = in.readInt(); 
 		issueName = in.readString();
 	}

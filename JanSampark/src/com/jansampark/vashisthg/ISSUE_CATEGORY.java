@@ -1,7 +1,7 @@
 package com.jansampark.vashisthg;
 
 
-public enum ISSUES {
+public enum ISSUE_CATEGORY {
     WATER,
     ELECTRICITY,
     LAW,

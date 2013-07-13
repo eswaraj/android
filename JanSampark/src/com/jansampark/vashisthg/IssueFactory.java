@@ -5,11 +5,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 
 public class IssueFactory {
 	
-	public static List<IssueItem> getIssuesFor(Context context, ISSUES issue)  {
+	
+	
+	public static List<IssueItem> getIssuesFor(Context context, ISSUE_CATEGORY issue)  {
 		List<IssueItem> issueItems = new ArrayList<IssueItem>();
 		Resources resources = context.getResources();
 		
@@ -55,11 +56,33 @@ public class IssueFactory {
 			IssueItem item = new IssueItem();
 			item.setIssueName(issues[i]);						
 			item.setTemplateId(type[i]);
-			item.setIssueId(issueId);
+			item.setIssueCategory(issueId);
 			issueItems.add(item);
 		}						
 		return issueItems;
 	}	
+	
+	public static String getIssueCategoryName(Context context, int issueCategoryId ) {
+		Resources resources = context.getResources();
+		String categoryName = "";
+		
+		if( issueCategoryId == resources.getInteger(R.integer.electricity) ) {
+			categoryName = resources.getString(R.string.electricity);
+		} else if (issueCategoryId == resources.getInteger(R.integer.lawandorder)) {
+			categoryName = resources.getString(R.string.law);
+		} else if (issueCategoryId == resources.getInteger(R.integer.water)) {
+			categoryName = resources.getString(R.string.water);
+		} else if (issueCategoryId == resources.getInteger(R.integer.sewage)) {
+			categoryName = resources.getString(R.string.sewage);
+		} else if (issueCategoryId == resources.getInteger(R.integer.transportation)) {
+			categoryName = resources.getString(R.string.transportation);
+		} else if(issueCategoryId == resources.getInteger(R.integer.road)) {
+			categoryName = resources.getString(R.string.road);
+		}
+		
+		return categoryName;		
+	}	
+	
 	
 	public static String getIssueTypeString(Context context, int templateId) {
 		int type = getIssueTypeInt(templateId);		
@@ -107,7 +130,7 @@ public class IssueFactory {
 		return color;		
 	}
 	
-	public static int getIssueId(Context context, ISSUES issue) {
+	public static int getIssueId(Context context, ISSUE_CATEGORY issue) {
 		int issueId;
 		Resources resources = context.getResources();
 		switch (issue) {
@@ -135,6 +158,7 @@ public class IssueFactory {
 		}
 		return issueId;
 	}
+	
 	
 	
 }

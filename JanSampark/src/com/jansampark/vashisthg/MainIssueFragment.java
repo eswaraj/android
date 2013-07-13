@@ -130,30 +130,30 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	}
 
 	public void onSewageClick(View view) {
-		openIssueActivity(ISSUES.SEWAGE);
+		openIssueActivity(ISSUE_CATEGORY.SEWAGE);
 	}
 
 	public void onTransportationClick(View view) {
-		openIssueActivity(ISSUES.TRANSPORT);
+		openIssueActivity(ISSUE_CATEGORY.TRANSPORT);
 	}
 
 	public void onWaterClick(View view) {
-		openIssueActivity(ISSUES.WATER);
+		openIssueActivity(ISSUE_CATEGORY.WATER);
 	}
 
 	public void onRoadClick(View view) {
-		openIssueActivity(ISSUES.ROAD);
+		openIssueActivity(ISSUE_CATEGORY.ROAD);
 	}
 
 	public void onElectricityClick(View view) {
-		openIssueActivity(ISSUES.ELECTRICITY);
+		openIssueActivity(ISSUE_CATEGORY.ELECTRICITY);
 	}
 
 	public void onLawAndOrderClick(View view) {
-		openIssueActivity(ISSUES.LAW);
+		openIssueActivity(ISSUE_CATEGORY.LAW);
 	}
 
-	private void openIssueActivity(ISSUES issue) {
+	private void openIssueActivity(ISSUE_CATEGORY issue) {
 		Intent intent = new Intent(getActivity(), IssueActivity.class);
 		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
 		startActivity(intent);

@@ -20,7 +20,7 @@ public class IssueActivity extends Activity {
     private TextView issueNameTV;
     private ListView issueList;
 
-    private ISSUES issue;
+    private ISSUE_CATEGORY issue;
     IssueAdapter adapter ;
 
     @Override
@@ -29,9 +29,9 @@ public class IssueActivity extends Activity {
         setContentView(R.layout.activity_issue);
         setViews();
         if(null == savedInstanceState) {
-            issue = (ISSUES) getIntent().getSerializableExtra(EXTRA_ISSUE);
+            issue = (ISSUE_CATEGORY) getIntent().getSerializableExtra(EXTRA_ISSUE);
         } else {
-        	issue = (ISSUES) savedInstanceState.getSerializable(EXTRA_ISSUE);
+        	issue = (ISSUE_CATEGORY) savedInstanceState.getSerializable(EXTRA_ISSUE);
         }
 
         setIssueBannerAndText();

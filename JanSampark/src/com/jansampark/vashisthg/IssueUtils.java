@@ -8,7 +8,7 @@ public class IssueUtils {
 	
 	
     
-    public static int getColorInt(Context context, ISSUES issue) {
+    public static int getColorInt(Context context, ISSUE_CATEGORY issue) {
     	Resources resources = context.getResources();
     	int color;
     	switch (issue) {

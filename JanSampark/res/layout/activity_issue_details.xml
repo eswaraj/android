@@ -122,16 +122,18 @@
 	                android:textSize="@dimen/issue_details_text"
 	               
                     android:text="@string/issue_details_add_description_button" />
-                <TextView
+                <EditText
 	                android:id="@+id/issue_detail_description_text"
-	                android:layout_width="wrap_content"
+	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
 	                android:layout_centerHorizontal="true"
 	                android:layout_alignParentBottom="true"
 	                android:layout_below="@+id/issue_detail_descption_edit_btn"
 	                android:textColor="@color/issue_details_red"
+	                android:focusable="false"
+	                android:focusableInTouchMode="false"
 	                android:textStyle="bold"
-	                
+	                android:inputType="text"
 	                android:textSize="@dimen/issue_details_text" />
 
             </RelativeLayout>

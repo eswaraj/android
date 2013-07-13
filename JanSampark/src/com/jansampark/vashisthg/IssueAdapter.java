@@ -19,7 +19,7 @@ public class IssueAdapter extends BaseAdapter {
 		View colorView;
 	}
 	
-	public static IssueAdapter newInstance(Context context, ISSUES issue) {
+	public static IssueAdapter newInstance(Context context, ISSUE_CATEGORY issue) {
 		IssueAdapter adapter = new IssueAdapter();
 		adapter.issueItems = IssueFactory.getIssuesFor(context, issue);
 		adapter.context = context;

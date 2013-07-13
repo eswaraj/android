@@ -11,7 +11,7 @@ import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.jansampark.vashisthg.ISSUES;
+import com.jansampark.vashisthg.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.IssueUtils;
 
 public class PieChartView extends GraphicalView {
@@ -21,7 +21,7 @@ public class PieChartView extends GraphicalView {
 	}
 
 	public static GraphicalView getNewInstance(Context context, int[] values) {
-		if (values.length != ISSUES.values().length) {
+		if (values.length != ISSUE_CATEGORY.values().length) {
 			throw new IllegalArgumentException(
 					"values sent are not equal to issues");
 		}
@@ -53,12 +53,12 @@ public class PieChartView extends GraphicalView {
 
 	private static int[] getColor(Context context) {
 		int[] colors = new int[] {
-				IssueUtils.getColorInt(context, ISSUES.ROAD),
-				IssueUtils.getColorInt(context, ISSUES.WATER),
-				IssueUtils.getColorInt(context, ISSUES.TRANSPORT),
-				IssueUtils.getColorInt(context, ISSUES.ELECTRICITY),
-				IssueUtils.getColorInt(context, ISSUES.LAW),
-				IssueUtils.getColorInt(context, ISSUES.SEWAGE) };
+				IssueUtils.getColorInt(context, ISSUE_CATEGORY.ROAD),
+				IssueUtils.getColorInt(context, ISSUE_CATEGORY.WATER),
+				IssueUtils.getColorInt(context, ISSUE_CATEGORY.TRANSPORT),
+				IssueUtils.getColorInt(context, ISSUE_CATEGORY.ELECTRICITY),
+				IssueUtils.getColorInt(context, ISSUE_CATEGORY.LAW),
+				IssueUtils.getColorInt(context, ISSUE_CATEGORY.SEWAGE) };
 		return colors;
 	}
 
