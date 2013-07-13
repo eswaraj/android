@@ -25,9 +25,16 @@
     <color name="analytics_spinner_unselected">#efece5</color>
     <color name="analytics_spinner_selected">#d64141</color>
     
-    <color name="lack_of_infra">#ff0000</color>
-    <color name="lack_of_main">#ffffff</color>
+   
     
     <color name="issue_details_dark">#7a7a7a</color>
     <color name="issue_details_red">#c34a4a</color>
+    
+    <color name="lack_of_infra">#99be5e</color>
+    <color name="lack_of_maintainence">#ff6e56</color>
+    <color name="lack_of_quality">#28d9ff</color>
+    <color name="poor_pricing">#ff1212</color>
+    <color name="awareness">#1155ff</color>
+    <color name="others">#676767</color>
+        
 </resources>

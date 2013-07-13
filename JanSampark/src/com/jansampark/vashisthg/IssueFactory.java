@@ -62,33 +62,46 @@ public class IssueFactory {
 	}	
 	
 	public static String getIssueTypeString(Context context, int templateId) {
-		int type = templateId/10;		
+		int type = getIssueTypeInt(templateId);		
 		String[] typeArray = context.getResources().getStringArray(R.array.infra);		
 		return typeArray[type];
 	}
 	
+	
+	private static int getIssueTypeInt(int templateId) {
+		int type;
+		if(templateId == 0) {
+			type = 5;
+		} else {
+		    type = templateId/10;
+		}				
+		return type;
+	}
+	
 	public static int getIssueTypeColor(Context context, int templateId) {
-		int type = templateId/10;
+		int type = getIssueTypeInt(templateId);
+		Resources resources = context.getResources();
+		
 		int color;
 		switch (type) {
 		case 0:
-			color = Color.RED;
+			color = resources.getColor(R.color.lack_of_infra);
 			break;
 		case 1:
-			color = Color.YELLOW;
+			color = resources.getColor(R.color.lack_of_maintainence);
 			break;
 		case 2:
-			color = Color.BLUE;
+			color = resources.getColor(R.color.lack_of_quality);
+			break;
+		case 3:
+			color = resources.getColor(R.color.poor_pricing);
 			break;
 		case 4:
-			color = Color.MAGENTA;
+			color = resources.getColor(R.color.awareness);
 			break;
 		case 5:
-			color = Color.GREEN;
-			break;
-		case 6:
 		default:
-			color = Color.BLACK;
+			color = resources.getColor(R.color.others);
 			break;						
 		}
 		return color;		
