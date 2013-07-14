@@ -41,6 +41,13 @@
     <string name="issue_details_add_description_button">Add Description</string>
     
     
+
+    <string name="issue_details_or_label">OR</string>
+    
+ 
+    
+    
+    
     
     <string-array name="demo_place">
         <item>Mayur Vihar</item>

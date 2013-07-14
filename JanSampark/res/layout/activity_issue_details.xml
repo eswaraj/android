@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    tools:context="IssueDetailsActivity" >
 
     <include
         android:id="@+id/main_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:layout_alignParentTop="true"
         layout="@layout/title_bar" />
 
     <ScrollView
@@ -135,6 +136,61 @@
 	                android:textStyle="bold"
 	                android:inputType="text"
 	                android:textSize="@dimen/issue_details_text" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/take_photo_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+                <Button 
+                    android:id="@+id/take_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="takePhoto"
+                    android:text="@string/issue_details_take_label"/>
+                <TextView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/issue_details_or_label"/>
+                <Button
+                    android:id="@+id/attach_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="choosePhoto"
+                    android:text="@string/issue_details_attach_label" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/photo_taken_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/chosen_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                  
+                     />
+                <Button 
+                    android:id="@+id/retake_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="retakePhoto"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/issue_details_retake_label"/>
+                <Button
+                    android:id="@+id/remove_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="removePhoto"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/retake_photo"
+                    android:text="@string/issue_details_remove_label"/>
+                
 
             </RelativeLayout>
 
