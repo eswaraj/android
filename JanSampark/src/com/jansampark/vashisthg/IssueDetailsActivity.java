@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.jansampark.vashisthg.CameraHelper.CameraUtilActivity;
+import com.jansampark.vashisthg.helpers.Utils;
 
 public class IssueDetailsActivity extends CameraUtilActivity {
 
@@ -135,6 +136,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 				descriptionET.setVisibility(View.VISIBLE);
 				descriptionET.setFocusable(true);
 				descriptionET.setFocusableInTouchMode(true);
+				descriptionET.setCursorVisible(true);
+				descriptionET.requestFocus();
 			}
 		});
 		
@@ -145,7 +148,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 				descriptionET.setVisibility(View.VISIBLE);
 				descriptionET.setFocusable(true);
 				descriptionET.setFocusableInTouchMode(true);
-				
+				descriptionET.setCursorVisible(true);
+				descriptionET.requestFocus();
 			}
 		});
 		setListenerToDescriptionET();
@@ -155,10 +159,17 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		descriptionET.setOnEditorActionListener(new OnEditorActionListener() {
 			
 			@Override
-			public boolean onEditorAction(TextView textView, int arg1, KeyEvent keyEvent) {
-				descriptionET.setFocusable(true);
-				descriptionET.setFocusableInTouchMode(true);
-				return true;
+			public boolean onEditorAction(TextView textView, int keyCode, KeyEvent keyEvent) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					descriptionET.setFocusable(false);
+					descriptionET.setFocusableInTouchMode(false);
+					descriptionET.setCursorVisible(false);
+					Utils.hideKeyboard(IssueDetailsActivity.this, textView);
+					return true;
+				} else {
+					return false;
+				}
+					
 			}
 		});
 	}

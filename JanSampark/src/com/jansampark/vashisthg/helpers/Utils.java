@@ -1,4 +1,4 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.helpers;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,9 +12,16 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 public class Utils {
 
+	public static void hideKeyboard(Context context, TextView textView) {
+		InputMethodManager imm = (InputMethodManager)context.getSystemService( Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+	}
+	
 	public static String getUniqueImageFilename() {
 		return String.valueOf(Calendar.getInstance().getTimeInMillis());
 	}
@@ -93,6 +100,5 @@ public class Utils {
 
 		return isExternalStorageAvailable && isExternalStorageWriteable;
 	}
-
 
 }
