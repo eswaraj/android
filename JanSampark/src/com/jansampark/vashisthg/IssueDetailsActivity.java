@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.jansampark.vashisthg.CameraHelper.CameraUtilActivity;
 import com.jansampark.vashisthg.helpers.Utils;
+import com.jansampark.vashisthg.volley.MultipartRequest;
 
 public class IssueDetailsActivity extends CameraUtilActivity {
+	
+	public static class IssueDetail {
+		public String lat;
+		public String lon;
+		public IssueItem issueItem;
+		public String image;
+		public String userImage;
+		public String reporterId = "123";
+		public String description;
+	}
 
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
-	private static final String SAVED_INSTANCE_IMAGE_PATH = "path";
 	private IssueItem issueItem;
 	
 	private TextView categoryTV;
@@ -38,6 +53,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	CameraHelper cameraHelper;
 	private ImageView issueImageView;
 	
+	private RequestQueue mRequestQueue;
+	
 	
 	
 	@Override
@@ -47,16 +64,17 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 
 		if (null == savedInstanceState) {
 			issueItem = (IssueItem) getIntent().getParcelableExtra(EXTRA_ISSUE_ITEM);
-			setCameraHelper();
+			
 		} else {
 			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);			
-		}	
+		}
+		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+		setCameraHelper();		
 		setViews();		
 	}
 	
 	private void setCameraHelper() {
-		cameraHelper = new CameraHelper(this);
-		
+		cameraHelper = new CameraHelper(this);		
 	}
 	
 	@Override
@@ -100,7 +118,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		takeImageContainer = (ViewGroup) findViewById(R.id.take_photo_container);
 		imageTakenContainer = (ViewGroup) findViewById(R.id.photo_taken_container);	
 		issueImageView = (ImageView)  findViewById(R.id.chosen_pic);
-		resetIssusImageView();		
+		//resetIssusImageView();		
+		displayImageIfAvailable();
 	}
 	
 	private void resetIssusImageView() {
@@ -109,8 +128,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			imageTakenContainer.setVisibility(View.GONE);
 		} else {
 			takeImageContainer.setVisibility(View.GONE);
-			imageTakenContainer.setVisibility(View.VISIBLE);
-			displayImage();
+			imageTakenContainer.setVisibility(View.VISIBLE);			
 		}
 	}
 	
@@ -204,23 +222,62 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	}
 	
 	public void onPostClick(View view) {
-		startActivity(new Intent(this, IssueSummaryActivity.class));
+		
+		executeRequest();
 	}
 	
 	@Override
 	public void onCameraPicTaken() {				
-		displayImage();
+		displayImageIfAvailable();
 	}
 	
-	private void displayImage() {
+	private void displayImageIfAvailable() {
 		resetIssusImageView();
-		new BitmapWorkerTask(issueImageView, 200).execute(cameraHelper.getImageName());
+		if(!TextUtils.isEmpty(cameraHelper.getImageName())) {
+			new BitmapWorkerTask(issueImageView, 200).execute(cameraHelper.getImageName());
+		}
 	}
 
 	@Override
 	public void onGalleryPicChosen() {
-		displayImage();		
+		displayImageIfAvailable();		
 	}
 	
+	private void executeRequest()  {
+		
+
+		String url = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
+		IssueDetail issueDetail = new IssueDetail();
+		issueDetail.lat = "28.606";
+		issueDetail.lon = "77.303";
+		issueDetail.image = cameraHelper.getImageName();
+		issueDetail.userImage = Utils.getUserImage();
+		issueDetail.reporterId  = "123";
+		issueDetail.description = descriptionET.getText().toString();
+		issueDetail.issueItem = issueItem;
+
+
+		
+		MultipartRequest request = new MultipartRequest(url, createMyReqErrorListener(), createMyReqSuccessListener(),  issueDetail);
+		mRequestQueue.add(request);
+	}
 	
+	 private Response.ErrorListener createMyReqErrorListener() {
+	        return new Response.ErrorListener() {
+	            @Override
+	            public void onErrorResponse(VolleyError error) {
+	            	Log.d("details", "try again");
+	            }
+	        };
+	  }
+	 
+	private Response.Listener<String> createMyReqSuccessListener() {
+        return new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+            	Log.d("details", "response: " + response);
+            	startActivity(new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class));
+            }
+        };
+    }		
 }

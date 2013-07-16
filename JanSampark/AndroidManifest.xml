@@ -61,15 +61,18 @@
         </activity>
         <activity
             android:name="com.jansampark.vashisthg.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+             >
         </activity>
         <activity
             android:name="com.jansampark.vashisthg.IssueSummaryActivity"
-            android:label="@string/title_activity_issue_summary" >
+            android:label="@string/title_activity_issue_summary"
+             >
         </activity>
         <activity
             android:name="com.jansampark.vashisthg.IssueDetailsActivity"
-            android:label="@string/title_activity_issue_details" >
+            android:label="@string/title_activity_issue_details"
+            >
         </activity>
         <activity
             android:name="com.jansampark.vashisthg.IssueActivity"

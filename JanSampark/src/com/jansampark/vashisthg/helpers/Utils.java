@@ -101,4 +101,9 @@ public class Utils {
 		return isExternalStorageAvailable && isExternalStorageWriteable;
 	}
 
+	
+	
+	public static String getUserImage() {
+		return null;
+	}
 }
