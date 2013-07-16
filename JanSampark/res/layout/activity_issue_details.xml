@@ -101,7 +101,8 @@
                     android:layout_alignParentRight="true"
 	                android:layout_alignParentTop="true"
 	                android:background="@drawable/issue_detail_button"
-	                
+	                android:focusable="true"
+	                android:focusableInTouchMode="true"
 	                android:drawableLeft="@drawable/ic_edit"
 	                android:textColor="@color/issue_details_dark"
 	                android:textSize="@dimen/issue_details_small_text"

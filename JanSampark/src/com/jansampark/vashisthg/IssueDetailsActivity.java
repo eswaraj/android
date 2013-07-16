@@ -2,6 +2,7 @@ package com.jansampark.vashisthg;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -130,14 +131,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				
 				addDescription.setVisibility(View.INVISIBLE);
 				editDesctiption.setVisibility(View.VISIBLE);
-				descriptionET.setVisibility(View.VISIBLE);
-				descriptionET.setFocusable(true);
-				descriptionET.setFocusableInTouchMode(true);
-				descriptionET.setCursorVisible(true);
-				descriptionET.requestFocus();
+				enableDescriptionET(true);
 			}
 		});
 		
@@ -145,15 +141,33 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			
 			@Override
 			public void onClick(View v) {
-				descriptionET.setVisibility(View.VISIBLE);
-				descriptionET.setFocusable(true);
-				descriptionET.setFocusableInTouchMode(true);
-				descriptionET.setCursorVisible(true);
-				descriptionET.requestFocus();
+				enableDescriptionET(true);
 			}
 		});
 		setListenerToDescriptionET();
 	}
+	
+	private void enableDescriptionET (boolean flag) {
+		
+		descriptionET.setVisibility(View.VISIBLE);
+		descriptionET.setFocusable(flag);
+		descriptionET.setFocusableInTouchMode(flag);
+		descriptionET.setCursorVisible(flag);
+		if(flag) {
+			
+			
+			descriptionET.requestFocus();
+			descriptionET.setInputType(InputType.TYPE_CLASS_TEXT);
+		} else {
+			editDesctiption.requestFocus();
+			
+			descriptionET.setInputType(InputType.TYPE_NULL);
+			Utils.hideKeyboard(IssueDetailsActivity.this, descriptionET);
+		}
+		descriptionET.setEnabled(flag);
+	}
+	
+	
 	
 	private void setListenerToDescriptionET() {
 		descriptionET.setOnEditorActionListener(new OnEditorActionListener() {
@@ -161,10 +175,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			@Override
 			public boolean onEditorAction(TextView textView, int keyCode, KeyEvent keyEvent) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
-					descriptionET.setFocusable(false);
-					descriptionET.setFocusableInTouchMode(false);
-					descriptionET.setCursorVisible(false);
-					Utils.hideKeyboard(IssueDetailsActivity.this, textView);
+					enableDescriptionET(false);					
 					return true;
 				} else {
 					return false;
