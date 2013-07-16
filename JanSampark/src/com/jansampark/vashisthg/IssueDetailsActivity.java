@@ -1,5 +1,7 @@
 package com.jansampark.vashisthg;
 
+import java.io.Serializable;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -45,11 +47,10 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 
 		if (null == savedInstanceState) {
 			issueItem = (IssueItem) getIntent().getParcelableExtra(EXTRA_ISSUE_ITEM);
+			setCameraHelper();
 		} else {
-			issueItem = (IssueItem) savedInstanceState.getSerializable(EXTRA_ISSUE_ITEM);
-			
-		}
-		setCameraHelper();
+			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);			
+		}	
 		setViews();		
 	}
 	
@@ -61,6 +62,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		outState.putParcelable(EXTRA_ISSUE_ITEM, issueItem);
 		cameraHelper.onSaveInstanceState(outState);
 	}
 	
@@ -73,8 +75,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		
+		super.onActivityResult(requestCode, resultCode, data);		
 		cameraHelper.onActivityResult(requestCode, resultCode, data);
 	}
 	
@@ -99,7 +100,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		takeImageContainer = (ViewGroup) findViewById(R.id.take_photo_container);
 		imageTakenContainer = (ViewGroup) findViewById(R.id.photo_taken_container);	
 		issueImageView = (ImageView)  findViewById(R.id.chosen_pic);
-		resetIssusImageView();
+		resetIssusImageView();		
 	}
 	
 	private void resetIssusImageView() {
@@ -109,6 +110,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		} else {
 			takeImageContainer.setVisibility(View.GONE);
 			imageTakenContainer.setVisibility(View.VISIBLE);
+			displayImage();
 		}
 	}
 	
@@ -153,9 +155,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		descriptionET.setFocusable(flag);
 		descriptionET.setFocusableInTouchMode(flag);
 		descriptionET.setCursorVisible(flag);
-		if(flag) {
-			
-			
+		if(flag) {						
 			descriptionET.requestFocus();
 			descriptionET.setInputType(InputType.TYPE_CLASS_TEXT);
 		} else {
@@ -201,6 +201,10 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	public void removePhoto(View view) {
 		cameraHelper.setImageName(null);
 		resetIssusImageView();
+	}
+	
+	public void onPostClick(View view) {
+		startActivity(new Intent(this, IssueSummaryActivity.class));
 	}
 	
 	@Override

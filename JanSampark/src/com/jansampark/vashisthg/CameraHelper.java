@@ -43,7 +43,6 @@ public class CameraHelper {
 		return overLayType;
 	}
 	private static final String IMAGE_NAME_INSTANCE = "image_name";
-	private static final String OVERLAY_TYPE_INSTANCE = "overlay_type_instance";
 
 
 	public void setOverLayType(int overLayType) {
@@ -169,19 +168,13 @@ public class CameraHelper {
     public void onGalleryPicChosen() {
     	((CameraHelperCallback)activity).onGalleryPicChosen();
     }
-    
-    
-
-  
     	
 	public void onSaveInstanceState(Bundle outState) {		
 		outState.putString(IMAGE_NAME_INSTANCE, imagePath);
-		outState.putInt(OVERLAY_TYPE_INSTANCE, overLayType);
 	}	
 
 	public void onRestoreInstanceState(Bundle savedInstanceState) {		
 		imagePath = savedInstanceState.getString(IMAGE_NAME_INSTANCE);
-		overLayType = savedInstanceState.getInt(OVERLAY_TYPE_INSTANCE);
 	}
 
 	public boolean isShowGallery() {

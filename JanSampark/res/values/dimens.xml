@@ -39,11 +39,26 @@
     <dimen name="issue_details_small_text">14sp</dimen>
     <dimen name="issue_details_text_top_margin">32dp</dimen>
     
+    <dimen name="issue_details_padding">16dp</dimen>
+    
     <dimen name="issue_details_edit_description_width">64dp</dimen>
     <dimen name="issue_details_edit_description_height">32dp</dimen>
     <dimen name="issue_details_edit_description_left_drawable_padding">0dp</dimen>
     <dimen name="issue_details_edit_description_padding">4dp</dimen>
     <dimen name="issue_details_add_desctiption_height">48dp</dimen>
+    
+    <dimen name="issue_details_retake_description_width">120dp</dimen>
+    <dimen name="issue_details_retake_description_height">40dp</dimen>
+    
+    <dimen name="issue_details_retake_container_height">120dp</dimen>
+    <dimen name="issue_details_issue_image_size">80dp</dimen>
+    
+    <dimen name="issue_summary_horizontal_padding">16dp</dimen>
+    <dimen name="issue_summary_big_text">22sp</dimen>
+    <dimen name="issue_summary_normal_text">16sp</dimen>
+    <dimen name="issue_summary_mla_pic_size">80dp</dimen>
+    
+    
     
     
 </resources>

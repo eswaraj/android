@@ -3,11 +3,169 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-<include
+
+    <include
         android:id="@+id/main_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
         android:layout_alignParentTop="true"
         layout="@layout/title_bar" />
+
+    <ScrollView
+        android:id="@+id/issue_summary_scroll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:id="@+id/issue_summary_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/issue_summary_horizontal_padding" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_complaint_success" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/issue_summary_success"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_summary_big_text" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/issue_summary_horizontal_padding"
+                android:paddingRight="@dimen/issue_summary_horizontal_padding"
+                android:text="@string/issue_summary_message"
+                android:textColor="@color/issue_details_dark"
+                android:textSize="@dimen/issue_summary_normal_text" />
+
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:padding="@dimen/issue_summary_horizontal_padding" >
+
+                <LinearLayout
+                    android:id="@+id/issue_details_mla_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="right|center"
+                    android:orientation="vertical"
+                    android:paddingRight="@dimen/issue_summary_horizontal_padding" >
+
+                    <TextView
+                        android:id="@+id/issue_summary_mla"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/issue_summary_normal_text"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/issue_summary_mla_constituency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/issue_details_dark" />
+                </LinearLayout>
+
+                <com.jansampark.vashisthg.widget.RoundedImageView
+                    android:id="@+id/issue_summary_mla_image"
+                    android:layout_width="@dimen/issue_summary_mla_pic_size"
+                    android:layout_height="@dimen/issue_summary_mla_pic_size"
+                     />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/issue_details_bottom_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:padding="@dimen/issue_summary_horizontal_padding" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/issue_details_category_label"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_summary_normal_text" />
+
+                <TextView
+                    android:id="@+id/issue_summary_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/issue_summary_normal_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/issue_summary_horizontal_padding"
+                    android:text="@string/issue_details_system_label"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_summary_normal_text" />
+
+                <TextView
+                    android:id="@+id/issue_summary_system"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/issue_summary_normal_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/issue_summary_horizontal_padding"
+                    android:text="@string/issue_summary_address_label"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_summary_normal_text" />
+
+                <TextView
+                    android:id="@+id/issue_summary_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/issue_summary_normal_text"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/issue_summary_horizontal_padding" >
+
+                    <Button
+                        android:id="@+id/issue_summary_another"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/issue_details_another"
+                        android:text="@string/issue_summary_another_complaint" />
+
+                    <Button
+                        android:id="@+id/issue_summary_done"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:background="@drawable/issue_details_post"
+                        android:text="@string/done"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

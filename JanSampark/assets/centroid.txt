@@ -1,0 +1,70 @@
+Adarsh Nagar , 004 ,  28.721 ,77.186 
+Ambedkar Nagar , 048 ,  28.5165 ,77.225 
+Babarpur , 067 ,  28.6895 ,77.2785 
+Badarpur , 053 ,  28.4995 ,77.318 
+Badli , 005 ,  28.7485 ,77.1535 
+Ballimaran , 022 ,  28.652 ,77.217 
+Bawana , 007 ,  28.7715 ,77.032 
+Bijwasan , 036 ,  28.549 ,77.081 
+Burari , 002 ,  28.759 ,77.1795 
+Chandni Chowk , 020 ,  28.6725 ,77.234 
+Chhatarpur , 046 ,  28.462 ,77.182 
+Delhi Cantt , 038 ,  28.593 ,77.1405 
+Deoli , 047 ,  28.5 ,77.228 
+Dwaraka , 033 ,  28.6 ,77.0935 
+Gandhi Nagar , 061 ,  28.664 ,77.2635 
+Ghonda , 066 ,  28.6955 ,77.2595 
+Gokalpur , 068 ,  28.71 ,77.3025 
+Greater Kailash , 050 ,  28.5395 ,77.2365 
+Hari Nagar , 028 ,  28.6225 ,77.1065 
+Janak Puri , 030 ,  28.6425 ,77.084 
+Jungpur , 041 ,  28.608 ,77.257 
+Kalkaji , 051 ,  28.55 ,77.2635 
+Karawal Nagar , 070 ,  28.745 ,77.24 
+Karol Bagh , 023 ,  28.65 ,77.197 
+Kasturba Nagar , 042 ,  28.572 ,77.2295 
+kirari , 009 ,  28.7025 ,77.0475 
+Kondli , 056 ,  28.6135 ,77.3245 
+Krishna Nagar , 060 ,  28.653 ,77.2795 
+Laxmi Nagar , 058 ,  28.6285 ,77.2725 
+Madipur , 026 ,  28.661 ,77.123 
+Malviya Nagar , 043 ,  28.548 ,77.1965 
+Mangol Puri , 012 ,  28.6975 ,77.099 
+Matia mahal , 021 ,  28.639 ,77.23 
+Matiala , 034 ,  28.56 ,76.9705 
+Mehrauli , 045 ,  28.5175 ,77.1545 
+Model Town , 018 ,  28.69 ,77.1915 
+Moti Nagar , 025 ,  28.6525 ,77.147 
+Mundka , 008 ,  28.7025 ,77.0145 
+Mustafabad , 069 ,  28.718 ,77.2735 
+Nangloi Jat , 011 ,  28.67 ,77.0765 
+Narela , 001 ,  28.8165 ,77.1325 
+Nazafgarh , 035 ,  28.6015 ,76.9305 
+New Delhi , 040 ,  28.6025 ,77.2045 
+Okhla , 054 ,  28.548 ,77.303 
+Palam , 037 ,  28.5925 ,77.0815 
+Patel Nagar , 024 ,  28.6535 ,77.1675 
+Patparganj , 057 ,  28.6035 ,77.29 
+R K Puram , 044 ,  28.5655 ,77.1615 
+Rajender Nagar , 039 ,  28.6365 ,77.1645 
+Rajouri Garden , 027 ,  28.6485 ,77.1095 
+Rithala , 006 ,  28.7235 ,77.1035 
+Rohini , 013 ,  28.7255 ,77.1275 
+Rohtas Nagar , 064 ,  28.686 ,77.2885 
+Sadar Bazar , 019 ,  28.6675 ,77.188 
+Sangam Vihar , 049 ,  28.5025 ,77.26 
+Seelam Pur , 065 ,  28.682 ,77.259 
+Seemapuri , 063 ,  28.687 ,77.3155 
+Shahdara , 062 ,  28.676 ,77.305 
+Shakur Basti , 015 ,  28.6765 ,77.114 
+Shalimar Bagh , 014 ,  28.712 ,77.1515 
+Sultanpur Majra , 010 ,  28.6935 ,77.078 
+Tilak Nagar , 029 ,  28.6425 ,77.084 
+Timarpur , 003 ,  28.705 ,77.219 
+Tri Nagar , 016 ,  28.687 ,77.1465 
+Trilokpuri , 055 ,  28.6 ,77.305 
+Tughlakabad , 052 ,  28.5195 ,77.279 
+Uttam Nagar , 032 ,  28.6175 ,77.0755 
+Vikaspuri , 031 ,  28.6465 ,77.0405 
+Vishwas Nagar , 059 ,  28.647 ,77.304 
+Wazirpur , 017 ,  28.6915 ,77.171 

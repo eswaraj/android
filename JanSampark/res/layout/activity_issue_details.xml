@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
+            
             android:orientation="vertical" >
 
             <TextView
@@ -144,12 +145,15 @@
                 android:id="@+id/take_photo_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/issue_details_padding"
                 android:gravity="center" >
                 <Button 
                     android:id="@+id/take_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="takePhoto"
+                    android:background="@null"
+                    android:drawableBottom="@drawable/issue_details_take"
                     android:text="@string/issue_details_take_label"/>
                 <TextView 
                     android:layout_width="wrap_content"
@@ -160,42 +164,70 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="choosePhoto"
+                    android:background="@null"
+                    android:drawableBottom="@drawable/issue_details_attach"
                     android:text="@string/issue_details_attach_label" />
             </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/photo_taken_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/issue_details_retake_container_height"
+                android:padding="@dimen/issue_details_padding" >
 
                 <ImageView
                     android:id="@+id/chosen_pic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/issue_details_issue_image_size"
+                    android:layout_height="@dimen/issue_details_issue_image_size"
                     android:layout_alignParentLeft="true"
-                  
-                     />
-                <Button 
-                    android:id="@+id/retake_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="retakePhoto"
-                    android:layout_alignParentRight="true"
-                    android:text="@string/issue_details_retake_label"/>
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/issue_details_image_container"
+                    android:cropToPadding="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/banner_electricity" />
+                
                 <Button
                     android:id="@+id/remove_pic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/issue_details_retake_description_width"
+                    android:layout_height="@dimen/issue_details_retake_description_height"
                     android:onClick="removePhoto"
+                    android:background="@drawable/issue_detail_button"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/retake_photo"
+                    
+                    android:textSize="@dimen/issue_details_small_text"
+                     android:textColor="@color/issue_details_red"
+                    
+                    android:drawableLeft="@drawable/ic_delete"
+                    android:drawablePadding="8dp"
                     android:text="@string/issue_details_remove_label"/>
                 
-
+				<Button 
+                    android:id="@+id/retake_photo"
+                    android:layout_width="@dimen/issue_details_retake_description_width"
+                    android:layout_height="@dimen/issue_details_retake_description_height"
+                    android:onClick="retakePhoto"
+                    android:background="@drawable/issue_detail_button"
+                    
+                    android:layout_alignParentRight="true"
+                    android:textSize="@dimen/issue_details_small_text"
+                    android:textColor="@color/issue_details_dark"
+                    android:layout_alignParentBottom="true"
+                    android:drawableLeft="@drawable/ic_retake"
+                    android:drawablePadding="8dp"
+                    android:text="@string/issue_details_retake_label"/>
             </RelativeLayout>
-
+			<Button
+			        android:id="@+id/issue_details_post"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_horizontal"
+			        android:onClick="onPostClick"
+			        android:background="@drawable/issue_details_post"
+			        android:textColor="@android:color/white"
+			        android:text="@string/issue_details_post" />
         </LinearLayout>
     </ScrollView>
+
+    
 
 </LinearLayout>
