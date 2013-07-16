@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -14,9 +15,9 @@
 
         <RadioGroup
             android:id="@+id/analytics_group"
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/analytics_overall"
@@ -25,8 +26,8 @@
                 android:background="@drawable/analytics_choose_left"
                 android:button="@null"
                 android:gravity="center"
-                android:textColor="@color/analytics_radio_text"
                 android:text="@string/analytics_overall"
+                android:textColor="@color/analytics_radio_text"
                 android:textOff="@string/analytics_overall"
                 android:textOn="@string/analytics_overall" />
 
@@ -34,18 +35,21 @@
                 android:id="@+id/analytics_spinner"
                 android:layout_width="@dimen/analytics_chooser_width"
                 android:layout_height="wrap_content"
+                android:background="@drawable/analytics_choose_right"
                 android:button="@null"
                 android:gravity="center"
-                android:textColor="@color/analytics_radio_text"
-                
-                android:background="@drawable/analytics_choose_right" />
+                android:textColor="@color/analytics_radio_text" />
         </RadioGroup>
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/pie_chart_container"
         android:layout_width="@dimen/main_pie_size"
-        android:layout_height="@dimen/main_pie_size" >
+        android:layout_height="@dimen/main_pie_size"
+        android:layout_alignParentLeft="false"
+        android:layout_below="@+id/analytics_chooser_container"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp" >
 
         <FrameLayout
             android:id="@+id/pie_chart_holder"
@@ -92,8 +96,11 @@
     </FrameLayout>
 
     <TableLayout
+        android:id="@+id/TableLayout1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/pie_chart_container"
         android:gravity="center" >
 
         <TableRow
@@ -182,4 +189,27 @@
         </TableRow>
     </TableLayout>
 
-</LinearLayout>
+    <View
+        android:id="@+id/analytics_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:background="@android:color/black"
+        android:visibility="invisible" />
+
+    <AutoCompleteTextView
+        android:id="@+id/analytics_autocomplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/analytics_chooser_container"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/white"
+        android:ems="10"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:visibility="gone" >
+    </AutoCompleteTextView>
+
+</RelativeLayout>
