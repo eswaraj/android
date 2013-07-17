@@ -1,5 +1,7 @@
 package com.jansampark.vashisthg.widget;
 
+import com.android.volley.toolbox.NetworkImageView;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,11 +21,10 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 
-public class RoundedImageView extends ImageView {
+public class RoundedImageView extends NetworkImageView {
 
 public RoundedImageView(Context context) {
     super(context);
-    // TODO Auto-generated constructor stub
 }
 
 public RoundedImageView(Context context, AttributeSet attrs) {
@@ -47,14 +48,16 @@ protected void onDraw(Canvas canvas) {
         return; 
     }
     Bitmap b =  ((BitmapDrawable)drawable).getBitmap() ;
-    Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
-
-    int w = getWidth(), h = getHeight();
-
-
-    Bitmap roundBitmap =  getCroppedBitmap(bitmap, w);
-//    roundBitmap=ImageUtils.setCircularInnerGlow(roundBitmap, 0xFFBAB399, 4, 1);
-    canvas.drawBitmap(roundBitmap, 0,0, null);
+    if(b != null) {
+	    Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+	
+	    int w = getWidth(), h = getHeight();
+	
+	
+	    Bitmap roundBitmap =  getCroppedBitmap(bitmap, w);
+	//    roundBitmap=ImageUtils.setCircularInnerGlow(roundBitmap, 0xFFBAB399, 4, 1);
+	    canvas.drawBitmap(roundBitmap, 0,0, null);
+    }
 
 }
 

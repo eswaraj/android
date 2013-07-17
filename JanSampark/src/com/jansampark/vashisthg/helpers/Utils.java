@@ -6,8 +6,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
 
+import com.jansampark.vashisthg.JanSamparkApplication;
+
+import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -105,5 +109,14 @@ public class Utils {
 	
 	public static String getUserImage() {
 		return null;
+	}
+	
+	
+	public static  void setLastKnownLocation(Application application, Location lastKnownLocation) {
+		((JanSamparkApplication) application).setLastKnownLocation(lastKnownLocation);
+	}
+	
+	public static Location getLastKnownLocation(Application application) {
+		return ((JanSamparkApplication) application).getLastKnownLocation();
 	}
 }

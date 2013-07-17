@@ -2,7 +2,12 @@ package com.jansampark.vashisthg;
 
 import java.io.Serializable;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -24,7 +29,7 @@ import com.jansampark.vashisthg.CameraHelper.CameraUtilActivity;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.volley.MultipartRequest;
 
-public class IssueDetailsActivity extends CameraUtilActivity {
+public class IssueDetailsActivity extends CameraUtilActivity implements LocationListener {
 	
 	public static class IssueDetail {
 		public String lat;
@@ -55,6 +60,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	private RequestQueue mRequestQueue;
 	
+	private LocationManager locationManager;
+	Location lastKnownLocation;
 	
 	
 	@Override
@@ -68,9 +75,20 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		} else {
 			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);			
 		}
+		initLocation();
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		setCameraHelper();		
 		setViews();		
+	}
+	
+	private void initLocation() {
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		String locationProvider = LocationManager.NETWORK_PROVIDER;
+		lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+		Criteria criteria = new Criteria();
+		String provider = locationManager.getBestProvider(criteria,true);
+		
+		locationManager.requestLocationUpdates(provider, 20000, 0,this);
 	}
 	
 	private void setCameraHelper() {
@@ -243,13 +261,34 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		displayImageIfAvailable();		
 	}
 	
+	@Override
+	public void onLocationChanged(Location location) {
+		lastKnownLocation = location;
+		locationManager.removeUpdates((android.location.LocationListener) this);
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		
+	}
+	
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		
+	}
+	
 	private void executeRequest()  {
 		
 
 		String url = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
 		IssueDetail issueDetail = new IssueDetail();
-		issueDetail.lat = "28.606";
-		issueDetail.lon = "77.303";
+		issueDetail.lat = lastKnownLocation.getLatitude() + "";
+		issueDetail.lon = lastKnownLocation.getLongitude() + "";
 		issueDetail.image = cameraHelper.getImageName();
 		issueDetail.userImage = Utils.getUserImage();
 		issueDetail.reporterId  = "123";
@@ -276,7 +315,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
             @Override
             public void onResponse(String response) {
             	Log.d("details", "response: " + response);
-            	startActivity(new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class));
+            	Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
+            	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, issueItem);
+            	startActivity(intent);
             }
         };
     }		

@@ -18,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
 
 public class MainIssueFragment extends Fragment implements LocationListener{
@@ -33,7 +35,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
     private LocationProvider locationProvider;
     
     private GoogleMap gMap = null;
-    
+    boolean isResumed;
     
     
     public static MainIssueFragment newInstance(Bundle args) {
@@ -58,15 +60,23 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     
 		
 		String locationProvider = LocationManager.NETWORK_PROVIDER;
-		lastKnownLocation = locationManager
-				.getLastKnownLocation(locationProvider);
+		Utils.setLastKnownLocation(getActivity().getApplication(), locationManager.getLastKnownLocation(locationProvider));
 		showLocation();
 		initButtonListeners();
 		initTitleBar();
+	}	
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		isResumed = true;
 	}
 	
-	
-	
+	@Override
+	public void onPause() {
+		isResumed = false;
+		super.onPause();
+	}
 	private void initButtonListeners() {
 		getActivity().findViewById(R.id.main_electricity).setOnClickListener(buttonListener);		
 		getActivity().findViewById(R.id.main_law).setOnClickListener(buttonListener);
@@ -115,18 +125,19 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 		});
 	}
 	
-	Location lastKnownLocation;
+	
 	    
 	private void showLocation() {
-		
-		LatLng lastKnownLatLng = new LatLng(lastKnownLocation.getLatitude(),
-				lastKnownLocation.getLongitude());
-		gMap.clear();
-
-		gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15));
-		gMap.addMarker(new MarkerOptions().position(lastKnownLatLng).icon(
-				BitmapDescriptorFactory
-						.fromResource(R.drawable.ic_main_annotation)));
+		Location location = Utils.getLastKnownLocation(getActivity().getApplication());		
+		if(null != location) {
+			LatLng lastKnownLatLng = new LatLng(location.getLatitude(),
+					location.getLongitude());
+			gMap.clear();	
+			gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15));
+			gMap.addMarker(new MarkerOptions().position(lastKnownLatLng).icon(
+					BitmapDescriptorFactory
+							.fromResource(R.drawable.ic_main_annotation)));
+		} 
 	}
 
 	public void onSewageClick(View view) {
@@ -193,8 +204,10 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 
 	@Override
 	public void onLocationChanged(Location location) {
-		lastKnownLocation = location;
-		showLocation();
+		if(isResumed) {
+			Utils.setLastKnownLocation(getActivity().getApplication(), location);
+			showLocation();
+		}
 		locationManager.removeUpdates((android.location.LocationListener) this);
 	}
 
