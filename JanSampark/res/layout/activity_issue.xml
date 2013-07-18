@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".IssueActivity" >
+    
+    <include
+        android:id="@+id/main_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        layout="@layout/title_bar" />
 
     <RelativeLayout
         	android:id="@+id/issue_banner"

@@ -40,6 +40,8 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		public String reporterId = "123";
 		public String description;
 	}
+	
+	private static final String TAG = "IssueDetail";
 
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
 	private IssueItem issueItem;
@@ -50,6 +52,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	
 	private Button addDescription;
 	private EditText descriptionET;
+	private TextView descriptionTextView;
 	private Button editDesctiption;
 	
 	
@@ -121,22 +124,21 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		systemTV = (TextView) findViewById(R.id.issue_detail_system_text);
 		addDescription = (Button) findViewById(R.id.issue_detail_descption_add_btn);
 		editDesctiption = (Button) findViewById(R.id.issue_detail_descption_edit_btn);
-		descriptionET = (EditText) findViewById(R.id.issue_detail_description_text);
-		
+		descriptionET = (EditText) findViewById(R.id.issue_detail_description_edit_text);
+		descriptionTextView = (TextView) findViewById(R.id.issue_detail_description_text_view);
 		
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		nameTV.setText(issueItem.getIssueName());
 		systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
 		setDescription();
-		initDescription();
+		resetDescription();
 		setIssueImageViews();
 	}
 	
 	private void setIssueImageViews() {
 		takeImageContainer = (ViewGroup) findViewById(R.id.take_photo_container);
 		imageTakenContainer = (ViewGroup) findViewById(R.id.photo_taken_container);	
-		issueImageView = (ImageView)  findViewById(R.id.chosen_pic);
-		//resetIssusImageView();		
+		issueImageView = (ImageView)  findViewById(R.id.chosen_pic);		
 		displayImageIfAvailable();
 	}
 	
@@ -150,28 +152,22 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		}
 	}
 	
-	private void initDescription() {
-		descriptionET.setVisibility(View.GONE);
-		descriptionET.setFocusable(false);
-		descriptionET.setFocusableInTouchMode(false);
+	private void resetDescription() {
+		if(TextUtils.isEmpty(descriptionET.getText().toString().trim())) {
+			showDescriptionButton();
+		}  else {
+			showDescriptionTV();
+		}
 	}
 	
-	private void setDescription() {
-		if(TextUtils.isEmpty(descriptionET.getText())) {
-			addDescription.setVisibility(View.VISIBLE);
-			editDesctiption.setVisibility(View.GONE);
-		} else {
-			addDescription.setVisibility(View.GONE);
-			editDesctiption.setVisibility(View.VISIBLE);
-		}
-		
+	
+	
+	private void setDescription() {		
 		addDescription.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				addDescription.setVisibility(View.INVISIBLE);
-				editDesctiption.setVisibility(View.VISIBLE);
-				enableDescriptionET(true);
+				showDescriptionEditText();
 			}
 		});
 		
@@ -179,48 +175,50 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 			
 			@Override
 			public void onClick(View v) {
-				enableDescriptionET(true);
+				showDescriptionEditText();
 			}
 		});
 		setListenerToDescriptionET();
 	}
 	
-	private void enableDescriptionET (boolean flag) {
+	private void showDescriptionTV() {
+		addDescription.setVisibility(View.INVISIBLE);
+		descriptionTextView.setVisibility(View.VISIBLE);
+		descriptionET.setVisibility(View.INVISIBLE);
+		editDesctiption.setVisibility(View.VISIBLE);
 		
-		descriptionET.setVisibility(View.VISIBLE);
-		descriptionET.setFocusable(flag);
-		descriptionET.setFocusableInTouchMode(flag);
-		descriptionET.setCursorVisible(flag);
-		if(flag) {						
-			descriptionET.requestFocus();
-			descriptionET.setInputType(InputType.TYPE_CLASS_TEXT);
-		} else {
-			editDesctiption.requestFocus();
-			
-			descriptionET.setInputType(InputType.TYPE_NULL);
-			Utils.hideKeyboard(IssueDetailsActivity.this, descriptionET);
-		}
-		descriptionET.setEnabled(flag);
+		descriptionTextView.setText(descriptionET.getText());
+		Utils.hideKeyboard(this, descriptionTextView);
 	}
 	
+	private void showDescriptionButton() {
+		addDescription.setVisibility(View.VISIBLE);
+		descriptionET.setVisibility(View.INVISIBLE);
+		editDesctiption.setVisibility(View.INVISIBLE);
+		descriptionTextView.setVisibility(View.INVISIBLE);
+	}
 	
-	
+	private void showDescriptionEditText() {
+		addDescription.setVisibility(View.INVISIBLE);
+		descriptionET.setVisibility(View.VISIBLE);
+		editDesctiption.setVisibility(View.INVISIBLE);
+		descriptionTextView.setVisibility(View.INVISIBLE);
+		descriptionET.requestFocus();
+		
+		Utils.showKeyboard(this, descriptionET);
+	}	
 	private void setListenerToDescriptionET() {
 		descriptionET.setOnEditorActionListener(new OnEditorActionListener() {
 			
 			@Override
-			public boolean onEditorAction(TextView textView, int keyCode, KeyEvent keyEvent) {
-				if (keyCode == KeyEvent.KEYCODE_ENTER) {
-					enableDescriptionET(false);					
-					return true;
-				} else {
-					return false;
-				}
-					
+			public boolean onEditorAction(TextView textView, int keyCode, KeyEvent keyEvent) {		
+				Log.d(TAG, "keycode: " + keyCode);
+				showDescriptionTV();
+				
+			    return true;
 			}
 		});
 	}
-
 
 	public void takePhoto(View view) {
 		cameraHelper.openOnlyCameraIntent();

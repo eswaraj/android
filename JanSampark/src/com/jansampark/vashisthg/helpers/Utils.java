@@ -26,6 +26,11 @@ public class Utils {
 		imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
 	}
 	
+	public static void showKeyboard(Context context, TextView textView) {		
+		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.showSoftInput(textView, InputMethodManager.SHOW_IMPLICIT);
+	}
+	
 	public static String getUniqueImageFilename() {
 		return String.valueOf(Calendar.getInstance().getTimeInMillis());
 	}
