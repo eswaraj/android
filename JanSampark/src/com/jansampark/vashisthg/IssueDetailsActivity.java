@@ -283,9 +283,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		
 	}
 	
-	private void executeRequest()  {
-		
-
+	private void executeRequest()  {		
 		String url = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
 		IssueDetail issueDetail = new IssueDetail();
 		issueDetail.lat = lastKnownLocation.getLatitude() + "";
@@ -295,8 +293,6 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		issueDetail.reporterId  = "123";
 		issueDetail.description = descriptionET.getText().toString();
 		issueDetail.issueItem = issueItem;
-
-
 		
 		MultipartRequest request = new MultipartRequest(url, createMyReqErrorListener(), createMyReqSuccessListener(),  issueDetail);
 		mRequestQueue.add(request);

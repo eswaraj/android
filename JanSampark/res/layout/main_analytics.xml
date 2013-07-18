@@ -1,215 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_analytics_scroll_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical" >
+    android:fillViewport="true" >
 
-    <LinearLayout
-        android:id="@+id/analytics_chooser_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/analytics_chooser_height"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <RadioGroup
-            android:id="@+id/analytics_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <RadioButton
-                android:id="@+id/analytics_overall"
-                android:layout_width="@dimen/analytics_chooser_width"
-                android:layout_height="wrap_content"
-                android:background="@drawable/analytics_choose_left"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/analytics_overall"
-                android:textColor="@color/analytics_radio_text"
-                android:textOff="@string/analytics_overall"
-                android:textOn="@string/analytics_overall" />
-
-            <RadioButton
-                android:id="@+id/analytics_spinner"
-                android:layout_width="@dimen/analytics_chooser_width"
-                android:layout_height="wrap_content"
-                android:background="@drawable/analytics_choose_right"
-                android:button="@null"
-                android:gravity="center"
-                android:textColor="@color/analytics_radio_text" />
-        </RadioGroup>
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/pie_chart_container"
-        android:layout_width="@dimen/main_pie_size"
-        android:layout_height="@dimen/main_pie_size"
-        android:layout_alignParentLeft="false"
-        android:layout_below="@+id/analytics_chooser_container"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="13dp" >
-
-        <FrameLayout
-            android:id="@+id/pie_chart_holder"
-            android:layout_width="@dimen/main_pie_size"
-            android:layout_height="@dimen/main_pie_size" >
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/main_pie_padding"
-            android:background="@drawable/pie_chart_top"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/issue_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/countdown_text"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/issue_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/issue_issue"
-                android:textSize="@dimen/countdown_label_text" />
-
-            <TextView
-                android:id="@+id/complaint_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/countdown_text"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/complaint_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/issue_complaint"
-                android:textSize="@dimen/countdown_label_text" />
-        </LinearLayout>
-    </FrameLayout>
-
-    <TableLayout
-        android:id="@+id/TableLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/pie_chart_container"
-        android:gravity="center" >
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center" >
-
-            <Button
-                android:id="@+id/main_road"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_analytics_road"
-                android:text="@string/main_road"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-
-            <Button
-                android:id="@+id/main_water"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_analytics_water"
-                android:text="@string/main_water"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-
-            <Button
-                android:id="@+id/main_transportation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_analytics_transport"
-                android:text="@string/main_transportation"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_column="1"
-            android:gravity="center" >
-
-            <Button
-                android:id="@+id/main_electricity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/main_law"
-                android:layout_marginLeft="@dimen/main_button_margin"
-                android:layout_marginRight="@dimen/main_button_margin"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_analytics_electricity"
-                android:text="@string/main_electricity"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-
-            <Button
-                android:id="@+id/main_law"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/main_water"
-                android:layout_marginLeft="@dimen/main_button_margin"
-                android:layout_marginRight="@dimen/main_button_margin"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_analytics_law"
-                android:text="@string/main_law_and_order"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-
-            <Button
-                android:id="@+id/main_sewage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/main_road"
-                android:layout_marginLeft="@dimen/main_button_margin"
-                android:layout_marginRight="@dimen/main_button_margin"
-                android:layout_toRightOf="@+id/main_water"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_analytics_sewage"
-                android:text="@string/main_sewage"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-        </TableRow>
-    </TableLayout>
-
-    <View
-        android:id="@+id/analytics_overlay"
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:background="@android:color/black"
-        android:visibility="invisible" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
 
-    <AutoCompleteTextView
-        android:id="@+id/analytics_autocomplete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/analytics_chooser_container"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/white"
-        android:ems="10"
-        android:paddingBottom="10dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp"
-        android:visibility="gone" >
-    </AutoCompleteTextView>
+        <LinearLayout
+            android:id="@+id/analytics_chooser_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/analytics_chooser_height"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-</RelativeLayout>
+            <RadioGroup
+                android:id="@+id/analytics_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/analytics_overall"
+                    android:layout_width="@dimen/analytics_chooser_width"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/analytics_choose_left"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/analytics_overall"
+                    android:textColor="@color/analytics_radio_text"
+                    android:textOff="@string/analytics_overall"
+                    android:textOn="@string/analytics_overall" />
+
+                <RadioButton
+                    android:id="@+id/analytics_spinner"
+                    android:layout_width="@dimen/analytics_chooser_width"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/analytics_choose_right"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:textColor="@color/analytics_radio_text" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/pie_chart_container"
+            android:layout_width="@dimen/main_pie_size"
+            android:layout_height="@dimen/main_pie_size"
+            android:layout_alignParentLeft="false"
+            android:layout_below="@+id/analytics_chooser_container"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp" >
+
+            <FrameLayout
+                android:id="@+id/pie_chart_holder"
+                android:layout_width="@dimen/main_pie_size"
+                android:layout_height="@dimen/main_pie_size" >
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/main_pie_padding"
+                android:background="@drawable/pie_chart_top"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/issue_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/countdown_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/issue_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/issue_issue"
+                    android:textSize="@dimen/countdown_label_text" />
+
+                <TextView
+                    android:id="@+id/complaint_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/countdown_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/complaint_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/issue_complaint"
+                    android:textSize="@dimen/countdown_label_text" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <TableLayout
+            android:id="@+id/TableLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/pie_chart_container"
+            android:gravity="center" >
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/main_road"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_road"
+                    android:text="@string/main_road"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+
+                <Button
+                    android:id="@+id/main_water"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_water"
+                    android:text="@string/main_water"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+
+                <Button
+                    android:id="@+id/main_transportation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_transport"
+                    android:text="@string/main_transportation"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/main_electricity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/main_law"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_electricity"
+                    android:text="@string/main_electricity"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+
+                <Button
+                    android:id="@+id/main_law"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/main_water"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_law"
+                    android:text="@string/main_law_and_order"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+
+                <Button
+                    android:id="@+id/main_sewage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/main_road"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
+                    android:layout_toRightOf="@+id/main_water"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_sewage"
+                    android:text="@string/main_sewage"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+            </TableRow>
+        </TableLayout>
+
+        <View
+            android:id="@+id/analytics_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.3"
+            android:background="@android:color/black"
+            android:visibility="invisible" />
+
+        <AutoCompleteTextView
+            android:id="@+id/analytics_autocomplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/analytics_chooser_container"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/white"
+            android:ems="10"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:visibility="gone" >
+        </AutoCompleteTextView>
+    </RelativeLayout>
+
+</ScrollView>

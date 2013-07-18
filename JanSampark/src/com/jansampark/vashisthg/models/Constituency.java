@@ -41,27 +41,24 @@ public class Constituency {
 		return location;				
 	}
 	
-	private static String getLocationString( Address address) {
-		
-		
-		String addressLine1 = address.getAddressLine(0);
+	private static String getLocationString( Address address) {						
 		String subLocality = address.getSubLocality();
 		String city = address.getLocality();
 		String state = address.getAdminArea();
-		String country = address.getCountryCode();
+		String country = address.getCountryName();
 		
 		String[] locationFields = new String[6];
 		
-		locationFields[0] = addressLine1;
-		locationFields[1] = subLocality;
-		locationFields[2]	= city;
-		locationFields[3]	= state;
-		locationFields[4] = country;
+		
+		locationFields[0] = subLocality;
+		locationFields[1] = ", " + city;
+		locationFields[2] = ", " + state;
+		locationFields[3] = ", " + country;
 		
 		StringBuffer locationAddress = new StringBuffer();
 		
-		for(int i = 0; i < locationFields.length; i ++) {
-			if(null != locationFields[i]) {
+		for(int i = 0; i < locationFields.length; i++) {
+			if(null != locationFields[i] && !", ".equals(locationFields[i])) {
 				locationAddress.append(locationFields[i]);
 			}
 		}

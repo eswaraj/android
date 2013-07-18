@@ -1,137 +1,138 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:map="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/main_issue_scroll_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity" >
+    android:fillViewport="true" >
 
-    
-
-    <FrameLayout
-        android:id="@+id/main_map_container"
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/main_map_height" >
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity" >
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.jansampark.vashisthg.widget.CustomSupportMapFragment"
+        <FrameLayout
+            android:id="@+id/main_map_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            map:zOrderOnTop="true" />
+            android:layout_height="@dimen/main_map_height" >
 
-        <View
-            android:id="@+id/map_blocker"
+            <fragment
+                android:id="@+id/map"
+                android:name="com.jansampark.vashisthg.widget.CustomSupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                map:zOrderOnTop="true" />
+
+            <View
+                android:id="@+id/map_blocker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/main_select"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/main_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/main_select"
-        android:layout_marginTop="@dimen/main_select_margin_top"
-        android:layout_marginBottom="@dimen/main_select_margin_bottom"
-        android:textSize="@dimen/main_select_text" />
-
-    <TableLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-         >
-
-        <TableRow
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_column="0"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/main_select_margin_bottom"
+            android:layout_marginTop="@dimen/main_select_margin_top"
             android:gravity="center"
-            tools:ignore="ObsoleteLayoutParam" >
+            android:text="@string/main_select"
+            android:textSize="@dimen/main_select_text" />
 
-            <Button
-                android:id="@+id/main_road"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_issue_road"
-                android:text="@string/main_road"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-
-            <Button
-                android:id="@+id/main_water"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_issue_water"
-                android:text="@string/main_water"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-
-            <Button
-                android:id="@+id/main_transportation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_issue_transport"
-                android:text="@string/main_transportation"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-        </TableRow>
-
-        <TableRow
+        <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_column="1"
             android:gravity="center" >
 
-            <Button
-                android:id="@+id/main_electricity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/main_law"
-                android:layout_marginLeft="@dimen/main_button_margin"
-                android:layout_marginRight="@dimen/main_button_margin"
-                
-                android:background="@null"
-                android:drawableTop="@drawable/ic_issue_electricity"
-                android:text="@string/main_electricity"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="0"
+                android:gravity="center"
+                tools:ignore="ObsoleteLayoutParam" >
 
-            <Button
-                android:id="@+id/main_law"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/main_water"
-                android:layout_marginLeft="@dimen/main_button_margin"
-                android:layout_marginRight="@dimen/main_button_margin"
-                
-                android:background="@null"
-                android:drawableTop="@drawable/ic_issue_law"
-                android:text="@string/main_law_and_order"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
+                <Button
+                    android:id="@+id/main_road"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_issue_road"
+                    android:text="@string/main_road"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
 
-            <Button
-                android:id="@+id/main_sewage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/main_road"
-                android:layout_marginLeft="@dimen/main_button_margin"
-                android:layout_marginRight="@dimen/main_button_margin"
-               
-                android:layout_toRightOf="@+id/main_water"
-                android:background="@null"
-                android:drawableTop="@drawable/ic_issue_sewage"
-                android:text="@string/main_sewage"
-                android:textColor="@color/main_text"
-                android:textSize="@dimen/main_button_text" />
-        </TableRow>
-    </TableLayout>
+                <Button
+                    android:id="@+id/main_water"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_issue_water"
+                    android:text="@string/main_water"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
 
-</LinearLayout>
+                <Button
+                    android:id="@+id/main_transportation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_issue_transport"
+                    android:text="@string/main_transportation"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/main_electricity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/main_law"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_issue_electricity"
+                    android:text="@string/main_electricity"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+
+                <Button
+                    android:id="@+id/main_law"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/main_water"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_issue_law"
+                    android:text="@string/main_law_and_order"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+
+                <Button
+                    android:id="@+id/main_sewage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/main_road"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
+                    android:layout_toRightOf="@+id/main_water"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_issue_sewage"
+                    android:text="@string/main_sewage"
+                    android:textColor="@color/main_text"
+                    android:textSize="@dimen/main_button_text" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</ScrollView>
