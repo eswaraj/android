@@ -129,9 +129,12 @@
 	                android:id="@+id/issue_detail_description_edit_text"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
+	                android:minHeight="@dimen/issue_details_edit_text_min_height"
 	                android:layout_centerHorizontal="true"
-	                android:layout_alignParentBottom="true"
+	                android:paddingTop="@dimen/issue_details_edit_text_padding"
+	                android:paddingBottom="@dimen/issue_details_edit_text_padding"
 	                android:layout_below="@+id/issue_detail_descption_edit_btn"
+	                android:background="@drawable/issue_detail_button"
 	                android:textColor="@color/issue_details_red"	                
 	                android:textStyle="bold"
 	                android:inputType="text"
@@ -145,6 +148,7 @@
                     android:textSize="@dimen/issue_details_text"
                     android:layout_alignLeft="@+id/issue_detail_description_edit_text"
                     android:layout_alignTop="@+id/issue_detail_description_edit_text"
+                    
                     android:text="@color/issue_details_red" />
 
             </RelativeLayout>
