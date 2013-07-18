@@ -153,6 +153,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/issue_details_another"
+                        android:onClick="onAnotherComplaintClick"
                         android:text="@string/issue_summary_another_complaint" />
 
                     <Button
@@ -162,6 +163,7 @@
                         android:layout_marginLeft="16dp"
                         android:background="@drawable/issue_details_post"
                         android:text="@string/done"
+                        android:onClick="onDoneClick"
                         android:textColor="@android:color/white" />
                 </LinearLayout>
             </LinearLayout>

@@ -5,10 +5,12 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.Request.Method;
@@ -21,7 +23,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.jansampark.vashisthg.helpers.LruBitmapCache;
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
-import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.models.Constituency;
 
 public class IssueSummaryActivity extends FragmentActivity {
@@ -42,6 +43,8 @@ public class IssueSummaryActivity extends FragmentActivity {
 	TextView systemTV;
 	TextView addressTV;
 	
+	boolean isResumed;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,18 @@ public class IssueSummaryActivity extends FragmentActivity {
 		executeMLAIdRequest();
 		setCategoryAndSystem();
 		fetchAddress();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		isResumed = true;
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		isResumed = false;
 	}
 	
 	@Override
@@ -115,7 +130,6 @@ public class IssueSummaryActivity extends FragmentActivity {
 					Log.d(TAG, "consti_id: " + mlaId);
 					executeMLADetailsRequest(mlaId);
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}        	
             }
@@ -136,14 +150,16 @@ public class IssueSummaryActivity extends FragmentActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
             	try {
-					Log.d(TAG, jsonObject.toString(2));
-					JSONObject node = jsonObject.getJSONArray("nodes").getJSONObject(0).getJSONObject("node");
-					String url = node.getString("image");
-					mlaImageView.setImageUrl(url, imageLoader);					
-					String name = node.getString("mla_name");
-					String constituency = node.getString("constituency");
-					nameTV.setText(name);
-					constituencyTV.setText(constituency);
+            		if(isResumed) {
+						Log.d(TAG, jsonObject.toString(2));
+						JSONObject node = jsonObject.getJSONArray("nodes").getJSONObject(0).getJSONObject("node");
+						String url = node.getString("image");
+						mlaImageView.setImageUrl(url, imageLoader);					
+						String name = node.getString("mla_name");
+						String constituency = node.getString("constituency");
+						nameTV.setText(name);
+						constituencyTV.setText(constituency);
+            		}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}        	
@@ -161,17 +177,35 @@ public class IssueSummaryActivity extends FragmentActivity {
 		
 		@Override
 		public void didReceiveGeoCoding(List<Constituency> locations) {
-			try {
-				addressTV.setText(locations.get(0).getName());
-			} catch( Exception e){
-				addressTV.setText("");
+			if(isResumed) {
+				try {
+					addressTV.setText(locations.get(0).getName());
+				} catch( Exception e){
+					addressTV.setText("");
+				}			
 			}
 		}
 		
 		@Override
 		public void didFailReceivingGeoCoding() {
-			addressTV.setText("");			
+			if(isResumed) {
+				addressTV.setText("");	
+			}
 		}
 	};
 
+	public void onAnotherComplaintClick(View view) {
+		startMainActivity();
+	}
+	
+	public void onDoneClick(View view) {
+		startMainActivity();
+	}
+	
+	public void startMainActivity() {
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
+	
 }
