@@ -16,237 +16,162 @@
         android:id="@+id/issue_details_scroll_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
             android:paddingBottom="@dimen/activity_vertical_margin"
-            android:orientation="vertical" >
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin" >
 
             <TextView
                 android:id="@+id/issue_detail_category_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/issue_details_text_top_margin"
-                android:textSize="@dimen/issue_details_text"
+                android:text="@string/issue_details_category_label"
                 android:textColor="@color/issue_details_dark"
-                
-                android:text="@string/issue_details_category_label" />
+                android:textSize="@dimen/issue_details_text" />
 
             <TextView
                 android:id="@+id/issue_detail_category_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/issue_details_red"
-                android:textStyle="bold"
                 android:textSize="@dimen/issue_details_text"
-                 />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/issue_detail_name_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/issue_details_dark"
                 android:layout_marginTop="@dimen/issue_details_text_top_margin"
-                android:textSize="@dimen/issue_details_text"
-                android:text="@string/issue_details_name_label" />
+                android:text="@string/issue_details_name_label"
+                android:textColor="@color/issue_details_dark"
+                android:textSize="@dimen/issue_details_text" />
 
             <TextView
                 android:id="@+id/issue_detail_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/issue_details_red"
-                android:textStyle="bold"
-                android:textSize="@dimen/issue_details_text" />
+                android:textSize="@dimen/issue_details_text"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/issue_detail_system_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/issue_details_dark"
                 android:layout_marginTop="@dimen/issue_details_text_top_margin"
-                android:textSize="@dimen/issue_details_text"
-                android:text="@string/issue_details_system_label" />
+                android:text="@string/issue_details_system_label"
+                android:textColor="@color/issue_details_dark"
+                android:textSize="@dimen/issue_details_text" />
 
             <TextView
                 android:id="@+id/issue_detail_system_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
+                android:layout_height="wrap_content"
                 android:textColor="@color/issue_details_red"
-                android:textStyle="bold"
-                android:textSize="@dimen/issue_details_text"/>
+                android:textSize="@dimen/issue_details_text"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/issue_details_text_top_margin"
                 android:orientation="vertical" >
+
                 <TextView
-	                android:id="@+id/issue_detail_description_label"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:textColor="@color/issue_details_dark"
-	                android:layout_alignParentLeft="true"
-	                android:layout_alignParentTop="true"
-	                android:textSize="@dimen/issue_details_text"
-	                android:text="@string/issue_details_description_label" />
-                
-                 
+                    android:id="@+id/issue_detail_description_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/issue_details_description_label"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_details_text" />
 
                 <Button
                     android:id="@+id/issue_detail_descption_edit_btn"
                     android:layout_width="@dimen/issue_details_edit_description_width"
                     android:layout_height="@dimen/issue_details_edit_description_height"
-                    android:gravity="center"
                     android:layout_alignParentRight="true"
-	                android:layout_alignParentTop="true"
-	                android:background="@drawable/issue_detail_button"
-	                android:focusable="true"
-	                android:focusableInTouchMode="true"
-	                android:drawableLeft="@drawable/ic_edit"
-	                android:textColor="@color/issue_details_dark"
-	                android:textSize="@dimen/issue_details_small_text"
-	                android:drawablePadding="@dimen/issue_details_edit_description_left_drawable_padding"
-                    android:text="@string/issue_details_edit_description_button" /> 
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/issue_detail_button"
+                    android:drawableLeft="@drawable/ic_edit"
+                    android:drawablePadding="@dimen/issue_details_edit_description_left_drawable_padding"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:text="@string/issue_details_edit_description_button"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_details_small_text" />
+
                 <Button
                     android:id="@+id/issue_detail_descption_add_btn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/issue_details_add_desctiption_height"
-                    android:gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/issue_detail_description_label"
                     android:layout_centerHorizontal="true"
-	                android:layout_alignParentBottom="true"
-	                android:layout_below="@+id/issue_detail_description_label"
-	                android:paddingLeft="@dimen/issue_details_edit_description_padding"
-	                android:paddingRight="@dimen/issue_details_edit_description_padding"
-	                android:background="@drawable/issue_detail_button"
-	                android:drawableRight="@drawable/ic_plus"
-	                android:textColor="@color/issue_details_dark"
-	                android:textSize="@dimen/issue_details_text"
-	               
-                    android:text="@string/issue_details_add_description_button" />
+                    android:background="@drawable/issue_detail_button"
+                    android:drawableRight="@drawable/ic_plus"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/issue_details_edit_description_padding"
+                    android:paddingRight="@dimen/issue_details_edit_description_padding"
+                    android:text="@string/issue_details_add_description_button"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_details_text" />
+
                 <EditText
-	                android:id="@+id/issue_detail_description_edit_text"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:minHeight="@dimen/issue_details_edit_text_min_height"
-	                android:layout_centerHorizontal="true"
-	                android:paddingTop="@dimen/issue_details_edit_text_padding"
-	                android:paddingBottom="@dimen/issue_details_edit_text_padding"
-	                android:layout_below="@+id/issue_detail_descption_edit_btn"
-	                android:background="@drawable/issue_detail_button"
-	                android:textColor="@color/issue_details_red"	                
-	                android:textStyle="bold"
-	                android:inputType="text"
-	                android:textSize="@dimen/issue_details_text" />
+                    android:id="@+id/issue_detail_description_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/issue_detail_descption_edit_btn"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/issue_detail_button"
+                    android:inputType="text"
+                    android:minHeight="@dimen/issue_details_edit_text_min_height"
+                    android:paddingBottom="@dimen/issue_details_edit_text_padding"
+                    android:paddingTop="@dimen/issue_details_edit_text_padding"
+                    android:textColor="@color/issue_details_red"
+                    android:textSize="@dimen/issue_details_text"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/issue_detail_description_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/issue_details_text"
                     android:layout_alignLeft="@+id/issue_detail_description_edit_text"
                     android:layout_alignTop="@+id/issue_detail_description_edit_text"
-                    
-                    android:text="@color/issue_details_red" />
-
+                    android:text="@color/issue_details_red"
+                    android:textSize="@dimen/issue_details_text"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/take_photo_container"
+            <include
+                android:id="@+id/take_photo_container_ref"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/issue_details_padding"
-                android:gravity="center" >
-                <Button 
-                    android:id="@+id/take_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="takePhoto"
-                    android:background="@null"
-                    android:drawableBottom="@drawable/issue_details_take"
-                    android:drawablePadding="@dimen/issue_details_take_attach_drawable_padding"
-                    android:textColor="@color/issue_details_dark"
-                    android:textSize="@dimen/issue_details_text"
-                    android:text="@string/issue_details_take_label"/>
-                <TextView 
-                    android:layout_width="@dimen/issue_details_OR_text_width"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/issue_details_or_label"/>
-                <Button
-                    android:id="@+id/attach_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="choosePhoto"
-                    android:background="@null"
-                    android:textColor="@color/issue_details_dark"
-                    android:textSize="@dimen/issue_details_text"
-                    android:drawableBottom="@drawable/issue_details_attach"
-                    android:drawablePadding="@dimen/issue_details_take_attach_drawable_padding"
-                    android:text="@string/issue_details_attach_label" />
-            </LinearLayout>
+                layout="@layout/take_photo_container" />
 
-            <RelativeLayout
-                android:id="@+id/photo_taken_container"
+            <include
+                android:id="@+id/photo_taken_container_ref"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/issue_details_retake_container_height"
-                android:padding="@dimen/issue_details_padding" >
+                layout="@layout/photo_taken_container" />
 
-                <ImageView
-                    android:id="@+id/chosen_pic"
-                    android:layout_width="@dimen/issue_details_issue_image_size"
-                    android:layout_height="@dimen/issue_details_issue_image_size"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/issue_details_image_container"
-                    android:cropToPadding="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/banner_electricity" />
-                
-                <Button
-                    android:id="@+id/remove_pic"
-                    android:layout_width="@dimen/issue_details_retake_description_width"
-                    android:layout_height="@dimen/issue_details_retake_description_height"
-                    android:onClick="removePhoto"
-                    android:background="@drawable/issue_detail_button"
-                    android:layout_alignParentRight="true"
-                    
-                    android:textSize="@dimen/issue_details_small_text"
-                     android:textColor="@color/issue_details_red"
-                    
-                    android:drawableLeft="@drawable/ic_delete"
-                    android:drawablePadding="8dp"
-                    android:text="@string/issue_details_remove_label"/>
-                
-				<Button 
-                    android:id="@+id/retake_photo"
-                    android:layout_width="@dimen/issue_details_retake_description_width"
-                    android:layout_height="@dimen/issue_details_retake_description_height"
-                    android:onClick="retakePhoto"
-                    android:background="@drawable/issue_detail_button"
-                    
-                    android:layout_alignParentRight="true"
-                    android:textSize="@dimen/issue_details_small_text"
-                    android:textColor="@color/issue_details_dark"
-                    android:layout_alignParentBottom="true"
-                    android:drawableLeft="@drawable/ic_retake"
-                    android:drawablePadding="8dp"
-                    android:text="@string/issue_details_retake_label"/>
-            </RelativeLayout>
-			<Button
-			        android:id="@+id/issue_details_post"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_gravity="center_horizontal"
-			        android:onClick="onPostClick"
-			        android:background="@drawable/post_button"
-			        android:textColor="@android:color/white"
-			        android:text="@string/issue_details_post" />
+            <Button
+                android:id="@+id/issue_details_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/post_button"
+                android:onClick="onPostClick"
+                android:text="@string/issue_details_post"
+                android:textColor="@android:color/white" />
         </LinearLayout>
     </ScrollView>
-
-    
 
 </LinearLayout>

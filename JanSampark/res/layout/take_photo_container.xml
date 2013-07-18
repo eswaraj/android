@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/take_photo_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:padding="@dimen/issue_details_padding" >
+
+    <Button
+        android:id="@+id/take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableBottom="@drawable/issue_details_take"
+        android:drawablePadding="@dimen/issue_details_take_attach_drawable_padding"
+        android:onClick="takePhoto"
+        android:text="@string/issue_details_take_label"
+        android:textColor="@color/issue_details_dark"
+        android:textSize="@dimen/issue_details_text" />
+
+    <TextView
+        android:layout_width="@dimen/issue_details_OR_text_width"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/issue_details_or_label" />
+
+    <Button
+        android:id="@+id/attach_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:drawableBottom="@drawable/issue_details_attach"
+        android:drawablePadding="@dimen/issue_details_take_attach_drawable_padding"
+        android:onClick="choosePhoto"
+        android:text="@string/issue_details_attach_label"
+        android:textColor="@color/issue_details_dark"
+        android:textSize="@dimen/issue_details_text" />
+
+</LinearLayout>

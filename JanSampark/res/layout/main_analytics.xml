@@ -120,6 +120,8 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:drawableTop="@drawable/ic_analytics_road"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
                     android:text="@string/main_road"
                     android:textColor="@color/main_text"
                     android:textSize="@dimen/main_button_text" />
@@ -130,6 +132,8 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:drawableTop="@drawable/ic_analytics_water"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
                     android:text="@string/main_water"
                     android:textColor="@color/main_text"
                     android:textSize="@dimen/main_button_text" />
@@ -140,6 +144,8 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:drawableTop="@drawable/ic_analytics_transport"
+                    android:layout_marginLeft="@dimen/main_button_margin"
+                    android:layout_marginRight="@dimen/main_button_margin"
                     android:text="@string/main_transportation"
                     android:textColor="@color/main_text"
                     android:textSize="@dimen/main_button_text" />

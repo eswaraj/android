@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/take_photo_container" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/issue_details_retake_container_height"
+        layout="@layout/photo_taken_container" />
+
+</LinearLayout>

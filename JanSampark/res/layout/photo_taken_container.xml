@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/photo_taken_container"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/issue_details_retake_container_height"
+    android:padding="@dimen/issue_details_padding" >
+
+    <ImageView
+        android:id="@+id/chosen_pic"
+        android:layout_width="@dimen/issue_details_issue_image_size"
+        android:layout_height="@dimen/issue_details_issue_image_size"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/issue_details_image_container"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/banner_electricity" />
+
+    <Button
+        android:id="@+id/remove_pic"
+        android:layout_width="@dimen/issue_details_retake_description_width"
+        android:layout_height="@dimen/issue_details_retake_description_height"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/issue_detail_button"
+        android:drawableLeft="@drawable/ic_delete"
+        android:drawablePadding="8dp"
+        android:onClick="removePhoto"
+        android:text="@string/issue_details_remove_label"
+        android:textColor="@color/issue_details_red"
+        android:textSize="@dimen/issue_details_small_text" />
+
+    <Button
+        android:id="@+id/retake_photo"
+        android:layout_width="@dimen/issue_details_retake_description_width"
+        android:layout_height="@dimen/issue_details_retake_description_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/issue_detail_button"
+        android:drawableLeft="@drawable/ic_retake"
+        android:drawablePadding="8dp"
+        android:onClick="retakePhoto"
+        android:text="@string/issue_details_retake_label"
+        android:textColor="@color/issue_details_dark"
+        android:textSize="@dimen/issue_details_small_text" />
+
+</RelativeLayout>

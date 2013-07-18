@@ -61,6 +61,8 @@ public class MainIssueFragment extends Fragment implements LocationListener{
         }
     }
 	
+	
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -76,7 +78,6 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 		lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 		showLocation();
 		initButtonListeners();
-		initTitleBar();
 	}	
 	
 	@Override
@@ -99,9 +100,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 		getActivity().findViewById(R.id.main_water).setOnClickListener(buttonListener);
 	}
 	
-	private void initTitleBar() {
-		((ImageButton)getActivity().findViewById(R.id.title_bar_left_button)).setImageResource(R.drawable.ic_info);
-	}
+	
 
 	public void initMap(CustomSupportMapFragment mapFragment) {
 		gMap = mapFragment.getMap();
@@ -112,7 +111,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 		Criteria criteria = new Criteria();
 		String provider = locationManager.getBestProvider(criteria,true);
 		
-		locationManager.requestLocationUpdates(provider, 20000, 0,this);
+		
 		
 		
 		UiSettings uiSettings = gMap.getUiSettings();

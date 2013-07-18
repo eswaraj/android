@@ -1,5 +1,8 @@
 package com.jansampark.vashisthg;
 
+import com.jansampark.vashisthg.helpers.TitleBarHelper;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,6 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 public class MainActivity extends FragmentActivity  {
@@ -18,7 +23,8 @@ public class MainActivity extends FragmentActivity  {
     
 	private ViewPager viewPager;
 	private RadioGroup footerTab;
-
+	private ViewGroup titleBar;
+	TitleBarHelper titleBarHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +32,30 @@ public class MainActivity extends FragmentActivity  {
         setContentView(R.layout.activity_main);
         viewPager = (ViewPager) findViewById(R.id.main_pager);
         footerTab = (RadioGroup) findViewById(R.id.main_tabs);
+        titleBar = (ViewGroup) findViewById(R.id.main_title_bar);
                 
         if(null == savedInstanceState) {
         	initFragments();
         }
         initViewPagingAndTabs();
+        setTitleBar();
     }
+    
+    private void setTitleBar() {
+    	titleBarHelper = new TitleBarHelper();
+    	titleBarHelper.setTitleBar(titleBar);
+    	titleBarHelper.setLeftButtonIcon(R.drawable.ic_info);
+    	titleBarHelper.setRightButtonIcon(R.drawable.ic_edit);
+    	titleBarHelper.setOnRightButtonClick(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(MainActivity.this, UserImageActivity.class));
+				
+			}
+		});
+    }
+    
     
     private void initFragments() {
 		analyticsFragment = MainAnalyticsFragment.newInstance(null);

@@ -80,6 +80,12 @@
             >
         </activity>
         <activity
+            android:name="com.jansampark.vashisthg.UserImageActivity"
+            android:label="@string/title_activity_issue_details"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity
             android:name="com.jansampark.vashisthg.IssueActivity"
             android:label="@string/title_activity_issue"
             android:screenOrientation="portrait"

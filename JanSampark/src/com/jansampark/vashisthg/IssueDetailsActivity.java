@@ -139,8 +139,8 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	}
 	
 	private void setIssueImageViews() {
-		takeImageContainer = (ViewGroup) findViewById(R.id.take_photo_container);
-		imageTakenContainer = (ViewGroup) findViewById(R.id.photo_taken_container);	
+		takeImageContainer = (ViewGroup) findViewById(R.id.take_photo_container_ref);
+		imageTakenContainer = (ViewGroup) findViewById(R.id.photo_taken_container_ref);	
 		issueImageView = (ImageView)  findViewById(R.id.chosen_pic);		
 		displayImageIfAvailable();
 	}
