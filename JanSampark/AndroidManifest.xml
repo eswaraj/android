@@ -53,6 +53,7 @@
         <activity
             android:name="com.jansampark.vashisthg.SplashActivity"
             android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,21 +64,25 @@
         <activity
             android:name="com.jansampark.vashisthg.MainActivity"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
              >
         </activity>
         <activity
             android:name="com.jansampark.vashisthg.IssueSummaryActivity"
             android:label="@string/title_activity_issue_summary"
+            android:screenOrientation="portrait"
              >
         </activity>
         <activity
             android:name="com.jansampark.vashisthg.IssueDetailsActivity"
             android:label="@string/title_activity_issue_details"
+            android:screenOrientation="portrait"
             >
         </activity>
         <activity
             android:name="com.jansampark.vashisthg.IssueActivity"
             android:label="@string/title_activity_issue"
+            android:screenOrientation="portrait"
             android:parentActivityName="MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -19,19 +19,19 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
 import com.jansampark.vashisthg.R;
-import com.jansampark.vashisthg.models.Location;
+import com.jansampark.vashisthg.models.Constituency;
 
 public class LocationAutoCompleteAdapter extends BaseAdapter implements Filterable {
 
 	private LayoutInflater inflater;
-	private List<Location> locations;
-	private List<Location> masterLocationList;
+	private List<Constituency> locations;
+	private List<Constituency> masterLocationList;
 	private String searchStr;
 
-	public LocationAutoCompleteAdapter(Context context, List<Location> locations) {
+	public LocationAutoCompleteAdapter(Context context, List<Constituency> locations) {
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		masterLocationList = locations;
-		this.locations = new ArrayList<Location>(masterLocationList);
+		this.locations = new ArrayList<Constituency>(masterLocationList);
 	}
 
 	@Override
@@ -81,16 +81,16 @@ public class LocationAutoCompleteAdapter extends BaseAdapter implements Filterab
 
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			locations = (List<Location>) results.values;
+			locations = (List<Constituency>) results.values;
 			notifyDataSetChanged();
 		}
 
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
-			List<Location> filteredList = new ArrayList<Location>(masterLocationList);
+			List<Constituency> filteredList = new ArrayList<Constituency>(masterLocationList);
 			searchStr = TextUtils.isEmpty(constraint) ? "" : constraint.toString().toLowerCase(Locale.US);
-			for(Location loc : masterLocationList) {
+			for(Constituency loc : masterLocationList) {
 				if(!loc.getName().toLowerCase(Locale.US).contains(searchStr)) {
 					filteredList.remove(loc);
 				}

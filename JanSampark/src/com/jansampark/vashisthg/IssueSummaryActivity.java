@@ -1,5 +1,7 @@
 package com.jansampark.vashisthg;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +20,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.jansampark.vashisthg.helpers.LruBitmapCache;
+import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.helpers.Utils;
+import com.jansampark.vashisthg.models.Constituency;
 
 public class IssueSummaryActivity extends FragmentActivity {
 	private static final String TAG = "SUMMARY";
@@ -56,6 +60,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 		imageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(4 * 1024 * 1024));
 		executeMLAIdRequest();
 		setCategoryAndSystem();
+		fetchAddress();
 	}
 	
 	@Override
@@ -71,6 +76,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 		constituencyTV = (TextView) findViewById(R.id.issue_summary_mla_constituency);
 		categoryTV = (TextView) findViewById(R.id.issue_summary_category);
 		systemTV = (TextView) findViewById(R.id.issue_summary_system);
+		addressTV = (TextView) findViewById(R.id.issue_summary_address);
 	}
 	
 	private void setCategoryAndSystem() {
@@ -144,5 +150,28 @@ public class IssueSummaryActivity extends FragmentActivity {
             }
         };
     }	
+	
+	
+	private void fetchAddress() {
+		ReverseGeoCodingTask geocodingTask = ReverseGeoCodingTask.newInstance(this, geoCodingListener, location);
+		geocodingTask.execute();
+	}
+	
+	private ReverseGeoCodingTask.GeoCodingTaskListener geoCodingListener = new ReverseGeoCodingTask.GeoCodingTaskListener() {
+		
+		@Override
+		public void didReceiveGeoCoding(List<Constituency> locations) {
+			try {
+				addressTV.setText(locations.get(0).getName());
+			} catch( Exception e){
+				addressTV.setText("");
+			}
+		}
+		
+		@Override
+		public void didFailReceivingGeoCoding() {
+			addressTV.setText("");			
+		}
+	};
 
 }

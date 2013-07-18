@@ -30,7 +30,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
 import com.jansampark.vashisthg.helpers.Utils;
-import com.jansampark.vashisthg.models.Location;
+import com.jansampark.vashisthg.models.Constituency;
 import com.jansampark.vashisthg.widget.PieChartView;
 
 public class MainAnalyticsFragment extends Fragment {
@@ -44,8 +44,8 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	private AutoCompleteTextView autoCompleteTextView;
 	private View overlay;
-	private List<Location> locations;
-	private Location lastSelectedLocation;
+	private List<Constituency> locations;
+	private Constituency lastSelectedLocation;
 	//Spinner spinner;
 
 	int[] vals;
@@ -72,7 +72,7 @@ public class MainAnalyticsFragment extends Fragment {
 		InputStream inputStream = getActivity().getAssets().open("centroid.txt");
 		BufferedReader f = new BufferedReader(new InputStreamReader(inputStream));
 		String line;
-		locations = new ArrayList<Location>();
+		locations = new ArrayList<Constituency>();
 		while ((line = f.readLine()) != null) {
 			String row[] = line.split(",");
 			parseRow(row);
@@ -80,7 +80,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void parseRow(String[] row) {
-		Location loc = new Location();
+		Constituency loc = new Constituency();
 		loc.setName(row[0]);
 		loc.setID(Integer.parseInt(row[1].trim()));
 		loc.setLatLong(new LatLng(Double.parseDouble(row[2]), Double.parseDouble(row[3])));
@@ -240,14 +240,14 @@ public class MainAnalyticsFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				disableAutoComplete();
-				Location loc = (Location) parent.getAdapter().getItem(position);
+				Constituency loc = (Constituency) parent.getAdapter().getItem(position);
 				setLocation(loc);
 			}
 		});
 		
 	}
 
-	private void setLocation(Location loc) {
+	private void setLocation(Constituency loc) {
 		lastSelectedLocation = loc;
 		autoCompleteButton.setText(loc.getName());
 	}
