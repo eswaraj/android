@@ -166,10 +166,14 @@
                     android:onClick="takePhoto"
                     android:background="@null"
                     android:drawableBottom="@drawable/issue_details_take"
+                    android:drawablePadding="@dimen/issue_details_take_attach_drawable_padding"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_details_text"
                     android:text="@string/issue_details_take_label"/>
                 <TextView 
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/issue_details_OR_text_width"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/issue_details_or_label"/>
                 <Button
                     android:id="@+id/attach_photo"
@@ -177,7 +181,10 @@
                     android:layout_height="wrap_content"
                     android:onClick="choosePhoto"
                     android:background="@null"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_details_text"
                     android:drawableBottom="@drawable/issue_details_attach"
+                    android:drawablePadding="@dimen/issue_details_take_attach_drawable_padding"
                     android:text="@string/issue_details_attach_label" />
             </LinearLayout>
 

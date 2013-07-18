@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
+import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.models.Location;
 import com.jansampark.vashisthg.widget.PieChartView;
 
@@ -215,7 +216,8 @@ public class MainAnalyticsFragment extends Fragment {
 		
 	}
 
-	private void disableAutoComplete() {
+	private void disableAutoComplete() {        
+        Utils.hideKeyboard(getActivity(), autoCompleteTextView);
 		autoCompleteTextView.setVisibility(View.GONE);
 		overlay.setVisibility(View.INVISIBLE);
 	}
