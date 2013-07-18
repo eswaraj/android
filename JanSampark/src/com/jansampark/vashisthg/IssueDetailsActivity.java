@@ -206,10 +206,9 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		
 		editDesctiption.setVisibility(View.INVISIBLE);
 		descriptionTextView.setVisibility(View.INVISIBLE);
-		descriptionET.requestFocus();
-		
-		Utils.showKeyboard(this, descriptionET);
+		descriptionET.requestFocus();		
 		descriptionET.setVisibility(View.VISIBLE);
+		Utils.showKeyboard(this, descriptionET);
 	}	
 	private void setListenerToDescriptionET() {
 		descriptionET.setOnEditorActionListener(new OnEditorActionListener() {

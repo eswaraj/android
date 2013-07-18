@@ -241,7 +241,7 @@
 			        android:layout_height="wrap_content"
 			        android:layout_gravity="center_horizontal"
 			        android:onClick="onPostClick"
-			        android:background="@drawable/issue_details_post"
+			        android:background="@drawable/post_button"
 			        android:textColor="@android:color/white"
 			        android:text="@string/issue_details_post" />
         </LinearLayout>
