@@ -2,6 +2,7 @@ package com.jansampark.vashisthg;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,12 +16,14 @@ import android.widget.TextView;
 public class IssueActivity extends Activity {
 
     public static final String EXTRA_ISSUE = "issue";
+    public static final String EXTRA_LOCATION = "location";
     
     private View issueBanner;
     private TextView issueNameTV;
     private ListView issueList;
 
     private ISSUE_CATEGORY issue;
+    private Location location;
     IssueAdapter adapter ;
 
     @Override
@@ -30,8 +33,10 @@ public class IssueActivity extends Activity {
         setViews();
         if(null == savedInstanceState) {
             issue = (ISSUE_CATEGORY) getIntent().getSerializableExtra(EXTRA_ISSUE);
+            location = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
         } else {
         	issue = (ISSUE_CATEGORY) savedInstanceState.getSerializable(EXTRA_ISSUE);
+        	location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
         }
 
         setIssueBannerAndText();
@@ -90,6 +95,7 @@ public class IssueActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
     	super.onSaveInstanceState(outState);
     	outState.putSerializable(EXTRA_ISSUE, issue);
+    	outState.putParcelable(EXTRA_LOCATION, location);
     }
     
     private OnItemClickListener listItemClickListener = new OnItemClickListener() {
@@ -98,6 +104,7 @@ public class IssueActivity extends Activity {
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 			Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
 			intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position));
+			intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
 			startActivity(intent);			
 		}
 	};

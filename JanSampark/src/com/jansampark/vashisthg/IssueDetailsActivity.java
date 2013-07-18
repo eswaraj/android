@@ -44,6 +44,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	private static final String TAG = "IssueDetail";
 
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
+	public static final String EXTRA_LOCATION = "location";
 	private IssueItem issueItem;
 	
 	private TextView categoryTV;
@@ -74,9 +75,10 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 
 		if (null == savedInstanceState) {
 			issueItem = (IssueItem) getIntent().getParcelableExtra(EXTRA_ISSUE_ITEM);
-			
+			lastKnownLocation = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
 		} else {
-			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);			
+			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);		
+			lastKnownLocation = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
 		}
 		initLocation();
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -102,6 +104,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putParcelable(EXTRA_ISSUE_ITEM, issueItem);
+		outState.putParcelable(EXTRA_LOCATION, lastKnownLocation);
 		cameraHelper.onSaveInstanceState(outState);
 	}
 	
@@ -316,6 +319,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
             	Log.d("details", "response: " + response);
             	Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
             	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, issueItem);
+            	intent.putExtra(IssueSummaryActivity.EXTRA_LOCATION, lastKnownLocation);
             	startActivity(intent);
             }
         };

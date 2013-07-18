@@ -117,11 +117,11 @@ public class Utils {
 	}
 	
 	
-	public static  void setLastKnownLocation(Application application, Location lastKnownLocation) {
-		((JanSamparkApplication) application).setLastKnownLocation(lastKnownLocation);
-	}
-	
-	public static Location getLastKnownLocation(Application application) {
-		return ((JanSamparkApplication) application).getLastKnownLocation();
-	}
+//	public static  void setLastKnownLocation(Application application, Location lastKnownLocation) {
+//		((JanSamparkApplication) application).setLastKnownLocation(lastKnownLocation);
+//	}
+//	
+//	public static Location getLastKnownLocation(Application application) {
+//		return ((JanSamparkApplication) application).getLastKnownLocation();
+//	}
 }

@@ -1,5 +1,6 @@
 package com.jansampark.vashisthg;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,6 +8,7 @@ public class IssueItem implements Parcelable {
 	private int issueCategory;	
 	private int templateId;
 	private String issueName;
+
 	
 	public IssueItem() {
 		
@@ -39,6 +41,8 @@ public class IssueItem implements Parcelable {
 	public void setIssueCategory(int issueId) {
 		this.issueCategory = issueId;
 	}
+	
+	
 
 	@Override
 	public int describeContents() {

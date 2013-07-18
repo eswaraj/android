@@ -24,7 +24,9 @@ public class IssueSummaryActivity extends FragmentActivity {
 	private static final String TAG = "SUMMARY";
 	
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
+	public static final String EXTRA_LOCATION = "location";
 	private IssueItem issueItem;
+	private Location location;
 	
 	private RequestQueue mRequestQueue;
 	ImageLoader imageLoader;
@@ -45,8 +47,10 @@ public class IssueSummaryActivity extends FragmentActivity {
 
 		if (null == savedInstanceState) {
 			issueItem = (IssueItem) getIntent().getParcelableExtra(EXTRA_ISSUE_ITEM);
+			location = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
 		} else {
 			issueItem = (IssueItem) savedInstanceState.getSerializable(EXTRA_ISSUE_ITEM);
+			location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
 		}
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		imageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(4 * 1024 * 1024));
@@ -58,6 +62,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putParcelable(EXTRA_ISSUE_ITEM, issueItem);
+		outState.putParcelable(EXTRA_LOCATION, location);
 	}
 	
 	private void setView() {
@@ -74,7 +79,6 @@ public class IssueSummaryActivity extends FragmentActivity {
 	}
 	
 	private void executeMLAIdRequest()  {	
-		Location location = Utils.getLastKnownLocation(getApplication()); 
 		double lat = location.getLatitude();
 		double lon = location.getLongitude();
 		String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;		

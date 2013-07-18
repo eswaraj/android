@@ -34,8 +34,11 @@ public class MainIssueFragment extends Fragment implements LocationListener{
     private LocationManager locationManager;
     private LocationProvider locationProvider;
     
+    private static final String SAVED_LOCATION = "SAVED_LOCATION";
+    
     private GoogleMap gMap = null;
     boolean isResumed;
+    Location lastKnownLocation;
     
     
     public static MainIssueFragment newInstance(Bundle args) {
@@ -51,8 +54,18 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);                  
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);          
+        
+        if(null != savedInstanceState) {
+        	lastKnownLocation = savedInstanceState.getParcelable(SAVED_LOCATION);
+        }
     }
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putParcelable(SAVED_LOCATION, lastKnownLocation);
+	}
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -60,7 +73,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     
 		
 		String locationProvider = LocationManager.NETWORK_PROVIDER;
-		Utils.setLastKnownLocation(getActivity().getApplication(), locationManager.getLastKnownLocation(locationProvider));
+		lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
 		showLocation();
 		initButtonListeners();
 		initTitleBar();
@@ -128,7 +141,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	
 	    
 	private void showLocation() {
-		Location location = Utils.getLastKnownLocation(getActivity().getApplication());		
+		Location location = lastKnownLocation;
 		if(null != location) {
 			LatLng lastKnownLatLng = new LatLng(location.getLatitude(),
 					location.getLongitude());
@@ -167,6 +180,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	private void openIssueActivity(ISSUE_CATEGORY issue) {
 		Intent intent = new Intent(getActivity(), IssueActivity.class);
 		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
+		intent.putExtra(IssueActivity.EXTRA_LOCATION, lastKnownLocation);
 		startActivity(intent);
 	}
 	android.view.View.OnClickListener buttonListener = new OnClickListener() {
@@ -205,7 +219,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	@Override
 	public void onLocationChanged(Location location) {
 		if(isResumed) {
-			Utils.setLastKnownLocation(getActivity().getApplication(), location);
+			lastKnownLocation =  location;
 			showLocation();
 		}
 		locationManager.removeUpdates((android.location.LocationListener) this);
