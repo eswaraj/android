@@ -19,7 +19,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.jansampark.vashisthg.helpers.LruBitmapCache;
 import com.jansampark.vashisthg.helpers.Utils;
-import com.jansampark.vashisthg.volley.StringRequestWithHeaderAndParams;
 
 public class IssueSummaryActivity extends FragmentActivity {
 	private static final String TAG = "SUMMARY";
@@ -78,8 +77,10 @@ public class IssueSummaryActivity extends FragmentActivity {
 		Location location = Utils.getLastKnownLocation(getApplication()); 
 		double lat = location.getLatitude();
 		double lon = location.getLongitude();
-		String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "long=" + lon;		
+		String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;		
 		JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLAIDReqSuccessListener(), createMyReqErrorListener());
+		
+		Log.d(TAG, "url: " + request.getUrl());
 		mRequestQueue.add(request);
 	}
 	
@@ -99,6 +100,7 @@ public class IssueSummaryActivity extends FragmentActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
             	try {
+            		Log.d(TAG, jsonObject.toString(1));
 					String mlaId = jsonObject.getString("consti_id");
 					Log.d(TAG, "consti_id: " + mlaId);
 					executeMLADetailsRequest(mlaId);
