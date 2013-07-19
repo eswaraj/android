@@ -108,7 +108,7 @@
                 android:gravity="center" >
 
                 <Button
-                    android:id="@+id/main_road"
+                    android:id="@+id/main_analytics_road"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/main_button_margin"
@@ -120,7 +120,7 @@
                     android:textSize="@dimen/main_button_text" />
 
                 <Button
-                    android:id="@+id/main_water"
+                    android:id="@+id/main_analytics_water"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/main_button_margin"
@@ -132,7 +132,7 @@
                     android:textSize="@dimen/main_button_text" />
 
                 <Button
-                    android:id="@+id/main_transportation"
+                    android:id="@+id/main_analytics_transportation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/main_button_margin"
@@ -150,7 +150,7 @@
                 android:gravity="center" >
 
                 <Button
-                    android:id="@+id/main_electricity"
+                    android:id="@+id/main_analytics_electricity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/main_button_margin"
@@ -162,7 +162,7 @@
                     android:textSize="@dimen/main_button_text" />
 
                 <Button
-                    android:id="@+id/main_law"
+                    android:id="@+id/main_analytics_law"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/main_button_margin"
@@ -174,7 +174,7 @@
                     android:textSize="@dimen/main_button_text" />
 
                 <Button
-                    android:id="@+id/main_sewage"
+                    android:id="@+id/main_analytics_sewage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/main_button_margin"

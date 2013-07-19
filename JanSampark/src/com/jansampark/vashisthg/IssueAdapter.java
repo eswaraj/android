@@ -22,18 +22,23 @@ public class IssueAdapter extends BaseAdapter {
 		View colorView;
 	}
 	
-	public static IssueAdapter newInstance(Context context, ISSUE_CATEGORY issue) {
+	private List<IssueItem> issueItems;
+	private Context context;
+	private LayoutInflater inflater;
+	private int layoutId;
+	
+	public static IssueAdapter newInstance(Context context, ISSUE_CATEGORY issue, int layoutId) {
 		IssueAdapter adapter = new IssueAdapter();
 		adapter.issueItems = IssueFactory.getIssuesFor(context, issue);
 		adapter.context = context;
 		adapter.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		adapter.layoutId = layoutId;
 		return adapter;		
 	}
 	
 	
-	private List<IssueItem> issueItems;
-	private Context context;
-	private LayoutInflater inflater;
+
+	
 	
 	private IssueAdapter() {
 		
@@ -60,7 +65,7 @@ public class IssueAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if(null == convertView) {
-			convertView = inflater.inflate(R.layout.issue_row, parent, false);
+			convertView = inflater.inflate(layoutId, parent, false);
 			holder = new ViewHolder();
 			
 			holder.title = (TextView) convertView.findViewById(R.id.issue_row_title);

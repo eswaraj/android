@@ -24,10 +24,18 @@ public class IssueActivity extends Activity {
     private View issueBanner;
     private TextView issueNameTV;
     private ListView issueList;
+    private TextView numIssuesTV;
+    private TextView numViewsTV;
+    
 
     private ISSUE_CATEGORY issue;
     private Location location;
-    IssueAdapter adapter ;
+    IssueAdapter adapter;
+    
+    
+    public static final String EXTRA_IS_ANALYTICS = "isAnalytics";
+    public boolean isAnalytics;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +43,25 @@ public class IssueActivity extends Activity {
         setContentView(R.layout.activity_issue);
         setViews();
         if(null == savedInstanceState) {
+        	isAnalytics = getIntent().getBooleanExtra(EXTRA_IS_ANALYTICS, false);
             issue = (ISSUE_CATEGORY) getIntent().getSerializableExtra(EXTRA_ISSUE);
             location = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
         } else {
+        	isAnalytics = savedInstanceState.getBoolean(EXTRA_IS_ANALYTICS);
         	issue = (ISSUE_CATEGORY) savedInstanceState.getSerializable(EXTRA_ISSUE);
         	location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
         }
 
         setIssueBannerAndText();
         setListView();
+        setNumTV();
     }
     
     private void setViews() {
     	issueBanner = findViewById(R.id.issue_banner);
     	issueNameTV = (TextView) findViewById(R.id.issue_name);
+    	numIssuesTV = (TextView) findViewById(R.id.issue_issues);
+    	numViewsTV = (TextView) findViewById(R.id.issue_views);
     }
 
     private void setIssueBannerAndText() {
@@ -89,26 +102,44 @@ public class IssueActivity extends Activity {
     
     private void setListView() {
     	issueList = (ListView) findViewById(R.id.issue_list);
-    	adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue);
+    	if(isAnalytics) {
+    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_analytics_row);
+    	} else {
+    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_row);
+    	}
     	issueList.setAdapter(adapter);
     	issueList.setOnItemClickListener(listItemClickListener);
     }
+    private void setNumTV() {
+    	if(isAnalytics) {
+    		
+    	} else {
+    		numIssuesTV.setText(String.format(getResources().getString(R.string.issue_issues), adapter.getCount()));
+    		numIssuesTV.setVisibility(View.VISIBLE);
+    		numViewsTV.setVisibility(View.INVISIBLE);
+    	}
+    	
+    }
+    
     
     @Override
     protected void onSaveInstanceState(Bundle outState) {
     	super.onSaveInstanceState(outState);
     	outState.putSerializable(EXTRA_ISSUE, issue);
     	outState.putParcelable(EXTRA_LOCATION, location);
+    	outState.putBoolean(EXTRA_IS_ANALYTICS, isAnalytics);
     }
     
     private OnItemClickListener listItemClickListener = new OnItemClickListener() {
 
 		@Override
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-			Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
-			intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position));
-			intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
-			startActivity(intent);			
+			if(!isAnalytics) {
+				Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
+				intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position));
+				intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
+				startActivity(intent);			
+			}
 		}
 	};
 }

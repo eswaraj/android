@@ -10,6 +10,9 @@ import java.util.List;
 import org.achartengine.GraphicalView;
 
 import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -31,6 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.models.Constituency;
+import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.widget.PieChartView;
 
 public class MainAnalyticsFragment extends Fragment {
@@ -103,6 +107,15 @@ public class MainAnalyticsFragment extends Fragment {
 		setPieChart();
 		setAutoComplete(view);
 		//setLocationSpinner();
+		initButtonListeners();
+	}
+	private void initButtonListeners() {
+		getActivity().findViewById(R.id.main_analytics_electricity).setOnClickListener(buttonListener);		
+		getActivity().findViewById(R.id.main_analytics_law).setOnClickListener(buttonListener);
+		getActivity().findViewById(R.id.main_analytics_road).setOnClickListener(buttonListener);
+		getActivity().findViewById(R.id.main_analytics_sewage).setOnClickListener(buttonListener);
+		getActivity().findViewById(R.id.main_analytics_transportation).setOnClickListener(buttonListener);
+		getActivity().findViewById(R.id.main_analytics_water).setOnClickListener(buttonListener);
 	}
 
 	@Override
@@ -250,4 +263,76 @@ public class MainAnalyticsFragment extends Fragment {
 		lastSelectedLocation = loc;
 		autoCompleteButton.setText(loc.getName());
 	}
+	
+	public void onSewageClick(View view) {
+		openIssueActivity(ISSUE_CATEGORY.SEWAGE);
+	}
+
+	public void onTransportationClick(View view) {
+		openIssueActivity(ISSUE_CATEGORY.TRANSPORT);
+	}
+
+	public void onWaterClick(View view) {
+		openIssueActivity(ISSUE_CATEGORY.WATER);
+	}
+
+	public void onRoadClick(View view) {
+		openIssueActivity(ISSUE_CATEGORY.ROAD);
+	}
+
+	public void onElectricityClick(View view) {
+		openIssueActivity(ISSUE_CATEGORY.ELECTRICITY);
+	}
+
+	public void onLawAndOrderClick(View view) {
+		openIssueActivity(ISSUE_CATEGORY.LAW);
+	}
+
+	private void openIssueActivity(ISSUE_CATEGORY issue) {
+		Intent intent = new Intent(getActivity(), IssueActivity.class);
+		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
+		intent.putExtra(IssueActivity.EXTRA_LOCATION, getLastKnownLocation());
+		intent.putExtra(IssueActivity.EXTRA_IS_ANALYTICS, true);
+		startActivity(intent);
+	}
+	
+	private Location getLastKnownLocation() {
+		LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);  
+		String locationProvider = LocationManager.NETWORK_PROVIDER;
+		return locationManager.getLastKnownLocation(locationProvider);
+	}
+	
+	android.view.View.OnClickListener buttonListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View view) {						
+			int id = view.getId();
+			
+			switch (id) {
+			case R.id.main_analytics_road:
+				onRoadClick(view);
+				break;
+			case R.id.main_analytics_law:
+				onLawAndOrderClick(view);
+				break;
+			case R.id.main_analytics_electricity:
+				onElectricityClick(view);
+				break;
+			case R.id.main_analytics_sewage:
+				onSewageClick(view);
+				break;
+			case R.id.main_analytics_transportation:
+				onTransportationClick(view);
+				break;
+			case R.id.main_analytics_water:
+				onWaterClick(view);
+				break;
+
+			default:
+				break;
+			}
+		}
+	};
+	
+	
 }
