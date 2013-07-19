@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -252,7 +253,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	}
 	
 	public void choosePhoto(View view) {
-		cameraHelper.openImageIntent();
+		cameraHelper.openOnlyGalleryIntent();
 	}
 	
 	public void retakePhoto(View view) {
@@ -271,6 +272,12 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	
 	private void showSendingOverlay() {
 		darkOverlay.setVisibility(View.VISIBLE);
+		darkOverlay.setOnTouchListener(new View.OnTouchListener() {			
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				return true;
+			}
+		});
 		sendingImage.setVisibility(View.VISIBLE);
 		sendingImage.setBackgroundResource(R.drawable.running_man);
 		AnimationDrawable frameAnimation = (AnimationDrawable) sendingImage.getBackground();
@@ -339,7 +346,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		request.setRetryPolicy(new DefaultRetryPolicy(
 		        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
 		        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-		        3));
+		        2));
 		mRequestQueue.add(request);
 	}
 	
@@ -349,6 +356,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	            public void onErrorResponse(VolleyError error) {	            	
 	            	hideSendingOverlay();
 	            	Toast.makeText(IssueDetailsActivity.this, "Could not connect to server.", Toast.LENGTH_LONG).show();
+	            	Log.e("Details", error.getMessage());
 	            	postButton.setEnabled(true);
 	            }
 	        };
@@ -357,14 +365,13 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	private Response.Listener<String> createMyReqSuccessListener() {
         return new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
-            	
-            	Log.d("details", "response: " + response);
-            	hideSendingOverlay();
+            public void onResponse(String response) {            	
+            	Log.d("details", "response: " + response);            	
             	Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
             	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, issueItem);
             	intent.putExtra(IssueSummaryActivity.EXTRA_LOCATION, lastKnownLocation);
-            	startActivity(intent);            	
+            	startActivity(intent);   
+            	hideSendingOverlay();
             	finish();
             }
         };

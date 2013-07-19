@@ -98,6 +98,11 @@ public class CameraHelper {
         
     }
     
+    public void openOnlyGalleryIntent() {
+    	 final Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+    	 activity.startActivityForResult(galleryIntent, PICTURE_REQUEST_CODE);
+    }
+    
     public void openOnlyCameraIntent() {
     	 setOutputImageUri();
          // Camera.
@@ -126,7 +131,7 @@ public class CameraHelper {
     public  void setOutputImageUri() {
         // Determine Uri of camera image to save.
         File root;
-        root = new File(Environment.getExternalStorageDirectory() + File.separator + "PictureEquality" + File.separator);
+        root = new File(Environment.getExternalStorageDirectory() + File.separator + "JanSampark" + File.separator);
         root.mkdirs();
         final String fname = Utils.getUniqueImageFilename() + ".png";
         final File sdImageMainDirectory = new File(root, fname);
