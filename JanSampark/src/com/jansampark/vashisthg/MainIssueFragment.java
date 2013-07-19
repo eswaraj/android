@@ -8,17 +8,15 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,13 +24,11 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
 
 public class MainIssueFragment extends Fragment implements LocationListener{
 
     private LocationManager locationManager;
-    private LocationProvider locationProvider;
     
     private static final String SAVED_LOCATION = "SAVED_LOCATION";
     
@@ -84,11 +80,13 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	public void onResume() {
 		super.onResume();
 		isResumed = true;
+		requestLocationUpdates();
 	}
 	
 	@Override
 	public void onPause() {
 		isResumed = false;
+		locationManager.removeUpdates((android.location.LocationListener) this);
 		super.onPause();
 	}
 	private void initButtonListeners() {
@@ -101,19 +99,20 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	}
 	
 	
+	private void requestLocationUpdates() {
+		Criteria criteria = new Criteria();
+		String provider = locationManager.getBestProvider(criteria,true);		
+		locationManager.requestLocationUpdates(provider, 20000, 0, this);
+	}
+	
 
 	public void initMap(CustomSupportMapFragment mapFragment) {
 		gMap = mapFragment.getMap();
 
-		// / REMOVE FOR DEBUG EMULATOR
 		gMap.setMyLocationEnabled(false);
 		
-		Criteria criteria = new Criteria();
-		String provider = locationManager.getBestProvider(criteria,true);
 		
-		
-		
-		
+				
 		UiSettings uiSettings = gMap.getUiSettings();
 		uiSettings.setMyLocationButtonEnabled(false);
 		uiSettings.setTiltGesturesEnabled(false);
@@ -219,6 +218,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	public void onLocationChanged(Location location) {
 		if(isResumed) {
 			lastKnownLocation =  location;
+			Log.d("Issue", "location changed");
 			showLocation();
 		}
 		locationManager.removeUpdates((android.location.LocationListener) this);

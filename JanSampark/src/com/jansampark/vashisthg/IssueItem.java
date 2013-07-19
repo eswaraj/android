@@ -1,6 +1,5 @@
 package com.jansampark.vashisthg;
 
-import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 

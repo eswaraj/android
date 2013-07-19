@@ -1,15 +1,13 @@
 package com.jansampark.vashisthg;
 
-import java.io.Serializable;
-
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,7 +18,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -39,9 +39,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		public String userImage;
 		public String reporterId = "123";
 		public String description;
-	}
-	
-	private static final String TAG = "IssueDetail";
+	}	
 
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
 	public static final String EXTRA_LOCATION = "location";
@@ -59,8 +57,12 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	
 	private ViewGroup takeImageContainer;
 	private ViewGroup imageTakenContainer;
-	CameraHelper cameraHelper;
 	private ImageView issueImageView;
+	private ImageView sendingImage;
+	private View darkOverlay;
+	
+	CameraHelper cameraHelper;
+	
 	
 	private RequestQueue mRequestQueue;
 	
@@ -96,6 +98,12 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		locationManager.requestLocationUpdates(provider, 20000, 0,this);
 	}
 	
+	@Override
+	protected void onDestroy() {
+		locationManager.removeUpdates(this);
+		super.onDestroy();
+	}
+	
 	private void setCameraHelper() {
 		cameraHelper = new CameraHelper(this);		
 	}
@@ -129,6 +137,9 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		editDesctiption = (Button) findViewById(R.id.issue_detail_descption_edit_btn);
 		descriptionET = (EditText) findViewById(R.id.issue_detail_description_edit_text);
 		descriptionTextView = (TextView) findViewById(R.id.issue_detail_description_text_view);
+		darkOverlay = findViewById(R.id.issue_details_overlay);
+		sendingImage = (ImageView)findViewById(R.id.issue_details_sending_image);
+		
 		
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		nameTV.setText(issueItem.getIssueName());
@@ -136,7 +147,19 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		setDescription();
 		resetDescription();
 		setIssueImageViews();
+		
 	}
+	
+	@Override
+	public void onBackPressed() {
+		if(descriptionET.hasFocus()) {
+			resetDescription();
+		} else {
+			super.onBackPressed();
+		}
+	}
+	
+	
 	
 	private void setIssueImageViews() {
 		takeImageContainer = (ViewGroup) findViewById(R.id.take_photo_container_ref);
@@ -199,6 +222,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		descriptionET.setVisibility(View.INVISIBLE);
 		editDesctiption.setVisibility(View.INVISIBLE);
 		descriptionTextView.setVisibility(View.INVISIBLE);
+		Utils.hideKeyboard(this, descriptionTextView);
 	}
 	
 	private void showDescriptionEditText() {
@@ -215,9 +239,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 			
 			@Override
 			public boolean onEditorAction(TextView textView, int keyCode, KeyEvent keyEvent) {		
-				Log.d(TAG, "keycode: " + keyCode);
-				showDescriptionTV();
-				
+				resetDescription();				
 			    return true;
 			}
 		});
@@ -241,8 +263,21 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	}
 	
 	public void onPostClick(View view) {
-		
+		showSendingOverlay();
 		executeRequest();
+	}
+	
+	private void showSendingOverlay() {
+		darkOverlay.setVisibility(View.VISIBLE);
+		sendingImage.setVisibility(View.VISIBLE);
+		sendingImage.setBackgroundResource(R.drawable.running_man);
+		AnimationDrawable frameAnimation = (AnimationDrawable) sendingImage.getBackground();
+		frameAnimation.start();
+	}
+	
+	private void hideSendingOverlay() {
+		darkOverlay.setVisibility(View.INVISIBLE);
+		sendingImage.setVisibility(View.GONE);
 	}
 	
 	@Override
@@ -264,6 +299,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	
 	@Override
 	public void onLocationChanged(Location location) {
+		Log.d("Details", "location changed");
 		lastKnownLocation = location;
 		locationManager.removeUpdates((android.location.LocationListener) this);
 	}
@@ -295,6 +331,10 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		issueDetail.issueItem = issueItem;
 		
 		MultipartRequest request = new MultipartRequest(url, createMyReqErrorListener(), createMyReqSuccessListener(),  issueDetail);
+		request.setRetryPolicy(new DefaultRetryPolicy(
+		        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+		        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+		        3));
 		mRequestQueue.add(request);
 	}
 	
@@ -302,7 +342,8 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	        return new Response.ErrorListener() {
 	            @Override
 	            public void onErrorResponse(VolleyError error) {
-	            	Log.d("details", "try again");
+	            	hideSendingOverlay();
+	            	Toast.makeText(IssueDetailsActivity.this, "Could not connect to server.", Toast.LENGTH_LONG).show();
 	            }
 	        };
 	  }
@@ -312,11 +353,13 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
             @Override
             public void onResponse(String response) {
             	Log.d("details", "response: " + response);
+            	hideSendingOverlay();
             	Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
             	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, issueItem);
             	intent.putExtra(IssueSummaryActivity.EXTRA_LOCATION, lastKnownLocation);
             	startActivity(intent);
+            	finish();
             }
         };
-    }		
+    }	
 }
