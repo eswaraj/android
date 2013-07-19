@@ -16,11 +16,10 @@
 
 package com.jansampark.vashisthg.location;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.jansampark.vashisthg.R;
-
 import android.content.Context;
 import android.location.Location;
+
+import com.google.android.gms.maps.model.LatLng;
 
 
 

@@ -81,7 +81,9 @@ public class LocationAutoCompleteAdapter extends BaseAdapter implements Filterab
 
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			locations = (List<Constituency>) results.values;
+			@SuppressWarnings("unchecked")
+			List<Constituency> values = (List<Constituency>) results.values;
+			locations = values;
 			notifyDataSetChanged();
 		}
 

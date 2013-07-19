@@ -37,7 +37,6 @@
         android:layout_height="@dimen/bottom_tabs_height"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_weight="1"
         layout="@layout/main_tabs" />
 
 </RelativeLayout>

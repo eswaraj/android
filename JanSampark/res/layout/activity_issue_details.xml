@@ -21,7 +21,7 @@
         <FrameLayout
             android:id="@+id/frame_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content" >
 
             <LinearLayout
                 android:id="@+id/issue_detail_wrapper"
@@ -191,11 +191,12 @@
                 android:visibility="gone" >
                     
             </FrameLayout>
-             <ImageView
-                		android:id="@+id/issue_details_sending_image"
-                		android:layout_width="wrap_content"
-                		android:layout_height="wrap_content"
-                		android:layout_gravity="center" />
+            <ImageView
+           		android:id="@+id/issue_details_sending_image"
+           		android:layout_width="wrap_content"
+           		android:layout_height="wrap_content"
+           		android:contentDescription="@string/app_name"
+           		android:layout_gravity="center" />
 
 
         </FrameLayout>

@@ -6,12 +6,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
 
-import com.jansampark.vashisthg.JanSamparkApplication;
-
-import android.app.Application;
 import android.content.Context;
 import android.database.Cursor;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;

@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
@@ -19,33 +19,26 @@
             android:gravity="center"
             android:orientation="horizontal" >
 
-            <RadioGroup
-                android:id="@+id/analytics_group"
-                android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/analytics_overall"
+                android:layout_width="@dimen/analytics_chooser_width"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:background="@drawable/analytics_choose_left"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/analytics_overall"
+                android:textColor="@color/analytics_radio_text"
+                android:textOff="@string/analytics_overall"
+                android:textOn="@string/analytics_overall" />
 
-                <RadioButton
-                    android:id="@+id/analytics_overall"
-                    android:layout_width="@dimen/analytics_chooser_width"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/analytics_choose_left"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="@string/analytics_overall"
-                    android:textColor="@color/analytics_radio_text"
-                    android:textOff="@string/analytics_overall"
-                    android:textOn="@string/analytics_overall" />
-
-                <RadioButton
-                    android:id="@+id/analytics_spinner"
-                    android:layout_width="@dimen/analytics_chooser_width"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/analytics_choose_right"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:textColor="@color/analytics_radio_text" />
-            </RadioGroup>
+            <RadioButton
+                android:id="@+id/analytics_spinner"
+                android:layout_width="@dimen/analytics_chooser_width"
+                android:layout_height="wrap_content"
+                android:background="@drawable/analytics_choose_right"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@color/analytics_radio_text" />
         </LinearLayout>
 
         <FrameLayout
@@ -118,10 +111,10 @@
                     android:id="@+id/main_road"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_road"
                     android:layout_marginLeft="@dimen/main_button_margin"
                     android:layout_marginRight="@dimen/main_button_margin"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_road"
                     android:text="@string/main_road"
                     android:textColor="@color/main_text"
                     android:textSize="@dimen/main_button_text" />
@@ -130,10 +123,10 @@
                     android:id="@+id/main_water"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_water"
                     android:layout_marginLeft="@dimen/main_button_margin"
                     android:layout_marginRight="@dimen/main_button_margin"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_water"
                     android:text="@string/main_water"
                     android:textColor="@color/main_text"
                     android:textSize="@dimen/main_button_text" />
@@ -142,10 +135,10 @@
                     android:id="@+id/main_transportation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_transport"
                     android:layout_marginLeft="@dimen/main_button_margin"
                     android:layout_marginRight="@dimen/main_button_margin"
+                    android:background="@null"
+                    android:drawableTop="@drawable/ic_analytics_transport"
                     android:text="@string/main_transportation"
                     android:textColor="@color/main_text"
                     android:textSize="@dimen/main_button_text" />
@@ -154,15 +147,12 @@
             <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_column="1"
                 android:gravity="center" >
 
                 <Button
                     android:id="@+id/main_electricity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/main_law"
                     android:layout_marginLeft="@dimen/main_button_margin"
                     android:layout_marginRight="@dimen/main_button_margin"
                     android:background="@null"
@@ -175,8 +165,6 @@
                     android:id="@+id/main_law"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/main_water"
                     android:layout_marginLeft="@dimen/main_button_margin"
                     android:layout_marginRight="@dimen/main_button_margin"
                     android:background="@null"
@@ -189,10 +177,8 @@
                     android:id="@+id/main_sewage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/main_road"
                     android:layout_marginLeft="@dimen/main_button_margin"
                     android:layout_marginRight="@dimen/main_button_margin"
-                    android:layout_toRightOf="@+id/main_water"
                     android:background="@null"
                     android:drawableTop="@drawable/ic_analytics_sewage"
                     android:text="@string/main_sewage"
