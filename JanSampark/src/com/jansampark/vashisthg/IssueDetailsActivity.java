@@ -60,6 +60,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	private ImageView issueImageView;
 	private ImageView sendingImage;
 	private View darkOverlay;
+	private Button postButton;
 	
 	CameraHelper cameraHelper;
 	
@@ -139,6 +140,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		descriptionTextView = (TextView) findViewById(R.id.issue_detail_description_text_view);
 		darkOverlay = findViewById(R.id.issue_details_overlay);
 		sendingImage = (ImageView)findViewById(R.id.issue_details_sending_image);
+		postButton = (Button) findViewById(R.id.issue_details_post);
 		
 		
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
@@ -264,7 +266,7 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	
 	public void onPostClick(View view) {
 		showSendingOverlay();
-		executeRequest();
+		executeRequest();			
 	}
 	
 	private void showSendingOverlay() {
@@ -319,7 +321,10 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		
 	}
 	
-	private void executeRequest()  {		
+	
+	
+	private void executeRequest()  {			
+		postButton.setEnabled(false);
 		String url = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
 		IssueDetail issueDetail = new IssueDetail();
 		issueDetail.lat = lastKnownLocation.getLatitude() + "";
@@ -341,9 +346,10 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	 private Response.ErrorListener createMyReqErrorListener() {
 	        return new Response.ErrorListener() {
 	            @Override
-	            public void onErrorResponse(VolleyError error) {
+	            public void onErrorResponse(VolleyError error) {	            	
 	            	hideSendingOverlay();
 	            	Toast.makeText(IssueDetailsActivity.this, "Could not connect to server.", Toast.LENGTH_LONG).show();
+	            	postButton.setEnabled(true);
 	            }
 	        };
 	  }
@@ -352,12 +358,13 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
         return new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+            	
             	Log.d("details", "response: " + response);
             	hideSendingOverlay();
             	Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
             	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, issueItem);
             	intent.putExtra(IssueSummaryActivity.EXTRA_LOCATION, lastKnownLocation);
-            	startActivity(intent);
+            	startActivity(intent);            	
             	finish();
             }
         };
