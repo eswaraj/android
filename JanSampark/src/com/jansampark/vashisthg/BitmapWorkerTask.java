@@ -3,6 +3,8 @@ package com.jansampark.vashisthg;
 import java.io.File;
 import java.lang.ref.WeakReference;
 
+import com.jansampark.vashisthg.helpers.BitmapUtil;
+
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;

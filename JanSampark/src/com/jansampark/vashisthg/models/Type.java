@@ -1,4 +1,4 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.models;
 
 public enum Type {
     LACK_IN_INFRA,

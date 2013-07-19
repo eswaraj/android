@@ -1,5 +1,8 @@
 package com.jansampark.vashisthg;
 
+import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
+import com.jansampark.vashisthg.models.IssueItem;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;

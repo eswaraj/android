@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley;
 import com.jansampark.vashisthg.helpers.LruBitmapCache;
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.models.Constituency;
+import com.jansampark.vashisthg.models.IssueItem;
 
 public class IssueSummaryActivity extends FragmentActivity {
 	private static final String TAG = "SUMMARY";

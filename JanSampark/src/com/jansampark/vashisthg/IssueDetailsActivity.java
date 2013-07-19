@@ -26,8 +26,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.jansampark.vashisthg.CameraHelper.CameraUtilActivity;
+import com.jansampark.vashisthg.helpers.CameraHelper;
 import com.jansampark.vashisthg.helpers.Utils;
+import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
+import com.jansampark.vashisthg.models.IssueItem;
 import com.jansampark.vashisthg.volley.MultipartRequest;
 
 public class IssueDetailsActivity extends CameraUtilActivity implements LocationListener {

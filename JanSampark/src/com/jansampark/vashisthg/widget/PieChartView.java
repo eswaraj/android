@@ -11,8 +11,8 @@ import android.content.Context;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import com.jansampark.vashisthg.ISSUE_CATEGORY;
-import com.jansampark.vashisthg.IssueUtils;
+import com.jansampark.vashisthg.helpers.IssueUtils;
+import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 
 public class PieChartView extends GraphicalView {
 

@@ -1,4 +1,4 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.helpers;
 
 import java.io.File;
 import java.io.FileInputStream;

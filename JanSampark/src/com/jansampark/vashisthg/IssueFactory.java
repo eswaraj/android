@@ -3,6 +3,9 @@ package com.jansampark.vashisthg;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
+import com.jansampark.vashisthg.models.IssueItem;
+
 import android.content.Context;
 import android.content.res.Resources;
 

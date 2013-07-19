@@ -1,12 +1,12 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.helpers;
+
+import com.jansampark.vashisthg.R;
+import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 
 import android.content.Context;
 import android.content.res.Resources;
 
-public class IssueUtils {
-	
-	
-	
+public class IssueUtils {	
     
     public static int getColorInt(Context context, ISSUE_CATEGORY issue) {
     	Resources resources = context.getResources();

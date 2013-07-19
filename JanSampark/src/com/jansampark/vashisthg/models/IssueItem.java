@@ -1,4 +1,4 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
