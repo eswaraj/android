@@ -2,17 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="@dimen/activity_horizontal_margin"
     android:orientation="vertical" >
 
     <include
-        
+        android:id="@+id/take_photo_container_ref"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/take_photo_container" />
 
     <include
+        android:id="@+id/photo_taken_container_ref"
         android:layout_width="match_parent"
         android:layout_height="@dimen/issue_details_retake_container_height"
         layout="@layout/photo_taken_container" />
+     <Button
+                    android:id="@+id/done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/post_button"
+                    android:onClick="onDoneClick"
+                    android:text="@string/done"
+                    android:textColor="@android:color/white" />
 
 </LinearLayout>

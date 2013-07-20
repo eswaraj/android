@@ -7,15 +7,22 @@ import java.io.OutputStream;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
+import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public class Utils {
+	public static final String SHARED_PREFS = "shared_pref";
+	public static final String USER_IMAGE = "image";
+	
+	public static String cachedUserImage;
+	
 
 	public static void hideKeyboard(Context context, TextView textView) {
 		InputMethodManager imm = (InputMethodManager)context.getSystemService( Context.INPUT_METHOD_SERVICE);
@@ -108,16 +115,32 @@ public class Utils {
 
 	
 	
-	public static String getUserImage() {
-		return null;
+	public static String getUserImage(Context context) {
+		 SharedPreferences settings = context.getSharedPreferences(SHARED_PREFS, 0);
+		 if(null == cachedUserImage) {
+			 cachedUserImage = settings.getString(USER_IMAGE, "");		
+		 }
+		 return cachedUserImage;
+	}
+	
+	public static void setUserImage(Context context, String string) {
+		if(null != string) {
+			SharedPreferences settings = context.getSharedPreferences(SHARED_PREFS, 0);
+		    SharedPreferences.Editor editor = settings.edit();
+		    editor.putString(USER_IMAGE, string);
+		    editor.commit();
+		    cachedUserImage = string;
+		}
+	}
+	
+	public static void removeUserImage(Context context) {
+		SharedPreferences settings = context.getSharedPreferences(SHARED_PREFS, 0);
+	    SharedPreferences.Editor editor = settings.edit();
+	    editor.remove(USER_IMAGE);
+	    editor.commit();
+	    cachedUserImage = null;
 	}
 	
 	
-//	public static  void setLastKnownLocation(Application application, Location lastKnownLocation) {
-//		((JanSamparkApplication) application).setLastKnownLocation(lastKnownLocation);
-//	}
-//	
-//	public static Location getLastKnownLocation(Application application) {
-//		return ((JanSamparkApplication) application).getLastKnownLocation();
-//	}
+	
 }

@@ -136,7 +136,6 @@ public class CameraHelper {
         final File sdImageMainDirectory = new File(root, fname);
         imagePath = sdImageMainDirectory.getAbsolutePath();
         outputFileUri = Uri.fromFile(sdImageMainDirectory);
-        //logger.d("Output file Uri" + outputFileUri.getPath() + ", path :" + imagePath);
     }
     
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

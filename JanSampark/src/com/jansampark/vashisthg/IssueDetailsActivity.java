@@ -360,7 +360,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			issueDetail.lat = lastKnownLocation.getLatitude() + "";
 			issueDetail.lon = lastKnownLocation.getLongitude() + "";
 			issueDetail.image = cameraHelper.getImageName();
-			issueDetail.userImage = Utils.getUserImage();
+			issueDetail.userImage = Utils.getUserImage(this);
 			issueDetail.reporterId  = "123";
 			issueDetail.description = descriptionET.getText().toString();
 			issueDetail.issueItem = issueItem;
