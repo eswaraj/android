@@ -41,15 +41,14 @@ public class ReverseGeoCodingTask  extends AsyncTask< String, Void, List<Constit
 			Geocoder geocoder = new Geocoder(context, Locale.getDefault());
 			List<Address> addresses = null;
 			List<Constituency> locations = new ArrayList<Constituency>();
-			addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 8);
+			addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 			for (Iterator<Address> iterator = addresses.iterator(); iterator.hasNext();) {
 				Address address = (Address) iterator.next();
 				Constituency archeTypeLocation = Constituency.createLocation(address);
 				archeTypeLocation.setLatLong(new LatLng(location.getLatitude(), location.getLongitude()));
 				
 				locations.add(archeTypeLocation);
-			}
-			
+			}			
 			return locations;
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -2,11 +2,13 @@ package com.jansampark.vashisthg;
 
 
 
+import java.text.DecimalFormat;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
+//import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,13 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.UiSettings;
@@ -27,9 +36,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
 
-public class MainIssueFragment extends Fragment implements LocationListener{
+public class MainIssueFragment extends Fragment {
 
-    private LocationManager locationManager;
+    //private LocationManager locationManager;
+    LocationRequest mLocationRequest;
+    LocationClient mLocationClient;
     
     private static final String SAVED_LOCATION = "SAVED_LOCATION";
     
@@ -51,7 +62,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);          
+        //locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);          
         
         if(null != savedInstanceState) {
         	lastKnownLocation = savedInstanceState.getParcelable(SAVED_LOCATION);
@@ -71,8 +82,7 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 		super.onViewCreated(view, savedInstanceState);
 		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     
 		
-		String locationProvider = LocationManager.NETWORK_PROVIDER;
-		lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+		
 		showLocation();
 		initButtonListeners();
 	}	
@@ -81,13 +91,15 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	public void onResume() {
 		super.onResume();
 		isResumed = true;
-		requestLocationUpdates();
+		startLocationTracking();
 	}
 	
 	@Override
 	public void onPause() {
 		isResumed = false;
-		locationManager.removeUpdates((android.location.LocationListener) this);
+		mLocationClient.removeLocationUpdates(mLocationListener);
+		mLocationClient.disconnect();
+		//locationManager.removeUpdates((android.location.LocationListener) this);
 		super.onPause();
 	}
 	private void initButtonListeners() {
@@ -100,11 +112,47 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	}
 	
 	
-	private void requestLocationUpdates() {
-		Criteria criteria = new Criteria();
-		String provider = locationManager.getBestProvider(criteria,true);		
-		locationManager.requestLocationUpdates(provider, 20000, 0, this);
+
+	
+	protected void startLocationTracking() {	
+	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
+	        mLocationClient = new LocationClient(getActivity(), mConnectionCallbacks, mConnectionFailedListener);
+	       mLocationClient.connect();
+	    }
 	}
+
+	private ConnectionCallbacks mConnectionCallbacks = new ConnectionCallbacks() {
+
+	    @Override
+	    public void onDisconnected() {
+	    }
+
+	    @Override
+	    public void onConnected(Bundle arg0) {
+	        LocationRequest locationRequest = LocationRequest.create();
+	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+	        mLocationClient.requestLocationUpdates(locationRequest, mLocationListener);
+	    }
+	};
+
+	private OnConnectionFailedListener mConnectionFailedListener = new OnConnectionFailedListener() {
+
+	    @Override
+	    public void onConnectionFailed(ConnectionResult arg0) {
+	        //Log.e(TAG, "ConnectionFailed");
+	    }
+	};
+
+	private LocationListener mLocationListener = new LocationListener() {
+	    @Override
+	        public void onLocationChanged(Location location) {	         
+	            if(isResumed) {
+	    			lastKnownLocation =  location;
+	    			Log.d("Issue", "location changed");
+	    			showLocation();
+	    		}
+	    }
+	};
 	
 
 	public void initMap(CustomSupportMapFragment mapFragment) {
@@ -215,29 +263,29 @@ public class MainIssueFragment extends Fragment implements LocationListener{
 	};
 
 
-	@Override
-	public void onLocationChanged(Location location) {
-		if(isResumed) {
-			lastKnownLocation =  location;
-			Log.d("Issue", "location changed");
-			showLocation();
-		}
-		locationManager.removeUpdates((android.location.LocationListener) this);
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		
-	}
+//	@Override
+//	public void onLocationChanged(Location location) {
+//		if(isResumed) {
+//			lastKnownLocation =  location;
+//			Log.d("Issue", "location changed");
+//			showLocation();
+//		}
+//		locationManager.removeUpdates((android.location.LocationListener) this);
+//	}
+//
+//	@Override
+//	public void onProviderDisabled(String provider) {
+//		
+//	}
+//
+//	@Override
+//	public void onProviderEnabled(String provider) {
+//		
+//	}
+//
+//	@Override
+//	public void onStatusChanged(String provider, int status, Bundle extras) {
+//		
+//	}
 	
 }

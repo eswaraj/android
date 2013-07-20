@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,13 +24,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
+import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.jansampark.vashisthg.helpers.CameraHelper;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
 import com.jansampark.vashisthg.models.IssueItem;
 import com.jansampark.vashisthg.volley.MultipartRequest;
 
-public class IssueDetailsActivity extends CameraUtilActivity implements LocationListener {
+public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	public static class IssueDetail {
 		public String lat;
@@ -70,8 +75,10 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	
 	private RequestQueue mRequestQueue;
 	
-	private LocationManager locationManager;
 	Location lastKnownLocation;
+	
+	LocationRequest mLocationRequest;
+    LocationClient mLocationClient;
 	
 	
 	@Override
@@ -86,26 +93,23 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);		
 			lastKnownLocation = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
 		}
-		initLocation();
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		setCameraHelper();		
 		setViews();		
 	}
 	
-	private void initLocation() {
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		String locationProvider = LocationManager.NETWORK_PROVIDER;
-		lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-		Criteria criteria = new Criteria();
-		String provider = locationManager.getBestProvider(criteria,true);
-		
-		locationManager.requestLocationUpdates(provider, 20000, 0,this);
+	@Override
+	protected void onResume() {
+		super.onResume();
+		startLocationTracking();
 	}
 	
 	@Override
-	protected void onDestroy() {
-		locationManager.removeUpdates(this);
-		super.onDestroy();
+	protected void onPause() {
+		super.onPause();
+		if(null != mLocationClient) {
+			mLocationClient.removeLocationUpdates(mLocationListener);
+		}
 	}
 	
 	private void setCameraHelper() {
@@ -308,48 +312,70 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 		displayImageIfAvailable();		
 	}
 	
-	@Override
-	public void onLocationChanged(Location location) {
-		Log.d("Details", "location changed");
-		lastKnownLocation = location;
-		locationManager.removeUpdates((android.location.LocationListener) this);
+	protected void startLocationTracking() {	
+	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
+	       mLocationClient = new LocationClient(this, mConnectionCallbacks, mConnectionFailedListener);
+	       mLocationClient.connect();
+	    }
+	    
+	    
 	}
 
-	@Override
-	public void onProviderDisabled(String provider) {
-		
-	}
+	private ConnectionCallbacks mConnectionCallbacks = new ConnectionCallbacks() {
 
-	@Override
-	public void onProviderEnabled(String provider) {
-		
-	}
-	
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		
-	}
-	
-	
+	    @Override
+	    public void onDisconnected() {
+	    }
+
+	    @Override
+	    public void onConnected(Bundle arg0) {
+	    	if(lastKnownLocation == null) {
+				lastKnownLocation = mLocationClient.getLastLocation();
+			}
+	    	
+	        LocationRequest locationRequest = LocationRequest.create();
+	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+	        mLocationClient.requestLocationUpdates(locationRequest, mLocationListener);
+	    }
+	};
+
+	private OnConnectionFailedListener mConnectionFailedListener = new OnConnectionFailedListener() {
+
+	    @Override
+	    public void onConnectionFailed(ConnectionResult arg0) {
+	        //Log.e(TAG, "ConnectionFailed");
+	    }
+	};
+
+	private LocationListener mLocationListener = new LocationListener() {
+	    @Override
+	        public void onLocationChanged(Location location) {	         
+	    		lastKnownLocation = location;
+	    }
+	};	
 	
 	private void executeRequest()  {			
-		postButton.setEnabled(false);
-		String url = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
-		IssueDetail issueDetail = new IssueDetail();
-		issueDetail.lat = lastKnownLocation.getLatitude() + "";
-		issueDetail.lon = lastKnownLocation.getLongitude() + "";
-		issueDetail.image = cameraHelper.getImageName();
-		issueDetail.userImage = Utils.getUserImage();
-		issueDetail.reporterId  = "123";
-		issueDetail.description = descriptionET.getText().toString();
-		issueDetail.issueItem = issueItem;
-		
-		MultipartRequest request = new MultipartRequest(url, createMyReqErrorListener(), createMyReqSuccessListener(),  issueDetail);
-		request.setRetryPolicy(new DefaultRetryPolicy(
-		        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-		        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-		        2));
-		mRequestQueue.add(request);
+		if(null != lastKnownLocation) {
+			postButton.setEnabled(false);
+			String url = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
+			IssueDetail issueDetail = new IssueDetail();
+			issueDetail.lat = lastKnownLocation.getLatitude() + "";
+			issueDetail.lon = lastKnownLocation.getLongitude() + "";
+			issueDetail.image = cameraHelper.getImageName();
+			issueDetail.userImage = Utils.getUserImage();
+			issueDetail.reporterId  = "123";
+			issueDetail.description = descriptionET.getText().toString();
+			issueDetail.issueItem = issueItem;
+			
+			MultipartRequest request = new MultipartRequest(url, createMyReqErrorListener(), createMyReqSuccessListener(),  issueDetail);
+			request.setRetryPolicy(new DefaultRetryPolicy(
+			        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+			        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+			        3));
+			mRequestQueue.add(request);
+		} else {
+			Toast.makeText(this, "Fetching location", Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	 private Response.ErrorListener createMyReqErrorListener() {
@@ -358,7 +384,9 @@ public class IssueDetailsActivity extends CameraUtilActivity implements Location
 	            public void onErrorResponse(VolleyError error) {	            	
 	            	hideSendingOverlay();
 	            	Toast.makeText(IssueDetailsActivity.this, "Could not connect to server.", Toast.LENGTH_LONG).show();
-	            	Log.e("Details", error.getMessage());
+	            	if(null != error) {
+	            		Log.e("Details", "" + error.getMessage());
+	            	}
 	            	postButton.setEnabled(true);
 	            }
 	        };

@@ -106,5 +106,7 @@
     <integer name="road">51</integer>
     <integer name="sewage">50</integer>
     
+    <integer name="location_update_millis">120000</integer>
+    
     
 </resources>
