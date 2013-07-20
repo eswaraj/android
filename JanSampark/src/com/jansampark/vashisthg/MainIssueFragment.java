@@ -2,14 +2,8 @@ package com.jansampark.vashisthg;
 
 
 
-import java.text.DecimalFormat;
-
-import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
-//import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -38,9 +32,8 @@ import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
 
 public class MainIssueFragment extends Fragment {
 
-    //private LocationManager locationManager;
-    LocationRequest mLocationRequest;
-    LocationClient mLocationClient;
+    LocationRequest locationRequest;
+    LocationClient locationClient;
     
     private static final String SAVED_LOCATION = "SAVED_LOCATION";
     
@@ -57,20 +50,15 @@ public class MainIssueFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.main_issue, container, false);		
 	}
-	
-	
+		
 	@Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);          
-        
+        super.onCreate(savedInstanceState);       
         if(null != savedInstanceState) {
         	lastKnownLocation = savedInstanceState.getParcelable(SAVED_LOCATION);
         }
     }
-	
-	
-	
+			
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -80,9 +68,7 @@ public class MainIssueFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     
-		
-		
+		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     		
 		showLocation();
 		initButtonListeners();
 	}	
@@ -97,9 +83,8 @@ public class MainIssueFragment extends Fragment {
 	@Override
 	public void onPause() {
 		isResumed = false;
-		mLocationClient.removeLocationUpdates(mLocationListener);
-		mLocationClient.disconnect();
-		//locationManager.removeUpdates((android.location.LocationListener) this);
+		locationClient.removeLocationUpdates(mLocationListener);
+		locationClient.disconnect();
 		super.onPause();
 	}
 	private void initButtonListeners() {
@@ -116,8 +101,8 @@ public class MainIssueFragment extends Fragment {
 	
 	protected void startLocationTracking() {	
 	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
-	        mLocationClient = new LocationClient(getActivity(), mConnectionCallbacks, mConnectionFailedListener);
-	       mLocationClient.connect();
+	        locationClient = new LocationClient(getActivity(), mConnectionCallbacks, mConnectionFailedListener);
+	       locationClient.connect();
 	    }
 	}
 
@@ -131,7 +116,7 @@ public class MainIssueFragment extends Fragment {
 	    public void onConnected(Bundle arg0) {
 	        LocationRequest locationRequest = LocationRequest.create();
 	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-	        mLocationClient.requestLocationUpdates(locationRequest, mLocationListener);
+	        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
 	    }
 	};
 

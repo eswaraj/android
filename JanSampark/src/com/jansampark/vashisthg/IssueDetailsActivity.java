@@ -1,9 +1,7 @@
 package com.jansampark.vashisthg;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.location.Criteria;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,15 +23,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.jansampark.vashisthg.helpers.CameraHelper;
-import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
+import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.models.IssueItem;
 import com.jansampark.vashisthg.volley.MultipartRequest;
 
@@ -77,8 +75,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	Location lastKnownLocation;
 	
-	LocationRequest mLocationRequest;
-    LocationClient mLocationClient;
+	LocationRequest locationRequest;
+    LocationClient locationClient;
 	
 	
 	@Override
@@ -107,8 +105,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if(null != mLocationClient) {
-			mLocationClient.removeLocationUpdates(mLocationListener);
+		if(null != locationClient) {
+			locationClient.removeLocationUpdates(mLocationListener);
 		}
 	}
 	
@@ -314,8 +312,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	protected void startLocationTracking() {	
 	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
-	       mLocationClient = new LocationClient(this, mConnectionCallbacks, mConnectionFailedListener);
-	       mLocationClient.connect();
+	       locationClient = new LocationClient(this, mConnectionCallbacks, mConnectionFailedListener);
+	       locationClient.connect();
 	    }
 	    
 	    
@@ -330,12 +328,12 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	    @Override
 	    public void onConnected(Bundle arg0) {
 	    	if(lastKnownLocation == null) {
-				lastKnownLocation = mLocationClient.getLastLocation();
+				lastKnownLocation = locationClient.getLastLocation();
 			}
 	    	
 	        LocationRequest locationRequest = LocationRequest.create();
 	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-	        mLocationClient.requestLocationUpdates(locationRequest, mLocationListener);
+	        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
 	    }
 	};
 
