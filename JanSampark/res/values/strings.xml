@@ -56,9 +56,10 @@
     
     
     
-    <string-array name="demo_place">
-        <item>Mayur Vihar</item>
-        <item>Preet Vihar</item>
+    <string-array name="splash_text">
+        <item>Lorem ipsum dolerr</item>
+        <item>Sir amet</item>
+        <item>Adipizingr</item>
     </string-array>
     
     <string name="water">Water</string>

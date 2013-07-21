@@ -11,8 +11,25 @@
             android:layout_height="match_parent"
             android:id="@+id/splash_image"
             android:src="@drawable/splash_1"
-            android:layout_below="@+id/textView"
-            android:layout_centerHorizontal="true"
+            
             android:scaleType="centerCrop"/>
+    
+    <com.jansampark.vashisthg.widget.ViewPagerCustomDuration
+        android:id="@+id/gallery_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="40dp" >
+         
+
+    </com.jansampark.vashisthg.widget.ViewPagerCustomDuration>
+    <RadioGroup
+            android:id="@+id/gallery_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:orientation="horizontal" >
+
+        </RadioGroup>
 
 </FrameLayout>
