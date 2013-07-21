@@ -4,14 +4,15 @@
     <declare-styleable name="CompoundButton">
         <attr name="android:button" />
     </declare-styleable>
-    <declare-styleable name="Triangle">
-        <attr name="color" format="reference" />
-        <attr name="direction" format="integer">
-            <enum name="north" value="0" />
-            <enum name="south" value="1" />
-            <enum name="east" value="2" />
-            <enum name="west" value="3" />
-        </attr>
+   
+    
+     <declare-styleable name="RoundedImageView">
+        <attr name="corner_radius" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="round_background" format="boolean" />
+        <attr name="is_oval" format="boolean" />
+        <attr name="android:scaleType" />
     </declare-styleable>
    
 

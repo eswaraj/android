@@ -3,16 +3,18 @@ package com.jansampark.vashisthg;
 import java.io.File;
 import java.lang.ref.WeakReference;
 
-import com.jansampark.vashisthg.helpers.BitmapUtil;
-
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+
+import com.jansampark.vashisthg.helpers.BitmapUtil;
 
 public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewReference;
     private String path = null;
     private int maxSize = 0;
+    
+    private int cornerRadius;
 
     public BitmapWorkerTask(ImageView imageView, int maxSize) {
         // Use a WeakReference to ensure the ImageView can be garbage collected
@@ -24,8 +26,8 @@ public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected Bitmap doInBackground(String... params) {
         path = params[0];
-        File imageFile = new File(path);
-        return BitmapUtil.decodeFileAndResize(imageFile, maxSize);
+        File imageFile = new File(path);        
+        return BitmapUtil.decodeFileAndResize(imageFile, maxSize);        
     }
 
     // Once complete, see if ImageView is still around and set bitmap.
@@ -38,4 +40,12 @@ public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
             }
         }
     }
+
+	public int getCornerRadius() {
+		return cornerRadius;
+	}
+
+	public void setCornerRadius(int cornerRadius) {
+		this.cornerRadius = cornerRadius;
+	}
 }

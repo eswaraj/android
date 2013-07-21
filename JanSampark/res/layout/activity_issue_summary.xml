@@ -83,7 +83,7 @@
                         android:textColor="@color/issue_details_dark" />
                 </LinearLayout>
 
-                <com.jansampark.vashisthg.widget.RoundedImageView
+                <com.jansampark.vashisthg.widget.RoundImageView
                     android:id="@+id/issue_summary_mla_image"
                     android:layout_width="@dimen/issue_summary_mla_pic_size"
                     android:layout_height="@dimen/issue_summary_mla_pic_size"

@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/photo_taken_container"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/issue_details_retake_container_height"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/issue_details_retake_container_height"
     android:padding="@dimen/issue_details_padding" >
 
-    <ImageView
-        android:id="@+id/chosen_pic"
+    <FrameLayout
+        android:id="@+id/chosen_pic_container"
         android:layout_width="@dimen/issue_details_issue_image_size"
         android:layout_height="@dimen/issue_details_issue_image_size"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
         android:background="@drawable/issue_details_image_container"
-        android:cropToPadding="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/banner_electricity" />
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" >
+
+        <com.jansampark.vashisthg.widget.RoundedImageView
+            android:id="@+id/chosen_pic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/banner_electricity"
+            app:corner_radius="4dp" />
+    </FrameLayout>
 
     <Button
         android:id="@+id/remove_pic"

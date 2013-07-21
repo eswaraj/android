@@ -148,5 +148,9 @@ public class BitmapUtil {
         bitmap.recycle();
         bitmap = null;
     }
+    
+    
+    
+  
 
 }

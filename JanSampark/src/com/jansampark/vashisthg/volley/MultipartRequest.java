@@ -57,10 +57,8 @@ public class MultipartRequest extends Request<String> {
 		template = issueDetail.issueItem.getTemplateId() + "";
 		reporterId = issueDetail.reporterId;
 		addIssueDetailImage(issueDetail.image);
+		addUserImage(issueDetail.userImage);
 		
-		if (!TextUtils.isEmpty(issueDetail.userImage)) {
-			userImage = new File(issueDetail.userImage);
-		}
 		description = issueDetail.description;
 		buildMultipartEntity();
 
@@ -69,6 +67,18 @@ public class MultipartRequest extends Request<String> {
 	private void addIssueDetailImage(String issueDetailImage) {
 		if(!TextUtils.isEmpty(issueDetailImage) ) {
 			issueImage = new File(issueDetailImage);
+			if(!issueImage.exists()) {
+				issueImage = null;
+			}
+		}
+	}
+	
+	private void addUserImage(String userImage) {
+		if (!TextUtils.isEmpty(userImage)) {
+			this.userImage = new File(userImage);
+			if(!this.userImage.exists()){
+				userImage = null;
+			}
 		}
 	}
 	

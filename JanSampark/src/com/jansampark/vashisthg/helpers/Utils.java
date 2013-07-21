@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
-import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 

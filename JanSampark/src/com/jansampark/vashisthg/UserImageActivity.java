@@ -1,17 +1,16 @@
 package com.jansampark.vashisthg;
 
-import com.jansampark.vashisthg.helpers.CameraHelper;
-import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
-import com.jansampark.vashisthg.helpers.Utils;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.jansampark.vashisthg.helpers.CameraHelper;
+import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
+import com.jansampark.vashisthg.helpers.Utils;
 
 public class UserImageActivity extends CameraUtilActivity {
 	CameraHelper cameraHelper;
