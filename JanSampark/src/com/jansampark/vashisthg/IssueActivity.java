@@ -142,4 +142,13 @@ public class IssueActivity extends Activity {
 			}
 		}
 	};
+	
+	public void onTitleBarLeftButtonClick(View view) {
+		
+	}
+	
+	public void onTitleBarRightButtonClick(View view) {
+		
+	}
+	
 }

@@ -404,4 +404,14 @@ public class IssueDetailsActivity extends CameraUtilActivity {
             }
         };
     }	
+	
+	
+	public void onTitleBarLeftButtonClick(View view) {
+		
+	}
+	
+	public void onTitleBarRightButtonClick(View view) {
+		
+	}
+	
 }

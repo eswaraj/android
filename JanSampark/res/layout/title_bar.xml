@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="left|center_vertical"
         android:contentDescription="@string/app_name"
+        android:onClick="onTitleBarLeftButtonClick"
         android:background="@null" />
 
     <ImageButton
@@ -19,11 +20,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
         android:contentDescription="@string/app_name"
+        android:onClick="onTitleBarRightButtonClick"
         android:background="@null"  />
 
     <ImageView
         android:id="@+id/title_bar_center_image"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:contentDescription="@string/app_name"

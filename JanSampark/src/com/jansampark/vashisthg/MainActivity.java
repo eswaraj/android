@@ -3,6 +3,7 @@ package com.jansampark.vashisthg;
 import com.jansampark.vashisthg.helpers.TitleBarHelper;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
@@ -25,6 +27,7 @@ public class MainActivity extends FragmentActivity  {
 	private RadioGroup footerTab;
 	private ViewGroup titleBar;
 	TitleBarHelper titleBarHelper;
+	Location lastKnownLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +48,18 @@ public class MainActivity extends FragmentActivity  {
     	titleBarHelper = new TitleBarHelper();
     	titleBarHelper.setTitleBar(titleBar);
     	titleBarHelper.setLeftButtonIcon(R.drawable.ic_info);
-    	titleBarHelper.setRightButtonIcon(R.drawable.ic_edit);
-    	titleBarHelper.setOnRightButtonClick(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				startActivity(new Intent(MainActivity.this, UserImageActivity.class));
-				
-			}
-		});
+    	titleBarHelper.setRightButtonIcon(R.drawable.ic_edit);   	
     }
     
     
     private void initFragments() {
-		analyticsFragment = MainAnalyticsFragment.newInstance(null);
-		issueFragment = MainIssueFragment.newInstance(null);
+    	Log.d(TAG, "initFragments");
+		if( null == analyticsFragment) {
+			analyticsFragment = MainAnalyticsFragment.newInstance(null);
+		}
+		if(null == issueFragment) {
+			issueFragment = MainIssueFragment.newInstance(null);
+		}
 	}
     
     private void initViewPagingAndTabs() {
@@ -118,5 +118,13 @@ public class MainActivity extends FragmentActivity  {
 		}
 	}; 
 	
+	
+	public void onTitleBarLeftButtonClick(View view) {
+		
+	}
+	
+	public void onTitleBarRightButtonClick(View view) {
+		startActivity(new Intent(MainActivity.this, UserImageActivity.class));
+	}
 	
 }

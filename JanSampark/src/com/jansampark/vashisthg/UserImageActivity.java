@@ -123,4 +123,12 @@ public class UserImageActivity extends CameraUtilActivity {
 		displayImageIfAvailable();
 	}
 	
+	public void onTitleBarLeftButtonClick(View view) {
+		onBackPressed();
+	}
+	
+	public void onTitleBarRightButtonClick(View view) {
+		
+	}
+	
 }
