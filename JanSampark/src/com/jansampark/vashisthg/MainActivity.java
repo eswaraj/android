@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 public class MainActivity extends FragmentActivity  {
 	public static final String TAG = "Main";
 
+	public static final String EXTRA_LOCATION = "location";
     MainAnalyticsFragment analyticsFragment;
     MainIssueFragment issueFragment;
     private MyPagerAdapter adapter;
@@ -38,7 +39,10 @@ public class MainActivity extends FragmentActivity  {
         titleBar = (ViewGroup) findViewById(R.id.main_title_bar);
                 
         if(null == savedInstanceState) {
+        	lastKnownLocation = getIntent().getParcelableExtra(EXTRA_LOCATION);
         	initFragments();
+        } else {
+        	lastKnownLocation = savedInstanceState.getParcelable(EXTRA_LOCATION);
         }
         initViewPagingAndTabs();
         setTitleBar();
@@ -49,6 +53,12 @@ public class MainActivity extends FragmentActivity  {
     	titleBarHelper.setTitleBar(titleBar);
     	titleBarHelper.setLeftButtonIcon(R.drawable.ic_info);
     	titleBarHelper.setRightButtonIcon(R.drawable.ic_edit);   	
+    }
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    	super.onSaveInstanceState(outState);
+    	outState.putParcelable(EXTRA_LOCATION, lastKnownLocation);
     }
     
     

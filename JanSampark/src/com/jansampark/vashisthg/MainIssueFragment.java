@@ -2,6 +2,8 @@ package com.jansampark.vashisthg;
 
 
 
+import java.security.acl.LastOwnerException;
+
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -42,8 +44,12 @@ public class MainIssueFragment extends Fragment {
     Location lastKnownLocation;
     
     
-    public static MainIssueFragment newInstance(Bundle args) {
-    	return new MainIssueFragment();
+    public static MainIssueFragment newInstance(Location lastKnownLocation) {
+    	MainIssueFragment issueFragment = new MainIssueFragment();
+    	Bundle bundle = new Bundle();
+    	bundle.putParcelable(SAVED_LOCATION, lastKnownLocation);
+    	issueFragment.setArguments(bundle);
+    	return issueFragment;
     }
     
 	@Override
@@ -56,6 +62,8 @@ public class MainIssueFragment extends Fragment {
         super.onCreate(savedInstanceState);       
         if(null != savedInstanceState) {
         	lastKnownLocation = savedInstanceState.getParcelable(SAVED_LOCATION);
+        } else {
+        	lastKnownLocation = getArguments().getParcelable(SAVED_LOCATION);
         }
     }
 			
@@ -114,6 +122,7 @@ public class MainIssueFragment extends Fragment {
 
 	    @Override
 	    public void onConnected(Bundle arg0) {
+	    	lastKnownLocation = locationClient.getLastLocation();
 	        LocationRequest locationRequest = LocationRequest.create();
 	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 	        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
