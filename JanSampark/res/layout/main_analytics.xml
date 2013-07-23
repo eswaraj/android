@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:issueButton="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_analytics_scroll_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -107,41 +108,36 @@
                 android:layout_height="fill_parent"
                 android:gravity="center" >
 
-                <Button
+                <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_road"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/main_button_margin"
-                    android:layout_marginRight="@dimen/main_button_margin"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_road"
-                    android:text="@string/main_road"
-                    android:textColor="@color/main_text"
-                    android:textSize="@dimen/main_button_text" />
+                    issueButton:tertiaryText="@null"
+                    issueButton:image="@drawable/ic_analytics_road"
+                    issueButton:bottomText="@string/main_road"
+                    
+                     />
 
-                <Button
+                <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_water"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/main_button_margin"
-                    android:layout_marginRight="@dimen/main_button_margin"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_water"
-                    android:text="@string/main_water"
-                    android:textColor="@color/main_text"
-                    android:textSize="@dimen/main_button_text" />
+                    
+                    
+                    issueButton:tertiaryText="@null"
+                    issueButton:image="@drawable/ic_analytics_water"
+                    issueButton:bottomText="@string/main_water"
+                     />
 
-                <Button
+                <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_transportation"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/main_button_margin"
-                    android:layout_marginRight="@dimen/main_button_margin"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_transport"
-                    android:text="@string/main_transportation"
-                    android:textColor="@color/main_text"
-                    android:textSize="@dimen/main_button_text" />
+                    android:layout_height="wrap_content"                    
+                    
+                    issueButton:tertiaryText="@null"
+                    issueButton:image="@drawable/ic_analytics_transport"
+                    issueButton:bottomText="@string/main_transportation"
+                     />
             </TableRow>
 
             <TableRow
@@ -149,41 +145,33 @@
                 android:layout_height="fill_parent"
                 android:gravity="center" >
 
-                <Button
+                <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_electricity"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/main_button_margin"
-                    android:layout_marginRight="@dimen/main_button_margin"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_electricity"
-                    android:text="@string/main_electricity"
-                    android:textColor="@color/main_text"
-                    android:textSize="@dimen/main_button_text" />
+                    android:layout_height="wrap_content"                 
+                    
+                    issueButton:tertiaryText="@null"
+                    issueButton:image="@drawable/ic_analytics_electricity"
+                    issueButton:bottomText="@string/main_electricity" />
 
-                <Button
+                <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_law"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/main_button_margin"
-                    android:layout_marginRight="@dimen/main_button_margin"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_law"
-                    android:text="@string/main_law_and_order"
-                    android:textColor="@color/main_text"
-                    android:textSize="@dimen/main_button_text" />
+                                      
+                    issueButton:tertiaryText="@null"
+                    issueButton:image="@drawable/ic_analytics_law"
+                    issueButton:bottomText="@string/main_law_and_order"
+                     />
 
-                <Button
+                <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_sewage"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/main_button_margin"
-                    android:layout_marginRight="@dimen/main_button_margin"
-                    android:background="@null"
-                    android:drawableTop="@drawable/ic_analytics_sewage"
-                    android:text="@string/main_sewage"
-                    android:textColor="@color/main_text"
-                    android:textSize="@dimen/main_button_text" />
+                    android:layout_height="wrap_content" 
+                    
+                    issueButton:tertiaryText="@null"
+                    issueButton:image="@drawable/ic_analytics_sewage"
+                    issueButton:bottomText="@string/main_sewage"/>
             </TableRow>
         </TableLayout>
 
