@@ -42,6 +42,13 @@ public class IssueActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issue);
         setViews();
+        setExtrasAndSavedInstance(savedInstanceState); 
+        setIssueBannerAndText();
+        setListView();
+        setNumTV();
+    }
+    
+    private void setExtrasAndSavedInstance(Bundle savedInstanceState) {
         if(null == savedInstanceState) {
         	isAnalytics = getIntent().getBooleanExtra(EXTRA_IS_ANALYTICS, false);
             issue = (ISSUE_CATEGORY) getIntent().getSerializableExtra(EXTRA_ISSUE);
@@ -51,10 +58,6 @@ public class IssueActivity extends Activity {
         	issue = (ISSUE_CATEGORY) savedInstanceState.getSerializable(EXTRA_ISSUE);
         	location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
         }
-
-        setIssueBannerAndText();
-        setListView();
-        setNumTV();
     }
     
     private void setViews() {
