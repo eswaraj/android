@@ -381,7 +381,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	            @Override
 	            public void onErrorResponse(VolleyError error) {	            	
 	            	hideSendingOverlay();
-	            	Toast.makeText(IssueDetailsActivity.this, "Could not connect to server.", Toast.LENGTH_LONG).show();
+	            	Toast.makeText(IssueDetailsActivity.this, R.string.network_error, Toast.LENGTH_LONG).show();
 	            	if(null != error) {
 	            		Log.e("Details", "" + error.getMessage());
 	            	}

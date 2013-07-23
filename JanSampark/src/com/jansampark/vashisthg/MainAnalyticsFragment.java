@@ -1,20 +1,17 @@
 package com.jansampark.vashisthg;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.achartengine.GraphicalView;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -31,17 +28,19 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
 import com.jansampark.vashisthg.helpers.ConstuencyParserHelper;
 import com.jansampark.vashisthg.helpers.Utils;
+import com.jansampark.vashisthg.models.Analytics;
 import com.jansampark.vashisthg.models.Constituency;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.volley.JsonRequestWithCache;
@@ -66,6 +65,8 @@ public class MainAnalyticsFragment extends Fragment {
 	int[] vals;
 	
 	private RequestQueue mRequestQueue;
+	
+	List<Analytics> analyticsArray;
 
 	public static MainAnalyticsFragment newInstance(Bundle args) {
 		return new MainAnalyticsFragment();
@@ -83,6 +84,7 @@ public class MainAnalyticsFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mRequestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+		analyticsArray = new ArrayList<Analytics>();
 	}
 
 	
@@ -318,7 +320,9 @@ public class MainAnalyticsFragment extends Fragment {
 	        return new Response.ErrorListener() {
 	            @Override
 	            public void onErrorResponse(VolleyError error) {
-	            	
+	            	if(isResumed) {
+	            		Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
+	            	}
 	            }
 	        };
 	  }
@@ -353,10 +357,27 @@ public class MainAnalyticsFragment extends Fragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
             	try {
+            		
             		if(isResumed) {
 						Log.d(TAG, jsonObject.toString(2));
-						///JSONObject node = jsonObject.getJSONArray("nodes").getJSONObject(0).getJSONObject("node");
-						
+						Iterator<String> iter = jsonObject.keys();
+						while(iter.hasNext()) {
+							String key = iter.next().toString();
+							int keyInt = Integer.parseInt(key);
+							JSONArray array = jsonObject.getJSONArray(key);
+							
+							
+							for(int i = 0; i < array.length(); i++) {
+								Analytics analytics = new Analytics();
+								analytics.setIssueCategory(keyInt);
+								JSONObject itemObject = array.getJSONObject(i);
+								analytics.setTemplateId(itemObject.getInt("template_id"));
+								analytics.setCount(itemObject.getInt("counter"));
+								analyticsArray.add(analytics);
+							}
+							
+							
+						}
             		}
 				} catch (JSONException e) {
 					e.printStackTrace();
