@@ -14,6 +14,12 @@
         <attr name="is_oval" format="boolean" />
         <attr name="android:scaleType" />
     </declare-styleable>
+    
+     <declare-styleable name="IssueButton">
+        <attr name="image" format="reference" />
+        <attr name="tertiaryText" format="reference" />
+        <attr name="bottomText" format="reference" />
+    </declare-styleable>
    
 
 </resources>
