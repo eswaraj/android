@@ -1,7 +1,7 @@
 package com.jansampark.vashisthg;
 
-import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
-import com.jansampark.vashisthg.models.IssueItem;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jansampark.vashisthg.models.Analytics;
+import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
+import com.jansampark.vashisthg.models.IssueItem;
+
 /**
  * Created by gaurav vashisth on 1/7/13.
  */
@@ -20,6 +24,7 @@ public class IssueActivity extends Activity {
 
     public static final String EXTRA_ISSUE = "issue";
     public static final String EXTRA_LOCATION = "location";
+    public static final String EXTRA_ANALYTICS_LIST = "analytics";
     
     private View issueBanner;
     private TextView issueNameTV;
@@ -34,10 +39,22 @@ public class IssueActivity extends Activity {
     
     
     public static final String EXTRA_IS_ANALYTICS = "isAnalytics";
-    public boolean isAnalytics;
+    private boolean isAnalytics;
+    private ArrayList<Analytics> analyticsList;
     
 
-    @Override
+    public ArrayList<Analytics> getAnalyticsList() {
+    	if(null == analyticsList) {
+    		analyticsList = new ArrayList<Analytics>();
+    	}
+		return analyticsList;
+	}
+
+	public void setAnalyticsList(ArrayList<Analytics> analyticsList) {
+		this.analyticsList = analyticsList;
+	}
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issue);
@@ -53,10 +70,12 @@ public class IssueActivity extends Activity {
         	isAnalytics = getIntent().getBooleanExtra(EXTRA_IS_ANALYTICS, false);
             issue = (ISSUE_CATEGORY) getIntent().getSerializableExtra(EXTRA_ISSUE);
             location = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
+            analyticsList =  getIntent().getParcelableArrayListExtra(EXTRA_ANALYTICS_LIST);
         } else {
         	isAnalytics = savedInstanceState.getBoolean(EXTRA_IS_ANALYTICS);
         	issue = (ISSUE_CATEGORY) savedInstanceState.getSerializable(EXTRA_ISSUE);
         	location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
+        	analyticsList = savedInstanceState.getParcelableArrayList(EXTRA_ANALYTICS_LIST);
         }
     }
     
@@ -115,11 +134,13 @@ public class IssueActivity extends Activity {
     }
     private void setNumTV() {
     	if(isAnalytics) {
-    		
+    		numIssuesTV.setText(String.format(getResources().getString(R.string.issue_issues), adapter.getCount()));    		
+    		numIssuesTV.setVisibility(View.VISIBLE);
+    		numViewsTV.setVisibility(View.VISIBLE);
     	} else {
     		numIssuesTV.setText(String.format(getResources().getString(R.string.issue_issues), adapter.getCount()));
     		numIssuesTV.setVisibility(View.VISIBLE);
-    		numViewsTV.setVisibility(View.INVISIBLE);
+    		numViewsTV.setVisibility(View.GONE);
     	}
     	
     }
@@ -131,6 +152,7 @@ public class IssueActivity extends Activity {
     	outState.putSerializable(EXTRA_ISSUE, issue);
     	outState.putParcelable(EXTRA_LOCATION, location);
     	outState.putBoolean(EXTRA_IS_ANALYTICS, isAnalytics);
+    	outState.putParcelableArrayList(EXTRA_ANALYTICS_LIST, analyticsList);
     }
     
     private OnItemClickListener listItemClickListener = new OnItemClickListener() {

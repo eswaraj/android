@@ -258,30 +258,30 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 	
 	public void onSewageClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.SEWAGE);
+		openIssueActivity(ISSUE_CATEGORY.SEWAGE, analyticsMap.get(getResources().getInteger(R.integer.sewage)));
 	}
 
 	public void onTransportationClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.TRANSPORT);
+		openIssueActivity(ISSUE_CATEGORY.TRANSPORT, analyticsMap.get(getResources().getInteger(R.integer.transportation)));
 	}
 
 	public void onWaterClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.WATER);
+		openIssueActivity(ISSUE_CATEGORY.WATER, analyticsMap.get(getResources().getInteger(R.integer.water)));
 	}
 
 	public void onRoadClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.ROAD);
+		openIssueActivity(ISSUE_CATEGORY.ROAD, analyticsMap.get(getResources().getInteger(R.integer.road)));
 	}
 
 	public void onElectricityClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.ELECTRICITY);
+		openIssueActivity(ISSUE_CATEGORY.ELECTRICITY, analyticsMap.get(getResources().getInteger(R.integer.electricity)));
 	}
 
 	public void onLawAndOrderClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.LAW);
+		openIssueActivity(ISSUE_CATEGORY.LAW, analyticsMap.get(getResources().getInteger(R.integer.lawandorder)));
 	}
 
-	private void openIssueActivity(ISSUE_CATEGORY issue) {
+	private void openIssueActivity(ISSUE_CATEGORY issue, List<Analytics> analytics) {
 		Intent intent = new Intent(getActivity(), IssueActivity.class);
 		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
 		intent.putExtra(IssueActivity.EXTRA_IS_ANALYTICS, true);
