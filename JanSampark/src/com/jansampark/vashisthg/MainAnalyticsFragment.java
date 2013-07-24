@@ -417,9 +417,12 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	private void setViewsAccordingToAnalytics() {
 		setTotalComplaintCount();
-	    setWaterCount(waterButton, R.integer.water);
-	    
-	    
+	    setIssueCount(waterButton, R.integer.water);
+	    setIssueCount(sewageButton, R.integer.sewage);
+	    setIssueCount(lawButton, R.integer.sewage);
+	    setIssueCount(roadButton, R.integer.road);
+	    setIssueCount(electricityButton, R.integer.electricity);
+	    setIssueCount(transportationButton, R.integer.transportation);	    
 	}
 	
 	private void setTotalComplaintCount() {
@@ -436,19 +439,19 @@ public class MainAnalyticsFragment extends Fragment {
 	    setCounts(issueCount, complaintCount);
 	}
 	
-	private void setWaterCount(IssueButton issueButton, int categoryResId) {
+	private void setIssueCount(IssueButton issueButton, int categoryResId) {
 		try {		
 			int waterPercentage = 0;
 			int waterCount = 0;
 			Resources resources = getActivity().getResources();
-			Integer waterIssueCategory = resources.getInteger(R.integer.water);
+			Integer waterIssueCategory = resources.getInteger(categoryResId);
 			if(analyticsMap.containsKey(waterIssueCategory)) {			
 				waterCount = analyticsMap.get(waterIssueCategory).size();
 			}
 			waterPercentage = waterCount/complaintCount;
-			waterButton.setPercentage(waterPercentage );
+			issueButton.setPercentage(waterPercentage );
 		} catch (Exception e) {
-			waterButton.setPercentage(0);
+			issueButton.setPercentage(0);
 			e.printStackTrace();
 		}
 	}
