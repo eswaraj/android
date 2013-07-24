@@ -15,6 +15,7 @@
     <dimen name="main_select_margin_top">32dp</dimen>
     <dimen name="main_select_margin_bottom">16dp</dimen>
     <dimen name="main_button_text">20sp</dimen>
+    <dimen name="main_button_percentage">25sp</dimen>
     <dimen name="main_button_margin">32dp</dimen>
     <dimen name="bottom_tabs_height">64dp</dimen>
     <dimen name="bottom_tabs_text">16sp</dimen>

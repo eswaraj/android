@@ -26,7 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="@dimen/main_button_text"
+            android:textSize="@dimen/main_button_percentage"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
              />
 
     </FrameLayout>

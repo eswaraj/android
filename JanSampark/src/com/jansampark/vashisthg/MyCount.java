@@ -10,14 +10,12 @@ public class MyCount extends CountDownTimer {
 
 	public static MyCount newInstance(int number, TextView textView) {
 
-		long countDownInterval = 40;
+		long countDownInterval = 1;
 		long millisInFuture = number * countDownInterval;
-		return new MyCount(millisInFuture, countDownInterval, number,
-				textView);
+		return new MyCount(number * millisInFuture, countDownInterval, number, textView);
 	}
 
-	private MyCount(long millisInFuture, long countDownInterval,
-			int number, TextView textView) {
+	private MyCount(long millisInFuture, long countDownInterval, int number, TextView textView) {
 		super(millisInFuture, countDownInterval);
 		this.number = number;
 		this.textView = textView;

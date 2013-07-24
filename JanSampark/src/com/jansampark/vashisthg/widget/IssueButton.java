@@ -19,15 +19,13 @@ public class IssueButton extends LinearLayout {
 	String bottomText;
 	Drawable image;
 	
+	TextView tertiaryTextView;
+	TextView bottomTextView;
+	
 	public IssueButton(Context context) {
 		this(context, null);
 	}	
-	
-//	public IssueButton(Context context, AttributeSet attrs, int defStyle) {
-//		super(context, attrs, defStyle);
-//		initView(context, attrs);		
-//	}
-	
+		
 	public IssueButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initView(context, attrs);
@@ -35,7 +33,7 @@ public class IssueButton extends LinearLayout {
 
 	
 	private void initView(Context context, AttributeSet attrs) {
-//		View.inflate(getContext(), R.layout.main_button_layout, this);
+
 		LayoutInflater.from(getContext()).inflate(R.layout.main_button_layout, this, true);
 		if(null != attrs) {
 			TypedArray a = context.obtainStyledAttributes(attrs,
@@ -56,8 +54,10 @@ public class IssueButton extends LinearLayout {
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		try {
-			((TextView)findViewById(R.id.issue_button_bottom_text)).setText(bottomText != null ? bottomText : "");
-			((TextView)findViewById(R.id.issue_button_tertiary_text)).setText(tertiaryText != null ? tertiaryText : "");
+			bottomTextView = ((TextView)findViewById(R.id.issue_button_bottom_text));
+			bottomTextView.setText(bottomText != null ? bottomText : "");
+			tertiaryTextView = ((TextView)findViewById(R.id.issue_button_tertiary_text));
+			tertiaryTextView.setText(tertiaryText != null ? tertiaryText : "");
 			((ImageView)findViewById(R.id.issue_button_image)).setImageDrawable(image);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -72,6 +72,10 @@ public class IssueButton extends LinearLayout {
 	         View v = getChildAt(i);
 		 v.layout(itemWidth*i, top, (i+1)*itemWidth, bottom);
 	     }
+	}
+	
+	public void setPercentage(int number) {
+		tertiaryTextView.setText(number + " %");
 	}
 
 }

@@ -10,9 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/splash_image"
-            android:src="@drawable/splash_1"
-            android:layout_below="@+id/textView"
-            android:layout_centerHorizontal="true"
+            android:src="@drawable/walkthrough"
             android:scaleType="centerCrop"/>
 
 </FrameLayout>

@@ -2,16 +2,21 @@ package com.jansampark.vashisthg;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.achartengine.GraphicalView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -27,6 +32,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,18 +40,20 @@ import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
 import com.jansampark.vashisthg.helpers.ConstuencyParserHelper;
+import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.models.Analytics;
 import com.jansampark.vashisthg.models.Constituency;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.volley.JsonRequestWithCache;
+import com.jansampark.vashisthg.widget.IssueButton;
 import com.jansampark.vashisthg.widget.PieChartView;
 
+@SuppressLint("UseSparseArrays")
 public class MainAnalyticsFragment extends Fragment {
 	
 	private static final String TAG = "Analytics";
@@ -66,7 +74,14 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	private RequestQueue mRequestQueue;
 	
-	List<Analytics> analyticsArray;
+	Map<Integer, List<Analytics>> analyticsMap;
+	
+	private IssueButton roadButton;
+	private IssueButton waterButton;
+	private IssueButton transportationButton;
+	private IssueButton electricityButton;
+	private IssueButton lawButton;
+	private IssueButton sewageButton;
 
 	public static MainAnalyticsFragment newInstance(Bundle args) {
 		return new MainAnalyticsFragment();
@@ -84,11 +99,9 @@ public class MainAnalyticsFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mRequestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-		analyticsArray = new ArrayList<Analytics>();
+		analyticsMap = new HashMap<Integer, List<Analytics>>();
 	}
-
 	
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -105,16 +118,15 @@ public class MainAnalyticsFragment extends Fragment {
 		setButtons();
 		setPieChart();
 		setAutoComplete(view);
-		//setLocationSpinner();
 		initButtonListeners();
 	}
 	private void initButtonListeners() {
-		getActivity().findViewById(R.id.main_analytics_electricity).setOnClickListener(buttonListener);		
-		getActivity().findViewById(R.id.main_analytics_law).setOnClickListener(buttonListener);
-		getActivity().findViewById(R.id.main_analytics_road).setOnClickListener(buttonListener);
-		getActivity().findViewById(R.id.main_analytics_sewage).setOnClickListener(buttonListener);
-		getActivity().findViewById(R.id.main_analytics_transportation).setOnClickListener(buttonListener);
-		getActivity().findViewById(R.id.main_analytics_water).setOnClickListener(buttonListener);
+		electricityButton.setOnClickListener(buttonListener);		
+		lawButton.setOnClickListener(buttonListener);
+		roadButton.setOnClickListener(buttonListener);
+		sewageButton.setOnClickListener(buttonListener);
+		transportationButton.setOnClickListener(buttonListener);
+		waterButton.setOnClickListener(buttonListener);
 	}
 	
 	boolean isResumed;
@@ -123,7 +135,7 @@ public class MainAnalyticsFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		isResumed = true;
-		setCounts();
+		setCounts(issueCount, complaintCount);
 	}
 
 	@Override
@@ -132,20 +144,20 @@ public class MainAnalyticsFragment extends Fragment {
 		super.onPause();
 	}
 
-	private void setCounts() {
+	private void setCounts(int issueCount, int complaintCount) {
 		issueNumTV = (TextView) getActivity().findViewById(R.id.issue_num);
 		complaintsNumTV = (TextView) getActivity().findViewById(
 				R.id.complaint_num);
 		if (null != issueCounter) {
 			issueCounter.cancel();
 		}
-		issueCounter = MyCount.newInstance(10, issueNumTV);
+		issueCounter = MyCount.newInstance(issueCount, issueNumTV);
 		issueCounter.start();
 
 		if (null != complaintCounter) {
 			complaintCounter.cancel();
 		}
-		complaintCounter = MyCount.newInstance(245, complaintsNumTV);
+		complaintCounter = MyCount.newInstance(complaintCount, complaintsNumTV);
 		complaintCounter.start();
 	}
 
@@ -167,7 +179,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	public void onFragmentShown() {
-		setCounts();
+		setCounts(issueCount, complaintCount);
 	}
 
 	private void setButtons() {
@@ -182,6 +194,14 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 
 		});
+		
+		
+		electricityButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_electricity);
+		roadButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_road);
+		waterButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_water);
+		transportationButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_transportation);
+		lawButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_law);
+		sewageButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_sewage);
 	}
 	
 	private void onRadioClick() {
@@ -312,6 +332,7 @@ public class MainAnalyticsFragment extends Fragment {
 		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createMLAIDReqSuccessListener(), createMyReqErrorListener());
 	
 		mRequestQueue.add(request);
+		DialogFactory.showPleaseWaitProgressDialog(getActivity());
 	}
 	
 	
@@ -322,6 +343,7 @@ public class MainAnalyticsFragment extends Fragment {
 	            public void onErrorResponse(VolleyError error) {
 	            	if(isResumed) {
 	            		Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
+	            		DialogFactory.hideProgressDialog();
 	            	}
 	            }
 	        };
@@ -345,7 +367,7 @@ public class MainAnalyticsFragment extends Fragment {
 	private void executeAnalyticsRequest(String mlaId) {
 		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + mlaId + "&time_frame=1m";
 		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createMLADetailsReqSuccessListener(), createMyReqErrorListener());
-		mRequestQueue.add(request);
+		mRequestQueue.add(request);		
 	}
 	
 	String MLAName;
@@ -365,6 +387,7 @@ public class MainAnalyticsFragment extends Fragment {
 							String key = iter.next().toString();
 							int keyInt = Integer.parseInt(key);
 							JSONArray array = jsonObject.getJSONArray(key);
+							List<Analytics> analyticsList = new ArrayList<Analytics>();
 							
 							
 							for(int i = 0; i < array.length(); i++) {
@@ -373,17 +396,61 @@ public class MainAnalyticsFragment extends Fragment {
 								JSONObject itemObject = array.getJSONObject(i);
 								analytics.setTemplateId(itemObject.getInt("template_id"));
 								analytics.setCount(itemObject.getInt("counter"));
-								analyticsArray.add(analytics);
+								analyticsList.add(analytics);
 							}
 							
-							
+							Log.d(TAG, "analytics, array length: " + analyticsList.size());
+							analyticsMap.put(keyInt, analyticsList);
+							setViewsAccordingToAnalytics();
 						}
             		}
+            		DialogFactory.hideProgressDialog();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}        	
             }
         };
     }
+	
+	int complaintCount = 0;
+	int issueCount = 0;
+	
+	private void setViewsAccordingToAnalytics() {
+		setTotalComplaintCount();
+	    setWaterCount(waterButton, R.integer.water);
+	    
+	    
+	}
+	
+	private void setTotalComplaintCount() {
+		int totalCount = 0;
+		Iterator<Entry<Integer, List<Analytics>>> it = analyticsMap.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<Integer, List<Analytics>>  pairs = (Map.Entry<Integer, List<Analytics>>)it.next();
+	        System.out.println(pairs.getKey() + " = " + pairs.getValue());
+	        for (Analytics analytics : pairs.getValue()) {
+				totalCount += analytics.getCount();
+			}	        
+	    }
+	    complaintCount = totalCount;
+	    setCounts(issueCount, complaintCount);
+	}
+	
+	private void setWaterCount(IssueButton issueButton, int categoryResId) {
+		try {		
+			int waterPercentage = 0;
+			int waterCount = 0;
+			Resources resources = getActivity().getResources();
+			Integer waterIssueCategory = resources.getInteger(R.integer.water);
+			if(analyticsMap.containsKey(waterIssueCategory)) {			
+				waterCount = analyticsMap.get(waterIssueCategory).size();
+			}
+			waterPercentage = waterCount/complaintCount;
+			waterButton.setPercentage(waterPercentage );
+		} catch (Exception e) {
+			waterButton.setPercentage(0);
+			e.printStackTrace();
+		}
+	}
 	
 }
