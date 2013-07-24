@@ -1,5 +1,8 @@
 package com.jansampark.vashisthg;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
@@ -21,6 +24,8 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
@@ -36,6 +41,8 @@ import com.jansampark.vashisthg.models.IssueItem;
 import com.jansampark.vashisthg.volley.MultipartRequest;
 
 public class IssueDetailsActivity extends CameraUtilActivity {
+	
+	private static final String TAG = "IssueDetailsActivity";
 	
 	public static class IssueDetail {
 		public String lat;
@@ -59,8 +66,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	private EditText descriptionET;
 	private TextView descriptionTextView;
 	private Button editDesctiption;
-	
-	
+		
 	private ViewGroup takeImageContainer;
 	private ViewGroup imageTakenContainer;
 	private ImageView issueImageView;
@@ -69,8 +75,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	private Button postButton;
 	
 	CameraHelper cameraHelper;
-	
-	
+		
 	private RequestQueue mRequestQueue;
 	
 	Location lastKnownLocation;
@@ -120,8 +125,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		outState.putParcelable(EXTRA_ISSUE_ITEM, issueItem);
 		outState.putParcelable(EXTRA_LOCATION, lastKnownLocation);
 		cameraHelper.onSaveInstanceState(outState);
-	}
-	
+	}	
 	
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -146,15 +150,13 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		darkOverlay = findViewById(R.id.issue_details_overlay);
 		sendingImage = (ImageView)findViewById(R.id.issue_details_sending_image);
 		postButton = (Button) findViewById(R.id.issue_details_post);
-		
-		
+				
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		nameTV.setText(issueItem.getIssueName());
 		systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
 		setDescription();
 		resetDescription();
-		setIssueImageViews();
-		
+		setIssueImageViews();		
 	}
 	
 	@Override
@@ -165,9 +167,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			super.onBackPressed();
 		}
 	}
-	
-	
-	
+		
 	private void setIssueImageViews() {
 		takeImageContainer = (ViewGroup) findViewById(R.id.take_photo_container_ref);
 		imageTakenContainer = (ViewGroup) findViewById(R.id.photo_taken_container_ref);	
@@ -192,9 +192,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			showDescriptionTV();
 		}
 	}
-	
-	
-	
+		
 	private void setDescription() {		
 		addDescription.setOnClickListener(new View.OnClickListener() {
 			
@@ -271,7 +269,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	public void onPostClick(View view) {
 		showSendingOverlay();
-		executeRequest();			
+		executeRequest();		
+		executeMLAIdRequest();
 	}
 	
 	private void showSendingOverlay() {
@@ -395,15 +394,97 @@ public class IssueDetailsActivity extends CameraUtilActivity {
             @Override
             public void onResponse(String response) {            	
             	Log.d("details", "response: " + response);            	
-            	Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
-            	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, issueItem);
-            	intent.putExtra(IssueSummaryActivity.EXTRA_LOCATION, lastKnownLocation);
-            	startActivity(intent);   
-            	hideSendingOverlay();
-            	finish();
+            	
             }
         };
     }	
+	
+	private void executeMLAIdRequest()  {	
+		if(null != lastKnownLocation) {
+			double lat = lastKnownLocation.getLatitude();
+			double lon = lastKnownLocation.getLongitude();
+			String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;		
+			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLAIDReqSuccessListener(), createMLAIdErrorListener());
+			
+			Log.d(TAG, "url: " + request.getUrl());
+			mRequestQueue.add(request);
+		}
+	}
+		
+	 private Response.ErrorListener createMLAIdErrorListener() {
+	        return new Response.ErrorListener() {
+	            @Override
+	            public void onErrorResponse(VolleyError error) {
+	            	Log.d(TAG, "try again");
+	            }
+	        };
+	  }
+	 
+	private Response.Listener<JSONObject> createMLAIDReqSuccessListener() {
+        return new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+            	try {
+            		Log.d(TAG, jsonObject.toString(1));
+					String mlaId = jsonObject.getString("consti_id");
+					Log.d(TAG, "consti_id: " + mlaId);
+					executeMLADetailsRequest(mlaId);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}        	
+            }
+        };
+    }	
+	
+	private void executeMLADetailsRequest(String mlaId) {
+		String url = "http://50.57.224.47/html/dev/micronews/mla-info/" + mlaId;
+		JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLADetailsReqSuccessListener(), createMLADetailsReqErrorListener());
+		mRequestQueue.add(request);
+	}
+	
+	String MLAName;
+	String MLAPic;
+	
+	private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
+        return new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+            	try {            	
+						JSONObject node = jsonObject.getJSONArray("nodes").getJSONObject(0).getJSONObject("node");
+						String url = node.getString("image");					
+						String name = node.getString("mla_name");
+						String constituency = node.getString("constituency");
+						nameTV.setText(name);
+						
+						Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, issueItem);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_LOCATION, lastKnownLocation);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_CONSTITUENCY, constituency);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_NAME, name);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_PIC, url);
+		            	startActivity(intent);   
+		            	hideSendingOverlay();
+		            	finish();
+            		
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}        	
+            }
+        };
+    }	
+	 private Response.ErrorListener createMLADetailsReqErrorListener() {
+	        return new Response.ErrorListener() {
+	            @Override
+	            public void onErrorResponse(VolleyError error) {	            	
+	            	hideSendingOverlay();
+	            	Toast.makeText(IssueDetailsActivity.this, R.string.network_error, Toast.LENGTH_LONG).show();
+	            	if(null != error) {
+	            		Log.e("Details", "" + error.getMessage());
+	            	}
+	            	postButton.setEnabled(true);
+	            }
+	        };
+	  }
 	
 	
 	public void onTitleBarLeftButtonClick(View view) {

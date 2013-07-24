@@ -2,23 +2,15 @@ package com.jansampark.vashisthg;
 
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.jansampark.vashisthg.helpers.LruBitmapCache;
@@ -27,12 +19,19 @@ import com.jansampark.vashisthg.models.Constituency;
 import com.jansampark.vashisthg.models.IssueItem;
 
 public class IssueSummaryActivity extends FragmentActivity {
-	private static final String TAG = "SUMMARY";
 	
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
 	public static final String EXTRA_LOCATION = "location";
+	public static final String EXTRA_MLA_NAME = "name";
+	public static final String EXTRA_MLA_PIC = "mla_pic";
+	public static final String EXTRA_CONSTITUENCY = "constituency";
+	
 	private IssueItem issueItem;
 	private Location location;
+	private String mlaName;
+	private String mlaUrl;
+	private String constituency;
+	
 	
 	private RequestQueue mRequestQueue;
 	ImageLoader imageLoader;
@@ -56,13 +55,20 @@ public class IssueSummaryActivity extends FragmentActivity {
 		if (null == savedInstanceState) {
 			issueItem = (IssueItem) getIntent().getParcelableExtra(EXTRA_ISSUE_ITEM);
 			location = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
+			mlaName = getIntent().getStringExtra(EXTRA_MLA_NAME);
+			mlaUrl = getIntent().getStringExtra(EXTRA_MLA_PIC);
+			constituency = getIntent().getStringExtra(EXTRA_CONSTITUENCY);
 		} else {
 			issueItem = (IssueItem) savedInstanceState.getSerializable(EXTRA_ISSUE_ITEM);
 			location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
+			mlaName = savedInstanceState.getString(EXTRA_MLA_NAME);
+			mlaUrl = savedInstanceState.getString(EXTRA_MLA_PIC);
+			constituency = savedInstanceState.getString(EXTRA_CONSTITUENCY);
 		}
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		imageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(4 * 1024 * 1024));
-		executeMLAIdRequest();
+		//executeMLAIdRequest();
+		setMLA();
 		setCategoryAndSystem();
 		fetchAddress();
 	}
@@ -84,6 +90,8 @@ public class IssueSummaryActivity extends FragmentActivity {
 		super.onSaveInstanceState(outState);
 		outState.putParcelable(EXTRA_ISSUE_ITEM, issueItem);
 		outState.putParcelable(EXTRA_LOCATION, location);
+		outState.putString(EXTRA_MLA_NAME, mlaName);
+		outState.putString(EXTRA_MLA_PIC, EXTRA_MLA_PIC);
 	}
 	
 	private void setView() {
@@ -98,75 +106,13 @@ public class IssueSummaryActivity extends FragmentActivity {
 	private void setCategoryAndSystem() {
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
+	}	
+	
+	private void setMLA() {
+		nameTV.setText(mlaName);
+		mlaImageView.setImageUrl(mlaUrl, imageLoader);
+		constituencyTV.setText(constituency);
 	}
-	
-	private void executeMLAIdRequest()  {	
-		double lat = location.getLatitude();
-		double lon = location.getLongitude();
-		String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;		
-		JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLAIDReqSuccessListener(), createMyReqErrorListener());
-		
-		Log.d(TAG, "url: " + request.getUrl());
-		mRequestQueue.add(request);
-	}
-	
-	
-	
-	 private Response.ErrorListener createMyReqErrorListener() {
-	        return new Response.ErrorListener() {
-	            @Override
-	            public void onErrorResponse(VolleyError error) {
-	            	Log.d(TAG, "try again");
-	            }
-	        };
-	  }
-	 
-	private Response.Listener<JSONObject> createMLAIDReqSuccessListener() {
-        return new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-            	try {
-            		Log.d(TAG, jsonObject.toString(1));
-					String mlaId = jsonObject.getString("consti_id");
-					Log.d(TAG, "consti_id: " + mlaId);
-					executeMLADetailsRequest(mlaId);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}        	
-            }
-        };
-    }	
-	
-	private void executeMLADetailsRequest(String mlaId) {
-		String url = "http://50.57.224.47/html/dev/micronews/mla-info/" + mlaId;
-		JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLADetailsReqSuccessListener(), createMyReqErrorListener());
-		mRequestQueue.add(request);
-	}
-	
-	String MLAName;
-	String MLAPic;
-	
-	private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
-        return new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-            	try {
-            		if(isResumed) {
-						Log.d(TAG, jsonObject.toString(2));
-						JSONObject node = jsonObject.getJSONArray("nodes").getJSONObject(0).getJSONObject("node");
-						String url = node.getString("image");
-						mlaImageView.setImageUrl(url, imageLoader);					
-						String name = node.getString("mla_name");
-						String constituency = node.getString("constituency");
-						nameTV.setText(name);
-						constituencyTV.setText(constituency);
-            		}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}        	
-            }
-        };
-    }	
 	
 	
 	private void fetchAddress() {
