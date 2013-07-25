@@ -208,5 +208,8 @@
 
     
     <string name="otherTypeOfComplaint">Others</string>
+    
+    <string name="network_error">Could not connect to server.</string>
+    <string name="dialog_please_wait">Please wait&#8230;</string>
 
 </resources>

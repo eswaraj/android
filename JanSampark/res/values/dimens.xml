@@ -14,16 +14,17 @@
     <dimen name="main_select_margin_top">16dp</dimen>
     <dimen name="main_select_margin_bottom">8dp</dimen>
     <dimen name="main_button_text">13sp</dimen>
+    <dimen name="main_button_percentage">20sp</dimen>
     <dimen name="main_button_margin">16dp</dimen>
     <dimen name="bottom_tabs_height">56dp</dimen>
     <dimen name="bottom_tabs_text">16sp</dimen>
     <dimen name="bottom_tab_one_side_padding">16dp</dimen>
     
-    <dimen name="main_pie_size">200dp</dimen>
+    <dimen name="main_pie_size">160dp</dimen>
     <dimen name="main_pie_padding">16dp</dimen>
     
-    <dimen name="countdown_label_text">16dp</dimen>
-    <dimen name="countdown_text">28dp</dimen>
+    <dimen name="countdown_label_text">14dp</dimen>
+    <dimen name="countdown_text">22dp</dimen>
     
     <dimen name="analytics_chooser_width">112dp</dimen>
     <dimen name="analytics_chooser_height">48dp</dimen>
@@ -65,6 +66,11 @@
     
     <dimen name="user_title_margin">16dp</dimen>
     <dimen name="user_title_size">20sp</dimen>
+    
+    <dimen name="issue_button_width">112dp</dimen>
+    <dimen name="issue_button_image_size">80dp</dimen>
+    <dimen name="issue_button_height">112dp</dimen>
+    <dimen name="issue_button_padding">0dp</dimen>
     
     
 </resources>

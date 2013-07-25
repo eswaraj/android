@@ -10,11 +10,12 @@
     <dimen name="title_bar_height">64dp</dimen>
     <dimen name="title_bar_button_width">80dp</dimen>
     
-    <dimen name="main_map_height">320dp</dimen>
+    <dimen name="main_map_height">400dp</dimen>
     <dimen name="main_select_text">28sp</dimen>
     <dimen name="main_select_margin_top">32dp</dimen>
     <dimen name="main_select_margin_bottom">16dp</dimen>
-    <dimen name="main_button_text">13sp</dimen>
+    <dimen name="main_button_text">20sp</dimen>
+    <dimen name="main_button_percentage">25sp</dimen>
     <dimen name="main_button_margin">32dp</dimen>
     <dimen name="bottom_tabs_height">64dp</dimen>
     <dimen name="bottom_tabs_text">16sp</dimen>
@@ -22,4 +23,11 @@
     
     
     <dimen name="isssue_list_padding">24dp</dimen>
+    
+    
+    <dimen name="issue_button_width">196dp</dimen>
+    <dimen name="issue_button_image_size">136dp</dimen>
+    
+    <dimen name="issue_button_height">196dp</dimen>
+    <dimen name="issue_button_padding">0dp</dimen>
 </resources>
