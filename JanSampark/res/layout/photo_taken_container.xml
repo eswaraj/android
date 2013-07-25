@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:cropToPadding="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/banner_electricity"
+            
             app:corner_radius="4dp" />
     </FrameLayout>
 
