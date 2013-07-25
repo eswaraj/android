@@ -1,34 +1,66 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity">
-
-
+    android:layout_gravity="center_horizontal"
+    tools:context=".SplashActivity" >
 
     <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/splash_image"
-            android:src="@drawable/walkthrough"
-            android:scaleType="centerCrop"/>
-    
+        android:id="@+id/splash_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/walkthrough" />
+
+    <FrameLayout
+        android:id="@+id/FrameLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#20000000" >
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="@dimen/splash_done_button_width"
+        android:layout_height="wrap_content"
+        
+        android:background="@drawable/post_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/splash_done_button_margin"
+        android:layout_marginTop="@dimen/splash_done_button_margin"
+        android:text="@string/done"
+        android:onClick="onDoneClick"
+        android:textColor="@android:color/white" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="@dimen/splash_seperator_width"
+        android:layout_height="2dp"
+        android:layout_centerHorizontal="true"          
+        android:layout_above="@+id/gallery_view_pager" 
+        android:background="@android:color/white" />
+
     <com.jansampark.vashisthg.widget.ViewPagerCustomDuration
         android:id="@+id/gallery_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="40dp" >
-         
-
+        android:layout_height="@dimen/splash_pager_height"
+        android:layout_alignLeft="@+id/splash_image"       
+        android:layout_above="@+id/gallery_radio_group" >
     </com.jansampark.vashisthg.widget.ViewPagerCustomDuration>
+
     <RadioGroup
-            android:id="@+id/gallery_radio_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:orientation="horizontal" >
+        android:id="@+id/gallery_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/splash_radio_bottom_margin"
+        android:orientation="horizontal" >
+    </RadioGroup>
 
-        </RadioGroup>
-
-</FrameLayout>
+</RelativeLayout>

@@ -2,30 +2,43 @@ package com.jansampark.vashisthg;
 
 
 
-import android.app.Activity;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.widget.ViewPagerCustomDuration;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends FragmentActivity {
 
 	
 	private com.jansampark.vashisthg.widget.ViewPagerCustomDuration pager;
 	private RadioGroup radioGroup;
 	private TextPagerAdapter adapter;
+	Timer timer;
+	String[] splashStrings;
+	
+	private static final int RADIO_BUTTON_STARTING_ID = 0x100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        startMainActivityAfterDelay();
+        startMainActivityIfRequired();
+        initSplashStrings();
         setView();
         setUpPager();
+        setUpRadioGroup();    
+        startAnimatingGallery();
     }
 
     private void setView() {
@@ -36,14 +49,14 @@ public class SplashActivity extends Activity {
     private void setUpPager() {
     	pager = (ViewPagerCustomDuration) findViewById(R.id.gallery_view_pager);
     	pager.setScrollDurationFactor(4);
-		adapter = new TextPagerAdapter(this);
+		adapter = new TextPagerAdapter(getSupportFragmentManager(), this, 3);
 		pager.setAdapter(adapter);
 		pager.setOffscreenPageLimit(2);
 		pager.setOnPageChangeListener(onPageChangeListener);
 		pager.setCurrentItem(0);
 	}
     
-private OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeListener() {
+    private OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeListener() {
 		
 		@Override
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -51,12 +64,45 @@ private OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeLis
 		}
 	};
 	
+	private void startAnimatingGallery() {
+		if (null != timer) {
+			timer.cancel();
+		}
+		timer = new Timer();
+		startTimer();
+	}
+	
+	private void startTimer() {
+		
+		timer.scheduleAtFixedRate(new TimerTask() {
+
+			@Override
+			public void run() {
+				SplashActivity.this.runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						int currentItem = pager.getCurrentItem();
+						
+						if (currentItem == splashStrings.length - 1) {
+							Log.d("Gallery", "show first item, current:" + currentItem);
+							pager.setCurrentItem(0, true);
+						} else {
+							Log.d("Gallery", "show next item, current:" + currentItem);
+							pager.setCurrentItem(currentItem + 1, true);
+						}				
+					}
+				});
+			}			
+		}, 2000, 2000);	
+	}
+	
 	private OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
 		
 		@Override
 		public void onPageSelected(int position) {
 			Log.d("Gallery", "page changed, position" + position);
-			//mRadioGroup.check(position + RADIO_BUTTON_STARTING_ID);			
+			radioGroup.check(position + RADIO_BUTTON_STARTING_ID);			
 		}
 		
 		@Override
@@ -68,29 +114,41 @@ private OnCheckedChangeListener onCheckedChangeListener = new OnCheckedChangeLis
 		}
 	};
 	
+	private void startMainActivityIfRequired() {
+		if(Utils.isFirstTimeBoot(getApplicationContext())) {
+			
+		} else {
+			startMainActivity();
+		}
+		
+	}
 	
-	
+	public void onDoneClick(View view) {
+		startMainActivity();
+	}
 
-    private void startMainActivityAfterDelay() {
-        runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startGalleryActivity();
-                        finish();
-                    }
-                }, 2000);
-
-            }
-        });
-    }
-
-    private void startGalleryActivity() {
+    private void startMainActivity() {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
+    
+    private void initSplashStrings() {
+    	splashStrings = getResources().getStringArray(R.array.splash_text);
+    }
+    
+    private void setUpRadioGroup() {
+		radioGroup = (RadioGroup) findViewById(R.id.gallery_radio_group);
+		radioGroup.setOnCheckedChangeListener(onCheckedChangeListener);
+		LayoutInflater inflater = getLayoutInflater();
+		
+		for(int i = 0; i< splashStrings.length ; i++) {
+			RadioButton radio = (RadioButton) inflater.inflate(R.layout.splash_radio, null);
+			radio.setId(RADIO_BUTTON_STARTING_ID + i);
+			radio.setEnabled(false);
+		    radioGroup.addView(radio);
+		}
+		radioGroup.check(RADIO_BUTTON_STARTING_ID);
+		radioGroup.setEnabled(false);
+	}
     
 }

@@ -2,6 +2,15 @@
     <!-- Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw600dp devices (e.g. 7" tablets) here. -->
          
+    <dimen name="splash_text">30sp</dimen>     
+    
+    <dimen name="splash_pager_bottom_margin">200dp</dimen>
+    <dimen name="splash_radio_bottom_margin">80dp</dimen>
+    <dimen name="splash_pager_height">120dp</dimen>
+    <dimen name="splash_seperator_bottom_margin">320dp</dimen>
+    <dimen name="splash_seperator_width">160dp</dimen>
+    <dimen name="splash_done_button_margin">40dp</dimen>
+    
     <dimen name="activity_horizontal_margin">40dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="issue_top_banner_height">144dp</dimen>

@@ -59,7 +59,7 @@
     <string-array name="splash_text">
         <item>Lorem ipsum dolerr</item>
         <item>Sir amet</item>
-        <item>Adipizingr</item>
+        <item>Adipizing</item>
     </string-array>
     
     <string name="water">Water</string>
@@ -211,5 +211,6 @@
     
     <string name="network_error">Could not connect to server.</string>
     <string name="dialog_please_wait">Please wait&#8230;</string>
+   
 
 </resources>

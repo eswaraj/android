@@ -140,6 +140,18 @@ public class Utils {
 	    cachedUserImage = null;
 	}
 	
+	public static boolean isFirstTimeBoot(Context context) {
+		 SharedPreferences settings = context.getSharedPreferences(SHARED_PREFS, 0);
+	     boolean isNotFirst = settings.getBoolean("isNotFirst", false);
+	     
+	     if(!isNotFirst) {
+	    	SharedPreferences.Editor editor = settings.edit();
+	 	    editor.putBoolean("isNotFirst", true);
+	 	    editor.commit();
+	     }
+	     
+	     return !isNotFirst;
+	}
 	
 	
 }
