@@ -282,10 +282,13 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void openIssueActivity(ISSUE_CATEGORY issue, List<Analytics> analytics) {
-		Intent intent = new Intent(getActivity(), IssueActivity.class);
-		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
-		intent.putExtra(IssueActivity.EXTRA_IS_ANALYTICS, true);
-		startActivity(intent);
+		
+			Intent intent = new Intent(getActivity(), IssueActivity.class);
+			intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
+			intent.putExtra(IssueActivity.EXTRA_IS_ANALYTICS, true);
+			intent.putParcelableArrayListExtra(IssueActivity.EXTRA_ANALYTICS_LIST, (ArrayList<Analytics>) analytics);
+			startActivity(intent);
+		
 	}
 	
 	android.view.View.OnClickListener buttonListener = new OnClickListener() {
@@ -370,9 +373,6 @@ public class MainAnalyticsFragment extends Fragment {
 		mRequestQueue.add(request);		
 	}
 	
-	String MLAName;
-	String MLAPic;
-	
 	
 	private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
         return new Response.Listener<JSONObject>() {
@@ -430,7 +430,6 @@ public class MainAnalyticsFragment extends Fragment {
 		Iterator<Entry<Integer, List<Analytics>>> it = analyticsMap.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<Integer, List<Analytics>>  pairs = (Map.Entry<Integer, List<Analytics>>)it.next();
-	        System.out.println(pairs.getKey() + " = " + pairs.getValue());
 	        for (Analytics analytics : pairs.getValue()) {
 				totalCount += analytics.getCount();
 			}	        
@@ -448,7 +447,9 @@ public class MainAnalyticsFragment extends Fragment {
 			if(analyticsMap.containsKey(waterIssueCategory)) {			
 				waterCount = analyticsMap.get(waterIssueCategory).size();
 			}
-			waterPercentage = waterCount/complaintCount;
+			if( complaintCount != 0) {
+				waterPercentage = (waterCount/complaintCount) * 100;
+			}
 			issueButton.setPercentage(waterPercentage );
 		} catch (Exception e) {
 			issueButton.setPercentage(0);

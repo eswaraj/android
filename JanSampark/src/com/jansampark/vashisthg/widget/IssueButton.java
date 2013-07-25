@@ -75,7 +75,7 @@ public class IssueButton extends LinearLayout {
 	}
 	
 	public void setPercentage(int number) {
-		tertiaryTextView.setText(number + " %");
+		tertiaryTextView.setText(number + "%");
 	}
 
 }

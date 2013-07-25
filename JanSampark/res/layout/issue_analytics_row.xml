@@ -9,12 +9,14 @@
     <View
         android:id="@+id/issue_row_color"
         android:layout_width="@dimen/issue_row_color_width"
+        android:layout_weight="0"
         android:layout_height="match_parent" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_weight="1"
         android:paddingLeft="@dimen/issue_row_text_left_padding"
         android:paddingRight="@dimen/issue_row_text_right_padding" >
 
@@ -33,15 +35,28 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_weight="0"
+        android:gravity = "right"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/issue_row_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="asdf" />
+            
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/issue_row_text_title"
+             />
+
+        <TextView
+            android:id="@+id/issue_row_complaints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/issue_row_text_type"
+            />
 
     </LinearLayout>
 

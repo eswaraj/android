@@ -125,9 +125,9 @@ public class IssueActivity extends Activity {
     private void setListView() {
     	issueList = (ListView) findViewById(R.id.issue_list);
     	if(isAnalytics) {
-    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_analytics_row);
+    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_analytics_row, analyticsList);
     	} else {
-    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_row);
+    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_row, null);
     	}
     	issueList.setAdapter(adapter);
     	issueList.setOnItemClickListener(listItemClickListener);
@@ -152,7 +152,7 @@ public class IssueActivity extends Activity {
     	outState.putSerializable(EXTRA_ISSUE, issue);
     	outState.putParcelable(EXTRA_LOCATION, location);
     	outState.putBoolean(EXTRA_IS_ANALYTICS, isAnalytics);
-    	outState.putParcelableArrayList(EXTRA_ANALYTICS_LIST, analyticsList);
+    	outState.putParcelableArrayList(EXTRA_ANALYTICS_LIST, getAnalyticsList());
     }
     
     private OnItemClickListener listItemClickListener = new OnItemClickListener() {
