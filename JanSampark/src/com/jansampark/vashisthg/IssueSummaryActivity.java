@@ -159,7 +159,8 @@ public class IssueSummaryActivity extends FragmentActivity {
 	public void startMainActivity() {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.putExtra(MainActivity.EXTRA_LOCATION, location);
+		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		//intent.putExtra(MainActivity.EXTRA_LOCATION, location);
 		startActivity(intent);
 		finish();
 	}	

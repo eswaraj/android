@@ -39,7 +39,6 @@ public class MainActivity extends FragmentActivity  {
         titleBar = (ViewGroup) findViewById(R.id.main_title_bar);
                 
         if(null == savedInstanceState) {
-        	lastKnownLocation = getIntent().getParcelableExtra(EXTRA_LOCATION);
         	initFragments();
         } else {
         	lastKnownLocation = savedInstanceState.getParcelable(EXTRA_LOCATION);
