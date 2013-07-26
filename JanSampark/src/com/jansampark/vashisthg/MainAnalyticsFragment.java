@@ -32,7 +32,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +62,8 @@ public class MainAnalyticsFragment extends Fragment {
 	FrameLayout pieChartHolder;
 	TextView issueNumTV;
 	TextView complaintsNumTV;
-	CompoundButton overallButton;
-	CompoundButton autoCompleteButton;
+	RadioButton overallButton;
+	RadioButton autoCompleteButton;
 	MyCount issueCounter;
 	MyCount complaintCounter;
 	
@@ -181,18 +183,49 @@ public class MainAnalyticsFragment extends Fragment {
 	public void onFragmentShown() {
 		setCounts(issueCount, complaintCount);
 	}
+	
+	boolean autoCompleteCheck;
 
 	private void setButtons() {
-		overallButton = (CompoundButton) getActivity().findViewById(
+		overallButton = (RadioButton) getActivity().findViewById(
 				R.id.analytics_overall);
-		autoCompleteButton = (CompoundButton) getActivity().findViewById(R.id.analytics_spinner);
+		autoCompleteButton = (RadioButton) getActivity().findViewById(R.id.analytics_spinner);
+		
+		((RadioGroup) getActivity().findViewById(R.id.analytics_chooser_container)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				switch (checkedId) {
+				case R.id.analytics_overall:
+					Log.d(TAG, "clicked on overall");
+					break;
+					
+				case R.id.analytics_spinner:
+					autoCompleteCheck = true;
+					Log.d(TAG, "clicked on autocomplete: ");
+					break;
+
+				default:
+					break;
+				}
+			}
+			
+			
+		});
+		
 		autoCompleteButton.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
-				onRadioClick();
+			public void onClick(View arg0) {
+				if(autoCompleteCheck) {
+					autoCompleteCheck = false;
+					overallButton.setChecked(false);
+					Log.d(TAG, "clicked on not already checked autocomplete: " + autoCompleteCheck);
+				} else {
+					onAutoCompleteRadioClick();
+				}
+				
 			}
-
 		});
 		
 		
@@ -204,20 +237,20 @@ public class MainAnalyticsFragment extends Fragment {
 		sewageButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_sewage);
 	}
 	
-	private void onRadioClick() {
+	private void onAutoCompleteRadioClick() {
 		if(autoCompleteTextView.getVisibility() == View.VISIBLE) {
 			disableAutoComplete();
 		} else {
+			overlay.setVisibility(View.VISIBLE);
 			if(null != lastSelectedLocation) {
 				autoCompleteTextView.setText(lastSelectedLocation.getName());
 			}
 			autoCompleteTextView.setVisibility(View.VISIBLE);
-			overlay.setVisibility(View.VISIBLE);
+			
 			autoCompleteTextView.requestFocus();
 			InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-		}
-		
+		}		
 	}
 
 	private void disableAutoComplete() {        

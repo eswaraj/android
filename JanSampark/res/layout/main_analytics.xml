@@ -13,7 +13,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <RadioGroup
             android:id="@+id/analytics_chooser_container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/analytics_chooser_height"
@@ -40,7 +40,7 @@
                 android:button="@null"
                 android:gravity="center"
                 android:textColor="@color/analytics_radio_text" />
-        </LinearLayout>
+        </RadioGroup>
 
         <RelativeLayout
             android:id="@+id/pie_chart_container"
