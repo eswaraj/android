@@ -28,7 +28,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="@dimen/issue_summary_horizontal_padding" >
+                android:paddingLeft="@dimen/issue_summary_horizontal_padding"
+                android:paddingRight="@dimen/issue_summary_horizontal_padding"
+                android:paddingTop="@dimen/issue_summary_horizontal_padding" >
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -44,43 +46,49 @@
                     android:textSize="@dimen/issue_summary_big_text" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/issue_summary_horizontal_padding"
-                android:paddingRight="@dimen/issue_summary_horizontal_padding"
-                android:text="@string/issue_summary_message"
-                android:textColor="@color/issue_details_dark"
-                android:textSize="@dimen/issue_summary_normal_text" />
-
             <LinearLayout
                 android:id="@+id/LinearLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:padding="@dimen/issue_summary_horizontal_padding" >
+                android:paddingRight="@dimen/issue_summary_horizontal_padding"
+                android:paddingLeft="@dimen/issue_summary_horizontal_padding"
+                android:paddingBottom="@dimen/issue_summary_horizontal_padding" >
 
                 <LinearLayout
                     android:id="@+id/issue_details_mla_container"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="right|center"
                     android:orientation="vertical"
                     android:paddingRight="@dimen/issue_summary_horizontal_padding" >
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/issue_summary_message"
+                        android:textColor="@color/issue_details_dark"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="left"
+                        android:textSize="@dimen/issue_summary_normal_text" />
+
+                    <TextView
                         android:id="@+id/issue_summary_mla"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/issue_summary_normal_text"
+                        android:text="abc"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/issue_summary_mla_constituency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="abc"
                         android:textColor="@color/issue_details_dark" />
+
                 </LinearLayout>
 
                 <com.jansampark.vashisthg.widget.RoundImageView
