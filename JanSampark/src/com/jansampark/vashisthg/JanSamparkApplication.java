@@ -1,5 +1,7 @@
 package com.jansampark.vashisthg;
 
+import com.jansampark.vashisthg.models.Constituency;
+
 import android.app.Application;
 import android.location.Location;
 
@@ -12,6 +14,7 @@ public class JanSamparkApplication extends Application {
     
 	
 	private Location lastKnownLocation;
+	private Constituency lastKnownConstituency;
 	
 	@Override
 	public void onCreate() {
@@ -27,6 +30,14 @@ public class JanSamparkApplication extends Application {
 		if(null != lastKnownLocation) {
 			this.lastKnownLocation = lastKnownLocation;
 		}
+	}
+
+	public Constituency getLastKnownConstituency() {
+		return lastKnownConstituency;
+	}
+
+	public void setLastKnownConstituency(Constituency lastKnownConstituency) {
+		this.lastKnownConstituency = lastKnownConstituency;
 	}
 			
 }

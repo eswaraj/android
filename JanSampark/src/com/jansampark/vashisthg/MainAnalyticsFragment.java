@@ -71,6 +71,8 @@ public class MainAnalyticsFragment extends Fragment {
 	private View overlay;
 	private List<Constituency> locations;
 	private Constituency lastSelectedLocation;
+	
+	
 
 	int[] vals;
 	

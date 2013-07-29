@@ -19,7 +19,8 @@
     <dimen name="issue_top_banner_title_size">30sp</dimen>
     <dimen name="isssue_list_padding">8dp</dimen>
 
-    <dimen name="main_map_height">136dp</dimen>
+    <dimen name="main_map_height">120dp</dimen>
+    <dimen name="main_map_location_top_margin">4dp</dimen>
     <dimen name="main_select_text">20sp</dimen>
     <dimen name="main_select_margin_top">16dp</dimen>
     <dimen name="main_select_margin_bottom">8dp</dimen>

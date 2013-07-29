@@ -13,12 +13,12 @@ public class Constituency {
 	
 	
 	private String name;
-	private int ID;
-	
+	private int ID;	
 	private LatLng latLong;
 	
-
-	private int cityIDRef;
+	
+	private Address address;
+	
 	
 	
 	public String getName() {
@@ -49,11 +49,11 @@ public class Constituency {
 	public static Constituency createLocation(Address address) {		
 		Constituency location = new Constituency();														     		
 		location.name = getLocationString( address);
-		location.cityIDRef = getCityRefId(address);
+		location.address = address;
 		return location;				
 	}
 	
-	private static String getLocationString( Address address) {						
+	public static String getLocationString( Address address) {						
 		String subLocality = address.getSubLocality();
 		String city = address.getLocality();
 		String state = address.getAdminArea();
@@ -76,7 +76,8 @@ public class Constituency {
 		}
 	    return locationAddress.toString();		
 	}
-	private static int getCityRefId(Address address) {
+	
+	public static int getCityRefId(Address address) {
 		int city;
 		int delhi = R.integer.id_city_delhi;
 		int bangalore = R.integer.id_city_bangalore;

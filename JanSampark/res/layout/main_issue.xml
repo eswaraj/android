@@ -24,20 +24,35 @@
                 android:name="com.jansampark.vashisthg.widget.CustomSupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                map:zOrderOnTop="true" />
+                map:zOrderOnTop="true"
+               />
 
             <View
                 android:id="@+id/map_blocker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            
+
         </FrameLayout>
+        
+        <TextView
+                android:id="@+id/main_map_location_text"
+                android:layout_gravity="center|bottom"
+                android:paddingTop="@dimen/main_map_location_top_margin"
+                android:paddingBottom="@dimen/main_map_location_top_margin"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_map_text_bg"
+                 />
 
         <TextView
             android:id="@+id/main_select"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/main_select_margin_bottom"
-            android:layout_marginTop="@dimen/main_select_margin_top"
+            
             android:gravity="center"
             android:text="@string/main_select"
             android:textSize="@dimen/main_select_text" />

@@ -1,5 +1,7 @@
 package com.jansampark.vashisthg;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -21,7 +23,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.helpers.TitleBarHelper;
+import com.jansampark.vashisthg.models.Constituency;
 
 public class MainActivity extends FragmentActivity  {
 	public static final String TAG = "Main";
@@ -201,6 +205,20 @@ public class MainActivity extends FragmentActivity  {
     			Log.d("Issue", "location changed");
     			JanSamparkApplication.getInstance().setLastKnownLocation(lastKnownLocation);
     			issueFragment.showLocation();   			
+    			LocationDataManager dataManager = new LocationDataManager(MainActivity.this, new  ReverseGeoCodingTask.GeoCodingTaskListener() {
+					
+					@Override
+					public void didReceiveGeoCoding(List<Constituency> locations) {
+						JanSamparkApplication.getInstance().setLastKnownConstituency(locations.get(0));
+						issueFragment.showLocationName();						
+					}
+					
+					@Override
+					public void didFailReceivingGeoCoding() {
+						
+					}
+				});
+    			dataManager.fetchAddress(location);
             }
 	    }
 	};

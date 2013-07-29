@@ -13,19 +13,29 @@ public class LocationDataManager {
 	Activity activity;
 	
 	
-	public LocationDataManager(Activity activity, GeoCodingTaskListener listener) {
+	public LocationDataManager(Activity activity, ReverseGeoCodingTask.GeoCodingTaskListener geoCodingTaskListener) {
 		this.activity = activity;
-		this.geoCodingListener = listener;
-	}
-
-	
+		this.geoCodingListener = geoCodingTaskListener;
+	}	
 	
 	public void fetchAddress(Location location) {
-		ReverseGeoCodingTask geocodingTask = ReverseGeoCodingTask.newInstance(activity, geoCodingListener, location);
+		ReverseGeoCodingTask geocodingTask = ReverseGeoCodingTask.newInstance(activity, mainGeoCodingListener, location);
 		geocodingTask.execute();
 	}
 	
 	private ReverseGeoCodingTask.GeoCodingTaskListener geoCodingListener ;
 	
+	private ReverseGeoCodingTask.GeoCodingTaskListener mainGeoCodingListener = new ReverseGeoCodingTask.GeoCodingTaskListener() {
+		
+		@Override
+		public void didReceiveGeoCoding(List<Constituency> locations) {
+			geoCodingListener.didReceiveGeoCoding(locations);
+		}
+		
+		@Override
+		public void didFailReceivingGeoCoding() {
+			geoCodingListener.didFailReceivingGeoCoding();
+		}
+	};
 	
 }

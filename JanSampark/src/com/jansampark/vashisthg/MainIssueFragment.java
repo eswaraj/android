@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -76,51 +78,6 @@ public class MainIssueFragment extends Fragment {
 		getActivity().findViewById(R.id.main_water).setOnClickListener(buttonListener);
 	}
 	
-	
-
-	
-//	protected void startLocationTracking() {	
-//	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
-//	        locationClient = new LocationClient(getActivity(), mConnectionCallbacks, mConnectionFailedListener);
-//	       locationClient.connect();
-//	    }
-//	}
-//
-//	private ConnectionCallbacks mConnectionCallbacks = new ConnectionCallbacks() {
-//
-//	    @Override
-//	    public void onDisconnected() {
-//	    }
-//
-//	    @Override
-//	    public void onConnected(Bundle arg0) {
-//	    	lastKnownLocation = locationClient.getLastLocation();
-//	        LocationRequest locationRequest = LocationRequest.create();
-//	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-//	        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
-//	    }
-//	};
-//
-//	private OnConnectionFailedListener mConnectionFailedListener = new OnConnectionFailedListener() {
-//
-//	    @Override
-//	    public void onConnectionFailed(ConnectionResult arg0) {
-//	        //Log.e(TAG, "ConnectionFailed");
-//	    }
-//	};
-//
-//	private LocationListener mLocationListener = new LocationListener() {
-//	    @Override
-//	        public void onLocationChanged(Location location) {	         
-//	            if(isResumed) {
-//	    			lastKnownLocation =  location;
-//	    			Log.d("Issue", "location changed");
-//	    			JanSamparkApplication.getInstance().setLastKnownLocation(lastKnownLocation);
-//	    			showLocation();
-//	    		}
-//	    }
-//	};
-	
 
 	public void initMap(CustomSupportMapFragment mapFragment) {
 		gMap = mapFragment.getMap();
@@ -164,6 +121,14 @@ public class MainIssueFragment extends Fragment {
 					BitmapDescriptorFactory
 							.fromResource(R.drawable.ic_main_annotation)));
 		} 
+	}
+	
+	public void showLocationName() {
+		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
+			((TextView)getActivity().findViewById(R.id.main_map_location_text)).setText(JanSamparkApplication.getInstance().getLastKnownConstituency().getName());
+		} else {
+			Log.e("ISSUE", "current constutuency is null");
+		}
 	}
 
 	public void onSewageClick(View view) {
