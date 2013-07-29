@@ -108,5 +108,8 @@
     
     <integer name="location_update_millis">120000</integer>
     
+    <integer name="id_city_delhi">999</integer>
+    <integer name="id_city_bangalore">998</integer>
+    
     
 </resources>

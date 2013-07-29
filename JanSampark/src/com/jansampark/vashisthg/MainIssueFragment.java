@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,13 +13,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.UiSettings;
@@ -31,22 +23,13 @@ import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
 
 public class MainIssueFragment extends Fragment {
-
-    LocationRequest locationRequest;
-    LocationClient locationClient;
-    
-    private static final String SAVED_LOCATION = "SAVED_LOCATION";
-    
+   
     private GoogleMap gMap = null;
     boolean isResumed;
-    Location lastKnownLocation;
     
     
-    public static MainIssueFragment newInstance(Location lastKnownLocation) {
+    public static MainIssueFragment newInstance() {
     	MainIssueFragment issueFragment = new MainIssueFragment();
-    	Bundle bundle = new Bundle();
-    	bundle.putParcelable(SAVED_LOCATION, lastKnownLocation);
-    	issueFragment.setArguments(bundle);
     	return issueFragment;
     }
     
@@ -58,17 +41,11 @@ public class MainIssueFragment extends Fragment {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);       
-        if(null != savedInstanceState) {
-        	lastKnownLocation = savedInstanceState.getParcelable(SAVED_LOCATION);
-        } else {
-        	lastKnownLocation = getArguments().getParcelable(SAVED_LOCATION);
-        }
     }
 			
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putParcelable(SAVED_LOCATION, lastKnownLocation);
 	}
 	
 	@Override
@@ -83,14 +60,11 @@ public class MainIssueFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		isResumed = true;
-		startLocationTracking();
 	}
 	
 	@Override
 	public void onPause() {
 		isResumed = false;
-		locationClient.removeLocationUpdates(mLocationListener);
-		locationClient.disconnect();
 		super.onPause();
 	}
 	private void initButtonListeners() {
@@ -105,46 +79,47 @@ public class MainIssueFragment extends Fragment {
 	
 
 	
-	protected void startLocationTracking() {	
-	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
-	        locationClient = new LocationClient(getActivity(), mConnectionCallbacks, mConnectionFailedListener);
-	       locationClient.connect();
-	    }
-	}
-
-	private ConnectionCallbacks mConnectionCallbacks = new ConnectionCallbacks() {
-
-	    @Override
-	    public void onDisconnected() {
-	    }
-
-	    @Override
-	    public void onConnected(Bundle arg0) {
-	    	lastKnownLocation = locationClient.getLastLocation();
-	        LocationRequest locationRequest = LocationRequest.create();
-	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-	        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
-	    }
-	};
-
-	private OnConnectionFailedListener mConnectionFailedListener = new OnConnectionFailedListener() {
-
-	    @Override
-	    public void onConnectionFailed(ConnectionResult arg0) {
-	        //Log.e(TAG, "ConnectionFailed");
-	    }
-	};
-
-	private LocationListener mLocationListener = new LocationListener() {
-	    @Override
-	        public void onLocationChanged(Location location) {	         
-	            if(isResumed) {
-	    			lastKnownLocation =  location;
-	    			Log.d("Issue", "location changed");
-	    			showLocation();
-	    		}
-	    }
-	};
+//	protected void startLocationTracking() {	
+//	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
+//	        locationClient = new LocationClient(getActivity(), mConnectionCallbacks, mConnectionFailedListener);
+//	       locationClient.connect();
+//	    }
+//	}
+//
+//	private ConnectionCallbacks mConnectionCallbacks = new ConnectionCallbacks() {
+//
+//	    @Override
+//	    public void onDisconnected() {
+//	    }
+//
+//	    @Override
+//	    public void onConnected(Bundle arg0) {
+//	    	lastKnownLocation = locationClient.getLastLocation();
+//	        LocationRequest locationRequest = LocationRequest.create();
+//	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+//	        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
+//	    }
+//	};
+//
+//	private OnConnectionFailedListener mConnectionFailedListener = new OnConnectionFailedListener() {
+//
+//	    @Override
+//	    public void onConnectionFailed(ConnectionResult arg0) {
+//	        //Log.e(TAG, "ConnectionFailed");
+//	    }
+//	};
+//
+//	private LocationListener mLocationListener = new LocationListener() {
+//	    @Override
+//	        public void onLocationChanged(Location location) {	         
+//	            if(isResumed) {
+//	    			lastKnownLocation =  location;
+//	    			Log.d("Issue", "location changed");
+//	    			JanSamparkApplication.getInstance().setLastKnownLocation(lastKnownLocation);
+//	    			showLocation();
+//	    		}
+//	    }
+//	};
 	
 
 	public void initMap(CustomSupportMapFragment mapFragment) {
@@ -177,10 +152,9 @@ public class MainIssueFragment extends Fragment {
 		});
 	}
 	
-	
 	    
-	private void showLocation() {
-		Location location = lastKnownLocation;
+	public void showLocation() {
+		Location location = JanSamparkApplication.getInstance().getLastKnownLocation();
 		if(null != location) {
 			LatLng lastKnownLatLng = new LatLng(location.getLatitude(),
 					location.getLongitude());
@@ -219,7 +193,7 @@ public class MainIssueFragment extends Fragment {
 	private void openIssueActivity(ISSUE_CATEGORY issue) {
 		Intent intent = new Intent(getActivity(), IssueActivity.class);
 		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
-		intent.putExtra(IssueActivity.EXTRA_LOCATION, lastKnownLocation);
+		intent.putExtra(IssueActivity.EXTRA_LOCATION, JanSamparkApplication.getInstance().getLastKnownLocation());
 		startActivity(intent);
 	}
 	android.view.View.OnClickListener buttonListener = new OnClickListener() {
@@ -253,31 +227,5 @@ public class MainIssueFragment extends Fragment {
 			}
 		}
 	};
-
-
-//	@Override
-//	public void onLocationChanged(Location location) {
-//		if(isResumed) {
-//			lastKnownLocation =  location;
-//			Log.d("Issue", "location changed");
-//			showLocation();
-//		}
-//		locationManager.removeUpdates((android.location.LocationListener) this);
-//	}
-//
-//	@Override
-//	public void onProviderDisabled(String provider) {
-//		
-//	}
-//
-//	@Override
-//	public void onProviderEnabled(String provider) {
-//		
-//	}
-//
-//	@Override
-//	public void onStatusChanged(String provider, int status, Bundle extras) {
-//		
-//	}
 	
 }

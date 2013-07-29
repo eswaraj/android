@@ -1,15 +1,26 @@
 package com.jansampark.vashisthg.models;
 
+import java.util.Locale;
+
 import android.location.Address;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.jansampark.vashisthg.R;
 
 
 public class Constituency {
+	
+	
+	
 	private String name;
 	private int ID;
+	
 	private LatLng latLong;
+	
 
+	private int cityIDRef;
+	
+	
 	public String getName() {
 		return name;
 	}
@@ -38,6 +49,7 @@ public class Constituency {
 	public static Constituency createLocation(Address address) {		
 		Constituency location = new Constituency();														     		
 		location.name = getLocationString( address);
+		location.cityIDRef = getCityRefId(address);
 		return location;				
 	}
 	
@@ -63,6 +75,30 @@ public class Constituency {
 			}
 		}
 	    return locationAddress.toString();		
+	}
+	private static int getCityRefId(Address address) {
+		int city;
+		int delhi = R.integer.id_city_delhi;
+		int bangalore = R.integer.id_city_bangalore;
+		if(null != address.getAdminArea()) {
+			String state = address.getAdminArea().toLowerCase(Locale.US);
+			if(state.equalsIgnoreCase("karnataka")) {
+				city = bangalore;
+			}			
+			city = delhi;
+		}
+		
+		if(null != address.getLocality()) {
+			String geocodedLocality = address.getLocality().toLowerCase(Locale.US);
+			if(geocodedLocality.equalsIgnoreCase("bangalore")
+					|| geocodedLocality.equalsIgnoreCase("bangaluru")) {
+				city = bangalore;
+			}
+			city = delhi;
+		}
+		city = delhi;
+		
+		return city;
 	}
 
 }
