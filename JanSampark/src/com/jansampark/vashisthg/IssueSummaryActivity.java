@@ -115,9 +115,21 @@ public class IssueSummaryActivity extends FragmentActivity {
 	}
 	
 	
-	private void fetchAddress() {
-		ReverseGeoCodingTask geocodingTask = ReverseGeoCodingTask.newInstance(this, geoCodingListener, location);
-		geocodingTask.execute();
+	private void fetchAddress() {		
+		if(null == JanSamparkApplication.getInstance().getLastKnownConstituency()) {
+			LocationDataManager locationManager = new LocationDataManager(this, geoCodingListener);
+			locationManager.fetchAddress(location);
+		} else {
+			showConstituency(JanSamparkApplication.getInstance().getLastKnownConstituency());
+		}
+	}
+	
+	private void showConstituency(Constituency location) {
+		try {
+			addressTV.setText(location.getName());
+		} catch( Exception e){
+			addressTV.setText("");
+		}	
 	}
 	
 	private ReverseGeoCodingTask.GeoCodingTaskListener geoCodingListener = new ReverseGeoCodingTask.GeoCodingTaskListener() {
@@ -125,11 +137,9 @@ public class IssueSummaryActivity extends FragmentActivity {
 		@Override
 		public void didReceiveGeoCoding(List<Constituency> locations) {
 			if(isResumed) {
-				try {
-					addressTV.setText(locations.get(0).getName());
-				} catch( Exception e){
-					addressTV.setText("");
-				}			
+				if(!locations.isEmpty()) {
+					showConstituency(locations.get(0));	
+				}
 			}
 		}
 		
@@ -160,7 +170,6 @@ public class IssueSummaryActivity extends FragmentActivity {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		//intent.putExtra(MainActivity.EXTRA_LOCATION, location);
 		startActivity(intent);
 		finish();
 	}	
