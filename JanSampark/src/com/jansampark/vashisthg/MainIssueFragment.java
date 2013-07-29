@@ -127,7 +127,7 @@ public class MainIssueFragment extends Fragment {
 		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
 			((TextView)getActivity().findViewById(R.id.main_map_location_text)).setText(JanSamparkApplication.getInstance().getLastKnownConstituency().getName());
 		} else {
-			Log.e("ISSUE", "current constutuency is null");
+			Log.e("ISSUE", "current constituency is null");
 		}
 	}
 

@@ -9,12 +9,19 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.jansampark.vashisthg.R;
 import com.jansampark.vashisthg.models.Constituency;
 
 public class ConstuencyParserHelper {
 
-	public static ArrayList<Constituency> readLocations(Context context) throws IOException {
-		InputStream inputStream = context.getAssets().open("centroid.txt");
+	public static ArrayList<Constituency> readLocations(Context context, int locationRef) throws IOException {
+		
+		String fileName = "centroid.txt";
+		if(locationRef == R.integer.id_city_bangalore) {
+			fileName = "centroid_Blr.txt";
+		}
+		
+		InputStream inputStream = context.getAssets().open(fileName);
 		BufferedReader f = new BufferedReader(new InputStreamReader(inputStream));
 		String line;
 		ArrayList<Constituency> locations = new ArrayList<Constituency>();

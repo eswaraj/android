@@ -211,6 +211,16 @@
     
     <string name="network_error">Could not connect to server.</string>
     <string name="dialog_please_wait">Please wait&#8230;</string>
+    
+    <string name="city_delhi">Delhi</string>
+    <string name="city_bangalore">Bangalore</string>
+    
+    
+    <string-array name="city">
+        <item>@string/city_delhi</item>
+        <item>@string/city_bangalore</item>
+    </string-array>
+
    
 
 </resources>

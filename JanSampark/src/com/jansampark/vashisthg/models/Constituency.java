@@ -49,7 +49,7 @@ public class Constituency {
 	public static Constituency createLocation(Address address) {		
 		Constituency location = new Constituency();														     		
 		location.name = getLocationString( address);
-		location.address = address;
+		location.setAddress(address);
 		return location;				
 	}
 	
@@ -100,6 +100,14 @@ public class Constituency {
 		city = delhi;
 		
 		return city;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }

@@ -37,7 +37,9 @@ public class JanSamparkApplication extends Application {
 	}
 
 	public void setLastKnownConstituency(Constituency lastKnownConstituency) {
-		this.lastKnownConstituency = lastKnownConstituency;
+		if(null != lastKnownConstituency) {
+			this.lastKnownConstituency = lastKnownConstituency;
+		}
 	}
 			
 }

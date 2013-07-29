@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.achartengine.GraphicalView;
 import org.json.JSONArray;
@@ -30,7 +31,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -72,6 +72,7 @@ public class MainAnalyticsFragment extends Fragment {
 	private List<Constituency> locations;
 	private Constituency lastSelectedLocation;
 	
+	private int cityResId;
 	
 
 	int[] vals;
@@ -91,13 +92,7 @@ public class MainAnalyticsFragment extends Fragment {
 		return new MainAnalyticsFragment();
 	}
 
-	private void parseLocations() {
-		try {
-			locations = ConstuencyParserHelper.readLocations(getActivity());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -121,7 +116,6 @@ public class MainAnalyticsFragment extends Fragment {
 	private void setViews(View view) {
 		setButtons();
 		setPieChart();
-		setAutoComplete(view);
 		initButtonListeners();
 	}
 	private void initButtonListeners() {
@@ -152,17 +146,20 @@ public class MainAnalyticsFragment extends Fragment {
 		issueNumTV = (TextView) getActivity().findViewById(R.id.issue_num);
 		complaintsNumTV = (TextView) getActivity().findViewById(
 				R.id.complaint_num);
-		if (null != issueCounter) {
-			issueCounter.cancel();
-		}
-		issueCounter = MyCount.newInstance(issueCount, issueNumTV);
-		issueCounter.start();
-
-		if (null != complaintCounter) {
-			complaintCounter.cancel();
-		}
-		complaintCounter = MyCount.newInstance(complaintCount, complaintsNumTV);
-		complaintCounter.start();
+//		if (null != issueCounter) {
+//			issueCounter.cancel();
+//		}
+//		issueCounter = MyCount.newInstance(issueCount, issueNumTV);
+//		issueCounter.start();
+//
+//		if (null != complaintCounter) {
+//			complaintCounter.cancel();
+//		}
+//		complaintCounter = MyCount.newInstance(complaintCount, complaintsNumTV);
+//		complaintCounter.start();
+		
+		issueNumTV.setText(issueCount + "");
+		complaintsNumTV.setText(complaintCount + "");
 	}
 
 
@@ -200,6 +197,7 @@ public class MainAnalyticsFragment extends Fragment {
 				switch (checkedId) {
 				case R.id.analytics_overall:
 					Log.d(TAG, "clicked on overall");
+					fetchCityAnalytics(0);
 					break;
 					
 				case R.id.analytics_spinner:
@@ -261,10 +259,10 @@ public class MainAnalyticsFragment extends Fragment {
 		overlay.setVisibility(View.INVISIBLE);
 	}
 	
-	private void setAutoComplete(View view) {
+	public void setAutoComplete() {
 		parseLocations();
-		autoCompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.analytics_autocomplete);
-		overlay = view.findViewById(R.id.analytics_overlay);
+		autoCompleteTextView = (AutoCompleteTextView) getActivity().findViewById(R.id.analytics_autocomplete);
+		overlay = getActivity().findViewById(R.id.analytics_overlay);
 		overlay.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -285,6 +283,14 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 		});
 		
+	}
+	
+	public void parseLocations() {
+		try {
+			locations = ConstuencyParserHelper.readLocations(getActivity(), Constituency.getCityRefId(JanSamparkApplication.getInstance().getLastKnownConstituency().getAddress()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void setLocation(Constituency loc) {
@@ -358,8 +364,7 @@ public class MainAnalyticsFragment extends Fragment {
 		}
 	};
 	
-	private void fetchAnalytics(Constituency constituency) {
-		
+	private void fetchAnalytics(Constituency constituency) {		
 		executeMLAIdRequest(constituency.getLatLong());
 	}
 	
@@ -403,7 +408,7 @@ public class MainAnalyticsFragment extends Fragment {
     }
 	
 	private void executeAnalyticsRequest(String mlaId) {
-		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + mlaId + "&time_frame=1m";
+		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + mlaId + "&time_frame=1w";
 		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createMLADetailsReqSuccessListener(), createMyReqErrorListener());
 		mRequestQueue.add(request);		
 	}
@@ -413,39 +418,43 @@ public class MainAnalyticsFragment extends Fragment {
         return new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-            	try {
-            		
+            	try {         		
             		if(isResumed) {
 						Log.d(TAG, jsonObject.toString(2));
-						Iterator<String> iter = jsonObject.keys();
-						while(iter.hasNext()) {
-							String key = iter.next().toString();
-							int keyInt = Integer.parseInt(key);
-							JSONArray array = jsonObject.getJSONArray(key);
-							List<Analytics> analyticsList = new ArrayList<Analytics>();
-							
-							
-							for(int i = 0; i < array.length(); i++) {
-								Analytics analytics = new Analytics();
-								analytics.setIssueCategory(keyInt);
-								JSONObject itemObject = array.getJSONObject(i);
-								analytics.setTemplateId(itemObject.getInt("template_id"));
-								analytics.setCount(itemObject.getInt("counter"));
-								analyticsList.add(analytics);
-							}
-							
-							Log.d(TAG, "analytics, array length: " + analyticsList.size());
-							analyticsMap.put(keyInt, analyticsList);
-							setViewsAccordingToAnalytics();
-						}
+						parseJsonToAnalyticsMap(jsonObject);
             		}
             		DialogFactory.hideProgressDialog();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}        	
             }
+
+			
         };
     }
+	private void parseJsonToAnalyticsMap(JSONObject jsonObject) throws JSONException {
+		Iterator<String> iter = jsonObject.keys();
+		while(iter.hasNext()) {
+			String key = iter.next().toString();
+			int keyInt = Integer.parseInt(key);
+			JSONArray array = jsonObject.getJSONArray(key);
+			List<Analytics> analyticsList = new ArrayList<Analytics>();
+			
+			
+			for(int i = 0; i < array.length(); i++) {
+				Analytics analytics = new Analytics();
+				analytics.setIssueCategory(keyInt);
+				JSONObject itemObject = array.getJSONObject(i);
+				analytics.setTemplateId(itemObject.getInt("template_id"));
+				analytics.setCount(itemObject.getInt("counter"));
+				analyticsList.add(analytics);
+			}
+			
+			Log.d(TAG, "analytics, array length: " + analyticsList.size());
+			analyticsMap.put(keyInt, analyticsList);
+			setViewsAccordingToAnalytics();
+		}
+	}
 	
 	int complaintCount = 0;
 	int issueCount = 0;
@@ -475,21 +484,85 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	private void setIssueCount(IssueButton issueButton, int categoryResId) {
 		try {		
-			int waterPercentage = 0;
-			int waterCount = 0;
+			int issuePercentage = 0;
+			int issueCount = 0;
+			
 			Resources resources = getActivity().getResources();
-			Integer waterIssueCategory = resources.getInteger(categoryResId);
-			if(analyticsMap.containsKey(waterIssueCategory)) {			
-				waterCount = analyticsMap.get(waterIssueCategory).size();
+			Integer issueCategory = resources.getInteger(categoryResId);
+			Set<Integer> anylyticsSet = analyticsMap.keySet();
+			for (Integer integer : anylyticsSet) {
+				Log.d(TAG, "KeySet: " + integer);
 			}
+			if(analyticsMap.containsKey(issueCategory)) {			
+				issueCount = getComplaintCountForCategory(issueCategory);
+				
+			}
+		
+			Log.d(TAG, "count: " + issueCount + ", complaintCount: " + complaintCount);
 			if( complaintCount != 0) {
-				waterPercentage = (waterCount/complaintCount) * 100;
+				issuePercentage = (issueCount * 100) / complaintCount;
 			}
-			issueButton.setPercentage(waterPercentage );
+			Log.d(TAG, "percentage: " + issuePercentage);
+			issueButton.setPercentage(issuePercentage  );
 		} catch (Exception e) {
 			issueButton.setPercentage(0);
 			e.printStackTrace();
 		}
 	}
 	
+	private int getComplaintCountForCategory(int issueCategory) {
+		int count = 0;
+		List<Analytics> analyticsList = analyticsMap.get(issueCategory);
+		for (Analytics analytics : analyticsList) {
+			count += analytics.getCount();
+		}
+		
+		return count;
+	}
+	
+	public void setCurrentCity() {
+		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
+			fetchCityAnalytics(0);
+			setAutoComplete();
+		} else {
+			Log.e(TAG, "last known constituency is null");
+		}
+	}
+	
+	private void fetchCityAnalytics(int id) {		
+		if(id == 0) {
+			id = getResources().getInteger(Constituency.getCityRefId(JanSamparkApplication.getInstance().getLastKnownConstituency().getAddress()));
+		}
+		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + id + "&time_frame=1w";
+		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createCityDetailsReqSuccessListener(), createMyReqErrorListener());
+		mRequestQueue.add(request);						
+	}
+	
+	private Response.Listener<JSONObject> createCityDetailsReqSuccessListener() {
+        return new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+            	try {         		
+            		if(isResumed) {
+						Log.d(TAG, jsonObject.toString(2));
+						parseJsonToAnalyticsMap(jsonObject);
+						if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
+							if(Constituency.getCityRefId(JanSamparkApplication.getInstance().getLastKnownConstituency().getAddress()) == R.integer.id_city_bangalore) {
+								overallButton.setText(R.string.city_bangalore);
+							} else {
+								overallButton.setText(R.string.city_delhi);
+							}
+						} else {
+							Log.e(TAG, "last known constituency is null");
+						}
+						
+            		}
+            		DialogFactory.hideProgressDialog();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}        	
+            }
+
+        };
+	} 		
 }

@@ -150,11 +150,18 @@ public class MainActivity extends FragmentActivity  {
 		public void onPageSelected(int position) {						
 			if (0 == position) {
 				footerTab.check(R.id.tab_issue);
+				if(issueFragment != null) {
+					issueFragment.showLocationName();
+				}
+				
 			} else {
 				footerTab.check(R.id.tab_analytics);
 				if(null != analyticsFragment) {
 					analyticsFragment.onFragmentShown();
 				}
+				if(analyticsFragment != null) {
+    				analyticsFragment.setCurrentCity();
+    			}
 			}	
 		}
 	}; 
@@ -182,11 +189,13 @@ public class MainActivity extends FragmentActivity  {
 	    }
 
 	    @Override
-	    public void onConnected(Bundle arg0) {
-	    	lastKnownLocation = locationClient.getLastLocation();
-	        LocationRequest locationRequest = LocationRequest.create();
-	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-	        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
+	    public void onConnected(Bundle arg0) {	
+	    	if(locationClient.isConnected()) {
+		    	lastKnownLocation = locationClient.getLastLocation();
+		        LocationRequest locationRequest = LocationRequest.create();
+		        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+		        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
+	    	}
 	    }
 	};
 
@@ -204,18 +213,34 @@ public class MainActivity extends FragmentActivity  {
     			lastKnownLocation =  location;
     			Log.d("Issue", "location changed");
     			JanSamparkApplication.getInstance().setLastKnownLocation(lastKnownLocation);
-    			issueFragment.showLocation();   			
+    			if(issueFragment != null) {
+    				issueFragment.showLocation();   
+    			}
+    			
+    			
     			LocationDataManager dataManager = new LocationDataManager(MainActivity.this, new  ReverseGeoCodingTask.GeoCodingTaskListener() {
 					
 					@Override
 					public void didReceiveGeoCoding(List<Constituency> locations) {
 						JanSamparkApplication.getInstance().setLastKnownConstituency(locations.get(0));
-						issueFragment.showLocationName();						
+						if(issueFragment != null) {
+							issueFragment.showLocationName();
+						}
+						if(analyticsFragment != null) {
+		    				analyticsFragment.setCurrentCity();
+		    			}
 					}
 					
 					@Override
 					public void didFailReceivingGeoCoding() {
-						
+						if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
+							if(issueFragment != null) {
+								issueFragment.showLocationName();
+							}
+							if(analyticsFragment != null) {
+			    				analyticsFragment.setCurrentCity();
+			    			}
+						}						
 					}
 				});
     			dataManager.fetchAddress(location);
