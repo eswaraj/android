@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="@dimen/issue_row_min_height"
+    android:background="@android:color/white"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
@@ -17,6 +18,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1"
+        android:paddingTop="@dimen/isssue_list_padding"
+        android:paddingBottom="@dimen/isssue_list_padding"
         android:paddingLeft="@dimen/issue_row_text_left_padding"
         android:paddingRight="@dimen/issue_row_text_right_padding" >
 
