@@ -64,11 +64,15 @@ public class LocationAutoCompleteAdapter extends BaseAdapter implements Filterab
 		}
 		String name = locations.get(position).getName();
 		SpannableString text = new SpannableString(name);
-		int index = name.toLowerCase(Locale.US).indexOf(searchStr.toLowerCase(Locale.US));
-		if(index > -1) {
-			text.setSpan(new StyleSpan(Typeface.BOLD), index, index + searchStr.length(), 0);
+		if(null != searchStr) {
+			int index = name.toLowerCase(Locale.US).indexOf(searchStr.toLowerCase(Locale.US));
+			if(index > -1) {
+				text.setSpan(new StyleSpan(Typeface.BOLD), index, index + searchStr.length(), 0);
+			}
+			tv.setText(text, BufferType.SPANNABLE);
+		} else {
+			tv.setText("");
 		}
-		tv.setText(text, BufferType.SPANNABLE);
 		return convertView;
 	}
 
