@@ -11,6 +11,7 @@ import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.models.IssueItem;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,13 +52,24 @@ public class IssueAdapter extends BaseAdapter {
 		
 		if(null != analyticsList) {
 			for (Analytics analytics : analyticsList) {
-				adapter.templateCount.put(analytics.getTemplateId(), analytics.getCount());
+				if(analytics.getTemplateId() % 10 == 0) {
+					if(adapter.templateCount.containsKey(new Integer(0))) {
+						int oldCount = adapter.templateCount.get(0);
+						adapter.templateCount.put(0, analytics.getCount() + oldCount);
+					} else {
+						adapter.templateCount.put(0, analytics.getCount());
+					}
+				} else {
+					adapter.templateCount.put(analytics.getTemplateId(), analytics.getCount());
+				}
+				
 			}
 			adapter.totalComplaints = adapter.getTotalComplaints();
 		}
 		
 		return adapter;		
 	}
+	
 	
 	
 
@@ -109,33 +121,45 @@ public class IssueAdapter extends BaseAdapter {
 		
 		holder.type.setTextColor(color);
 		holder.colorView.setBackgroundColor(color);
+		setComplaint(holder, item, position);
 		
+		
+		return convertView;
+	}	
+	
+	private void setComplaint(ViewHolder holder, IssueItem item, int position) {
 		int complaintCount = 0;
 		int complaintPercentage = 0;
 		if(null != holder.percentage) {
-			if(null != templateCount) {
+			if(null != templateCount) {				
 				if(templateCount.containsKey(item.getTemplateId())) {
-					complaintCount = templateCount.get(item.getTemplateId());
+					complaintCount = getIndividualComplaintCount(item, position);
 				}
 				
 				holder.complaints.setText(complaintCount + " complaints");
 				if(0  != totalComplaints) {
 					complaintPercentage = (complaintCount  * 100) / totalComplaints;
 				}
-				holder.percentage.setText(complaintPercentage + "%");			 
+				holder.percentage.setText(complaintPercentage + "%");	
+				
 			}			
 		}
-		
-		return convertView;
-	}	
+	}
 	
 	private int getTotalComplaints() {
 		int counter = 0;
 		Iterator<Entry<Integer, Integer>> it = templateCount.entrySet().iterator();
+		
 	    while (it.hasNext()) {
 	        Map.Entry<Integer, Integer> pairs = (Map.Entry<Integer, Integer>)it.next();
 	        counter += pairs.getValue();
 	    }
 		return counter;
 	}
+	
+	private int getIndividualComplaintCount(IssueItem item,int position) {
+		return templateCount.get(item.getTemplateId());
+	}
+	
+	
 }

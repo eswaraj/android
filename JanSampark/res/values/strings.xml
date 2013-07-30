@@ -116,24 +116,7 @@
         <item>should not there be a court awareness day , once in 3 months , where citizens should be encouraged  to review there courts , to check that they are  happy with service of the  staff.</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
-    <string-array name="lawandorder_index">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>11</item>
-        <item>12</item>
-        <item>21</item>
-        <item>22</item>
-        <item>31</item>
-        <item>32</item>
-        <item>41</item>
-        <item>42</item>
-        <item>43</item>
-        <item>44</item>
-        <item>45</item>
-        <item>0</item>
-    </string-array>
+    
     <string-array name="water">
         <item>No municipality water in this area.</item>
         <item>we have to heavily rely on tankers for water supply, please look into it.</item>

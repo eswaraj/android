@@ -181,7 +181,7 @@ public class IssueActivity extends Activity {
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 			if(!isAnalytics) {
 				Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
-				intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position));
+				intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position - 1));
 				intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
 				startActivity(intent);			
 			}
