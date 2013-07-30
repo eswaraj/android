@@ -19,7 +19,8 @@
     <string name="main_road">Road</string>
     <string name="main_sewage">Sewage</string>
 
-    <string name="issue_views">%d views</string>
+    
+    <string name="issue_complaints">%d complaints</string>
     <string name="issue_issues">%d issues</string>
     <string name="tab_issues">Issues</string>
     <string name="tab_analytics">Analytics</string>

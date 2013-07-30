@@ -30,12 +30,14 @@ public class IssueActivity extends Activity {
     private TextView issueNameTV;
     private ListView issueList;
     private TextView numIssuesTV;
-    private TextView numViewsTV;
+    private TextView numComplaintsTV;
     
 
     private ISSUE_CATEGORY issue;
     private Location location;
     IssueAdapter adapter;
+    
+    private View headerView;
     
     
     public static final String EXTRA_IS_ANALYTICS = "isAnalytics";
@@ -58,12 +60,17 @@ public class IssueActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issue);
-        setViews();
         setExtrasAndSavedInstance(savedInstanceState); 
-        setIssueBannerAndText();
+        initListView();
+        setHeaderView();
         setListView();
+        setIssueBannerAndText();
         setNumTV();
     }
+	
+	private void initListView() {
+		issueList = (ListView) findViewById(R.id.issue_list);
+	}
     
     private void setExtrasAndSavedInstance(Bundle savedInstanceState) {
         if(null == savedInstanceState) {
@@ -79,11 +86,14 @@ public class IssueActivity extends Activity {
         }
     }
     
-    private void setViews() {
-    	issueBanner = findViewById(R.id.issue_banner);
-    	issueNameTV = (TextView) findViewById(R.id.issue_name);
-    	numIssuesTV = (TextView) findViewById(R.id.issue_issues);
-    	numViewsTV = (TextView) findViewById(R.id.issue_views);
+    
+    
+    private void setHeaderView() {
+    	headerView = getLayoutInflater().inflate(R.layout.issue_banner, issueList, false);
+    	issueBanner = headerView.findViewById(R.id.issue_banner);
+    	issueNameTV = (TextView) headerView.findViewById(R.id.issue_name);
+    	numIssuesTV = (TextView) headerView.findViewById(R.id.issue_issues);
+    	numComplaintsTV = (TextView) headerView.findViewById(R.id.issue_complaints);
     }
 
     private void setIssueBannerAndText() {
@@ -123,12 +133,13 @@ public class IssueActivity extends Activity {
     }
     
     private void setListView() {
-    	issueList = (ListView) findViewById(R.id.issue_list);
+    	
     	if(isAnalytics) {
     		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_analytics_row, analyticsList);
     	} else {
     		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_row, null);
     	}
+    	issueList.addHeaderView(headerView, null, false);
     	issueList.setAdapter(adapter);
     	issueList.setOnItemClickListener(listItemClickListener);
     }
@@ -136,13 +147,22 @@ public class IssueActivity extends Activity {
     	if(isAnalytics) {
     		numIssuesTV.setText(String.format(getResources().getString(R.string.issue_issues), adapter.getCount()));    		
     		numIssuesTV.setVisibility(View.VISIBLE);
-    		numViewsTV.setVisibility(View.VISIBLE);
+    		numComplaintsTV.setVisibility(View.VISIBLE);
+    		numComplaintsTV.setText(String.format(getResources().getString(R.string.issue_complaints), getTotalComplaints()));
     	} else {
     		numIssuesTV.setText(String.format(getResources().getString(R.string.issue_issues), adapter.getCount()));
     		numIssuesTV.setVisibility(View.VISIBLE);
-    		numViewsTV.setVisibility(View.GONE);
+    		numComplaintsTV.setVisibility(View.GONE);
     	}
     	
+    }
+    
+    private int getTotalComplaints() {
+    	int count = 0;
+    	for (Analytics analytics : analyticsList) {
+			count += analytics.getCount();
+		}
+    	return count;
     }
     
     
@@ -174,6 +194,5 @@ public class IssueActivity extends Activity {
 	
 	public void onTitleBarRightButtonClick(View view) {
 		
-	}
-	
+	}	
 }
