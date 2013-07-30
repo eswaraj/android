@@ -63,7 +63,7 @@ import com.jansampark.vashisthg.widget.PieChartView;
 
 @SuppressLint("UseSparseArrays")
 public class MainAnalyticsFragment extends Fragment {
-	
+
 	private static final String TAG = "Analytics";
 	FrameLayout pieChartHolder;
 	TextView issueNumTV;
@@ -74,30 +74,32 @@ public class MainAnalyticsFragment extends Fragment {
 	Spinner overallSpinner;
 	MyCount issueCounter;
 	MyCount complaintCounter;
-	
+
 	private AutoCompleteTextView autoCompleteTextView;
 	private View overlay;
 	private List<Constituency> locations;
 	private Constituency lastSelectedLocation;
-	
+
 	private int cityResId = -1;
 	private int constituencyId = -1;
-	
+
 	private void setCityResId(int cityResId) {
 		this.cityResId = cityResId;
 	}
-	
+
 	public int getCityResId() {
 		return cityResId;
 	}
-	
+
+	boolean isFetchingCityAnalytics;
+	boolean isFetchingConstituencyAnalytics;
 
 	int[] vals;
-	
+
 	private RequestQueue mRequestQueue;
-	
+
 	Map<Integer, List<Analytics>> analyticsMap;
-	
+
 	private IssueButton roadButton;
 	private IssueButton waterButton;
 	private IssueButton transportationButton;
@@ -109,15 +111,14 @@ public class MainAnalyticsFragment extends Fragment {
 		return new MainAnalyticsFragment();
 	}
 
-	
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mRequestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+		mRequestQueue = Volley.newRequestQueue(getActivity()
+				.getApplicationContext());
 		analyticsMap = new HashMap<Integer, List<Analytics>>();
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -134,20 +135,22 @@ public class MainAnalyticsFragment extends Fragment {
 		setButtons();
 		setPieChart();
 		initButtonListeners();
-		autoCompleteTextView = (AutoCompleteTextView) getActivity().findViewById(R.id.analytics_autocomplete);
+		autoCompleteTextView = (AutoCompleteTextView) getActivity()
+				.findViewById(R.id.analytics_autocomplete);
 		overlay = getActivity().findViewById(R.id.analytics_overlay);
 	}
+
 	private void initButtonListeners() {
-		electricityButton.setOnClickListener(buttonListener);		
+		electricityButton.setOnClickListener(buttonListener);
 		lawButton.setOnClickListener(buttonListener);
 		roadButton.setOnClickListener(buttonListener);
 		sewageButton.setOnClickListener(buttonListener);
 		transportationButton.setOnClickListener(buttonListener);
 		waterButton.setOnClickListener(buttonListener);
 	}
-	
+
 	boolean isResumed;
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -164,12 +167,10 @@ public class MainAnalyticsFragment extends Fragment {
 	private void setCounts(int issueCount, int complaintCount) {
 		issueNumTV = (TextView) getActivity().findViewById(R.id.issue_num);
 		complaintsNumTV = (TextView) getActivity().findViewById(
-				R.id.complaint_num);		
+				R.id.complaint_num);
 		issueNumTV.setText(issueCount + "");
 		complaintsNumTV.setText(complaintCount + "");
 	}
-
-
 
 	public void setPieChart() {
 		pieChartHolder = (FrameLayout) getActivity().findViewById(
@@ -183,86 +184,88 @@ public class MainAnalyticsFragment extends Fragment {
 				return true;
 			}
 		});
-		 pieChartHolder.addView(chartView);
+		pieChartHolder.addView(chartView);
 	}
 
 	public void onFragmentShown() {
 		setCounts(issueCount, complaintCount);
 	}
-	
+
 	boolean autoCompleteCheck;
 
 	private void setButtons() {
-		
+
 		overallButton = (RadioButton) getActivity().findViewById(
 				R.id.analytics_overall);
 		overallSpinner = (Spinner) getActivity().findViewById(
 				R.id.analytics_overall_spinner);
-		autoCompleteButton = (RadioButton) getActivity().findViewById(R.id.analytics_spinner);
-		analyticsRadioGroup = (RadioGroup) ((RadioGroup) getActivity().findViewById(R.id.analytics_chooser_container));
-		analyticsRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		autoCompleteButton = (RadioButton) getActivity().findViewById(
+				R.id.analytics_spinner);
+		analyticsRadioGroup = (RadioGroup) ((RadioGroup) getActivity()
+				.findViewById(R.id.analytics_chooser_container));
+		analyticsRadioGroup
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				switch (checkedId) {
-				case R.id.analytics_overall:
-					Log.d(TAG, "clicked on overall");
-					fetchCityAnalytics();
-					break;
-					
-				case R.id.analytics_spinner:
-					autoCompleteCheck = true;
-					Log.d(TAG, "clicked on autocomplete: ");
-					break;
+					@Override
+					public void onCheckedChanged(RadioGroup group, int checkedId) {
+						switch (checkedId) {
+						case R.id.analytics_overall:
+							Log.d(TAG, "clicked on overall");
+							fetchCityAnalytics();
+							break;
 
-				default:
-					break;
-				}
-			}
-			
-			
-		});
-		
+						case R.id.analytics_spinner:
+							autoCompleteCheck = true;
+							Log.d(TAG, "clicked on autocomplete: ");
+							break;
+
+						default:
+							break;
+						}
+					}
+
+				});
+
 		autoCompleteButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				if(autoCompleteCheck) {
+				if (autoCompleteCheck) {
 					autoCompleteCheck = false;
-					if( -1 == constituencyId) {
+					if (-1 == constituencyId) {
 						executeCurrentMLAIdRequest();
 					} else {
 						executeAnalyticsRequest();
 					}
-					Log.d(TAG, "clicked on not already checked autocomplete: " + autoCompleteCheck);
+					Log.d(TAG, "clicked on not already checked autocomplete: "
+							+ autoCompleteCheck);
 				} else {
 					onAutoCompleteRadioClick();
 				}
-				
+
 			}
 		});
-		
-		
-		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-		        R.array.city, R.layout.analytics_city_selector_bg);
-		// Specify the layout to use when the list of choices appears
+
+
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+				getActivity(), R.array.city,
+				R.layout.analytics_city_selector_bg);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-	    overallSpinner.setAdapter(adapter);
-	    
-	    overallSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		overallSpinner.setAdapter(adapter);
+
+		overallSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,int position, long arg3) {
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
 				Log.d(TAG, "in onitemselectedListener");
 				analyticsRadioGroup.check(R.id.analytics_overall);
 				switch (position) {
-				case 0:					
+				case 0:
 					setCityResId(R.integer.id_city_delhi);
 					break;
 				case 1:
-					setCityResId(R.integer.id_city_bangalore);					
+					setCityResId(R.integer.id_city_bangalore);
 					break;
 
 				default:
@@ -275,22 +278,23 @@ public class MainAnalyticsFragment extends Fragment {
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				analyticsRadioGroup.check(R.id.analytics_overall);
-				
+
 			}
 		});
-		
+
 		overallSpinner.setOnTouchListener(new OnTouchListener() {
-			
+
 			@Override
 			public boolean onTouch(View arg0, MotionEvent arg1) {
-				
-				if(R.id.analytics_overall == analyticsRadioGroup.getCheckedRadioButtonId()) {		
+
+				if (R.id.analytics_overall == analyticsRadioGroup
+						.getCheckedRadioButtonId()) {
 					switch (getCityResId()) {
 					case R.integer.id_city_bangalore:
 						overallSpinner.setSelection(1);
 						break;
 					case R.integer.id_city_delhi:
-						overallSpinner.setSelection(0);						
+						overallSpinner.setSelection(0);
 						break;
 
 					default:
@@ -298,71 +302,82 @@ public class MainAnalyticsFragment extends Fragment {
 					}
 					return false;
 				} else {
-					analyticsRadioGroup.check(R.id.analytics_overall);								
+					analyticsRadioGroup.check(R.id.analytics_overall);
 					return true;
 				}
 			}
 		});
-		
-		electricityButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_electricity);
-		roadButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_road);
-		waterButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_water);
-		transportationButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_transportation);
-		lawButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_law);
-		sewageButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_sewage);
+
+		electricityButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_electricity);
+		roadButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_road);
+		waterButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_water);
+		transportationButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_transportation);
+		lawButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_law);
+		sewageButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_sewage);
 	}
-	
+
 	private void onAutoCompleteRadioClick() {
-		
-		if(autoCompleteTextView.getVisibility() == View.VISIBLE) {
+
+		if (autoCompleteTextView.getVisibility() == View.VISIBLE) {
 			disableAutoComplete();
 		} else {
 			overlay.setVisibility(View.VISIBLE);
-			if(null != lastSelectedLocation) {
+			if (null != lastSelectedLocation) {
 				autoCompleteTextView.setText(lastSelectedLocation.getName());
 			}
 			autoCompleteTextView.setVisibility(View.VISIBLE);
-			
+
 			autoCompleteTextView.requestFocus();
-			InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-		}		
+			InputMethodManager imm = (InputMethodManager) getActivity()
+					.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+		}
 	}
 
-	private void disableAutoComplete() {        
-        Utils.hideKeyboard(getActivity(), autoCompleteTextView);
+	private void disableAutoComplete() {
+		Utils.hideKeyboard(getActivity(), autoCompleteTextView);
 		autoCompleteTextView.setVisibility(View.GONE);
 		overlay.setVisibility(View.INVISIBLE);
 	}
-	
+
 	public void setAutoComplete() {
 		parseLocations();
-		
+
 		overlay.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				disableAutoComplete();
 			}
 		});
-		LocationAutoCompleteAdapter adapter = new LocationAutoCompleteAdapter(getActivity(), locations);
+		LocationAutoCompleteAdapter adapter = new LocationAutoCompleteAdapter(
+				getActivity(), locations);
 		autoCompleteTextView.setAdapter(adapter);
 		autoCompleteTextView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				disableAutoComplete();
-				Constituency loc = (Constituency) parent.getAdapter().getItem(position);
+				Constituency loc = (Constituency) parent.getAdapter().getItem(
+						position);
 				setLocation(loc);
 				fetchAnalytics(loc);
 			}
 		});
-		
+
 	}
-	
+
 	public void parseLocations() {
 		try {
-			locations = ConstuencyParserHelper.readLocations(getActivity(), getCityResId());
+			locations = ConstuencyParserHelper.readLocations(getActivity(),
+					getCityResId());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -372,47 +387,61 @@ public class MainAnalyticsFragment extends Fragment {
 		lastSelectedLocation = loc;
 		autoCompleteButton.setText(loc.getName());
 	}
-	
+
 	public void onSewageClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.SEWAGE, analyticsMap.get(getResources().getInteger(R.integer.sewage)));
+		openIssueActivity(ISSUE_CATEGORY.SEWAGE,
+				analyticsMap.get(getResources().getInteger(R.integer.sewage)));
 	}
 
 	public void onTransportationClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.TRANSPORT, analyticsMap.get(getResources().getInteger(R.integer.transportation)));
+		openIssueActivity(
+				ISSUE_CATEGORY.TRANSPORT,
+				analyticsMap.get(getResources().getInteger(
+						R.integer.transportation)));
 	}
 
 	public void onWaterClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.WATER, analyticsMap.get(getResources().getInteger(R.integer.water)));
+		openIssueActivity(ISSUE_CATEGORY.WATER,
+				analyticsMap.get(getResources().getInteger(R.integer.water)));
 	}
 
 	public void onRoadClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.ROAD, analyticsMap.get(getResources().getInteger(R.integer.road)));
+		openIssueActivity(ISSUE_CATEGORY.ROAD,
+				analyticsMap.get(getResources().getInteger(R.integer.road)));
 	}
 
 	public void onElectricityClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.ELECTRICITY, analyticsMap.get(getResources().getInteger(R.integer.electricity)));
+		openIssueActivity(
+				ISSUE_CATEGORY.ELECTRICITY,
+				analyticsMap.get(getResources().getInteger(
+						R.integer.electricity)));
 	}
 
 	public void onLawAndOrderClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.LAW, analyticsMap.get(getResources().getInteger(R.integer.lawandorder)));
+		openIssueActivity(
+				ISSUE_CATEGORY.LAW,
+				analyticsMap.get(getResources().getInteger(
+						R.integer.lawandorder)));
 	}
 
-	private void openIssueActivity(ISSUE_CATEGORY issue, List<Analytics> analytics) {
-		
-			Intent intent = new Intent(getActivity(), IssueActivity.class);
-			intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
-			intent.putExtra(IssueActivity.EXTRA_IS_ANALYTICS, true);
-			intent.putParcelableArrayListExtra(IssueActivity.EXTRA_ANALYTICS_LIST, (ArrayList<Analytics>) analytics);
-			startActivity(intent);
-		
+	private void openIssueActivity(ISSUE_CATEGORY issue,
+			List<Analytics> analytics) {
+
+		Intent intent = new Intent(getActivity(), IssueActivity.class);
+		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
+		intent.putExtra(IssueActivity.EXTRA_IS_ANALYTICS, true);
+		intent.putParcelableArrayListExtra(IssueActivity.EXTRA_ANALYTICS_LIST,
+				(ArrayList<Analytics>) analytics);
+		startActivity(intent);
+
 	}
-	
+
 	android.view.View.OnClickListener buttonListener = new OnClickListener() {
-		
+
 		@Override
-		public void onClick(View view) {						
+		public void onClick(View view) {
 			int id = view.getId();
-			
+
 			switch (id) {
 			case R.id.main_analytics_road:
 				onRoadClick(view);
@@ -438,87 +467,91 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 		}
 	};
-	
-	private void fetchAnalytics(Constituency constituency) {		
+
+	private void fetchAnalytics(Constituency constituency) {
 		executeMLAIdRequest(constituency.getLatLong());
 	}
-	
-	private void executeMLAIdRequest(LatLng latlng)  {	
+
+	private void executeMLAIdRequest(LatLng latlng) {
 		double lat = latlng.latitude;
 		double lon = latlng.longitude;
-		String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;		
-		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createMLAIDReqSuccessListener(), createMyReqErrorListener());
-	
+		String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat="
+				+ lat + "&long=" + lon;
+		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
+				url, null, createMLAIDReqSuccessListener(),
+				createMyReqErrorListener());
+
 		mRequestQueue.add(request);
 		DialogFactory.showPleaseWaitProgressDialog(getActivity());
 	}
-	
-	
-	
-	 private Response.ErrorListener createMyReqErrorListener() {
-	        return new Response.ErrorListener() {
-	            @Override
-	            public void onErrorResponse(VolleyError error) {
-	            	if(isResumed) {
-	            		Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
-	            		DialogFactory.hideProgressDialog();
-	            	}
-	            }
-	        };
-	  }
-	 
+
+	private Response.ErrorListener createMyReqErrorListener() {
+		return new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if (isResumed) {
+					Toast.makeText(getActivity(), R.string.network_error,
+							Toast.LENGTH_LONG).show();
+					DialogFactory.hideProgressDialog();
+				}
+			}
+		};
+	}
+
 	private Response.Listener<JSONObject> createMLAIDReqSuccessListener() {
-        return new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-            	try {
-            		Log.d(TAG, jsonObject.toString(2));
+		return new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject jsonObject) {
+				try {
+					Log.d(TAG, jsonObject.toString(2));
 					String mlaId = jsonObject.getString("consti_id");
 					constituencyId = Integer.parseInt(mlaId);
 					executeAnalyticsRequest();
 				} catch (JSONException e) {
 					e.printStackTrace();
-				}        	
-            }
-        };
-    }
-	
+				}
+			}
+		};
+	}
+
 	private void executeAnalyticsRequest() {
-		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + constituencyId + "&time_frame=1w";
-		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createAnalyticsReqSuccessListener(), createMyReqErrorListener());
-		mRequestQueue.add(request);		
+		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid="
+				+ constituencyId + "&time_frame=1w";
+		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
+				url, null, createAnalyticsReqSuccessListener(),
+				createMyReqErrorListener());
+		mRequestQueue.add(request);
 		DialogFactory.showPleaseWaitProgressDialog(getActivity());
 	}
-	
-	
+
 	private Response.Listener<JSONObject> createAnalyticsReqSuccessListener() {
-        return new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-            	try {         		
-            		if(isResumed) {
+		return new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject jsonObject) {
+				try {
+					if (isResumed) {
 						Log.d(TAG, jsonObject.toString(2));
 						parseJsonToAnalyticsMap(jsonObject);
-            		}
-            		DialogFactory.hideProgressDialog();
+					}
+					DialogFactory.hideProgressDialog();
 				} catch (JSONException e) {
 					e.printStackTrace();
-				}        	
-            }
-            
-			
-        };
-    }
-	private void parseJsonToAnalyticsMap(JSONObject jsonObject) throws JSONException {
+				}
+			}
+
+		};
+	}
+
+	private void parseJsonToAnalyticsMap(JSONObject jsonObject)
+			throws JSONException {
 		Iterator<String> iter = jsonObject.keys();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			String key = iter.next().toString();
 			int keyInt = Integer.parseInt(key);
 			JSONArray array = jsonObject.getJSONArray(key);
 			List<Analytics> analyticsList = new ArrayList<Analytics>();
-			
-			
-			for(int i = 0; i < array.length(); i++) {
+
+			for (int i = 0; i < array.length(); i++) {
 				Analytics analytics = new Analytics();
 				analytics.setIssueCategory(keyInt);
 				JSONObject itemObject = array.getJSONObject(i);
@@ -526,203 +559,214 @@ public class MainAnalyticsFragment extends Fragment {
 				analytics.setCount(itemObject.getInt("counter"));
 				analyticsList.add(analytics);
 			}
-			
-			//Log.d(TAG, "analytics, array length: " + analyticsList.size());
+
+			// Log.d(TAG, "analytics, array length: " + analyticsList.size());
 			analyticsMap.put(keyInt, analyticsList);
 			setViewsAccordingToAnalytics();
 		}
 	}
-	
+
 	int complaintCount = 0;
 	int issueCount = 0;
-	
+
 	private void setViewsAccordingToAnalytics() {
 		setTotalComplaintCount();
-	    setIssueCount(waterButton, R.integer.water);
-	    setIssueCount(sewageButton, R.integer.sewage);
-	    setIssueCount(lawButton, R.integer.sewage);
-	    setIssueCount(roadButton, R.integer.road);
-	    setIssueCount(electricityButton, R.integer.electricity);
-	    setIssueCount(transportationButton, R.integer.transportation);	    
+		setIssueCount(waterButton, R.integer.water);
+		setIssueCount(sewageButton, R.integer.sewage);
+		setIssueCount(lawButton, R.integer.sewage);
+		setIssueCount(roadButton, R.integer.road);
+		setIssueCount(electricityButton, R.integer.electricity);
+		setIssueCount(transportationButton, R.integer.transportation);
 	}
-	
+
 	private void setTotalComplaintCount() {
 		int totalCount = 0;
-		Iterator<Entry<Integer, List<Analytics>>> it = analyticsMap.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry<Integer, List<Analytics>>  pairs = (Map.Entry<Integer, List<Analytics>>)it.next();
-	        for (Analytics analytics : pairs.getValue()) {
+		Iterator<Entry<Integer, List<Analytics>>> it = analyticsMap.entrySet()
+				.iterator();
+		while (it.hasNext()) {
+			Map.Entry<Integer, List<Analytics>> pairs = (Map.Entry<Integer, List<Analytics>>) it
+					.next();
+			for (Analytics analytics : pairs.getValue()) {
 				totalCount += analytics.getCount();
-			}	        
-	    }
-	    complaintCount = totalCount;
-	    setCounts(issueCount, complaintCount);
+			}
+		}
+		complaintCount = totalCount;
+		setCounts(issueCount, complaintCount);
 	}
-	
+
 	private void setIssueCount(IssueButton issueButton, int categoryResId) {
-		try {		
+		try {
 			int issuePercentage = 0;
 			int issueCount = 0;
-			
+
 			Resources resources = getActivity().getResources();
 			Integer issueCategory = resources.getInteger(categoryResId);
 			Set<Integer> anylyticsSet = analyticsMap.keySet();
 			for (Integer integer : anylyticsSet) {
-				//Log.d(TAG, "KeySet: " + integer);
+				// Log.d(TAG, "KeySet: " + integer);
 			}
-			if(analyticsMap.containsKey(issueCategory)) {			
+			if (analyticsMap.containsKey(issueCategory)) {
 				issueCount = getComplaintCountForCategory(issueCategory);
-				
+
 			}
-		
-			//Log.d(TAG, "count: " + issueCount + ", complaintCount: " + complaintCount);
-			if( complaintCount != 0) {
+
+			// Log.d(TAG, "count: " + issueCount + ", complaintCount: " +
+			// complaintCount);
+			if (complaintCount != 0) {
 				issuePercentage = (issueCount * 100) / complaintCount;
 			}
-			//Log.d(TAG, "percentage: " + issuePercentage);
-			issueButton.setPercentage(issuePercentage  );
+			// Log.d(TAG, "percentage: " + issuePercentage);
+			issueButton.setPercentage(issuePercentage);
 		} catch (Exception e) {
 			issueButton.setPercentage(0);
 			e.printStackTrace();
 		}
 	}
-	
+
 	private int getComplaintCountForCategory(int issueCategory) {
 		int count = 0;
 		List<Analytics> analyticsList = analyticsMap.get(issueCategory);
 		for (Analytics analytics : analyticsList) {
 			count += analytics.getCount();
 		}
-		
+
 		return count;
 	}
-	
-	public void setCurrentCity() {		
- 		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
- 			if(getCityResId() == -1 ) {
- 				setCityResId(Constituency.getCityRefId(JanSamparkApplication.getInstance().getLastKnownConstituency().getAddress()));
- 			}
-			Log.d(TAG, "call fetch analytics from setCurrentCity");
+
+	public void setCurrentCity() {
+		if (null != JanSamparkApplication.getInstance()
+				.getLastKnownConstituency()) {
+			if (getCityResId() == -1) {
+				setCityResId(Constituency.getCityRefId(JanSamparkApplication
+						.getInstance().getLastKnownConstituency().getAddress()));
+			}
 			setAutoComplete();
 			fetchCityAnalytics();
-			
 		} else {
 			Log.e(TAG, "last known constituency is null");
-		}	
+		}
 	}
-	
+
 	private String requestTag = "tag";
-	
-	
-	private void fetchCityAnalytics() {		
+
+	private void fetchCityAnalytics() {
 		mRequestQueue.cancelAll(requestTag);
-		int id = getResources().getInteger(getCityResId());		
-		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + id + "&time_frame=1w";
+		int id = getResources().getInteger(getCityResId());
+		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid="
+				+ id + "&time_frame=1w";
 		Log.d(TAG, "requesting city analytics for url: " + url);
-		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createCityDetailsReqSuccessListener(), createMyReqErrorListener());
+		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
+				url, null, createCityDetailsReqSuccessListener(),
+				createMyReqErrorListener());
 		request.setTag(requestTag);
-		mRequestQueue.add(request);		
+		mRequestQueue.add(request);
 		DialogFactory.showPleaseWaitProgressDialog(getActivity());
-		
+
 	}
-	
+
 	private Response.Listener<JSONObject> createCityDetailsReqSuccessListener() {
-        return new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-            	try {         		
-            		if(R.id.analytics_overall == analyticsRadioGroup.getCheckedRadioButtonId()) {
-	            		if(isResumed) {
-							parseJsonToAnalyticsMap(jsonObject);						
-	            		}
-            		}
-            		DialogFactory.hideProgressDialog();
+		return new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject jsonObject) {
+				try {
+					if (R.id.analytics_overall == analyticsRadioGroup
+							.getCheckedRadioButtonId()) {
+						if (isResumed) {
+							parseJsonToAnalyticsMap(jsonObject);
+						}
+					}
+					DialogFactory.hideProgressDialog();
 				} catch (JSONException e) {
 					e.printStackTrace();
-				}        	
-            }
+				}
+			}
 
-        };
-	} 
-	
-	private void executeCurrentMLAIdRequest()  {	
-		Location lastKnownLocation = JanSamparkApplication.getInstance().getLastKnownLocation();
-		if(null != lastKnownLocation) {
+		};
+	}
+
+	private void executeCurrentMLAIdRequest() {
+		Location lastKnownLocation = JanSamparkApplication.getInstance()
+				.getLastKnownLocation();
+		if (null != lastKnownLocation) {
 			double lat = lastKnownLocation.getLatitude();
 			double lon = lastKnownLocation.getLongitude();
-			String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;		
-			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createCurrentMLAIDReqSuccessListener(), createMLAIdErrorListener());
-			
+			String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat="
+					+ lat + "&long=" + lon;
+			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url,
+					null, createCurrentMLAIDReqSuccessListener(),
+					createMLAIdErrorListener());
+
 			Log.d(TAG, "url: " + request.getUrl());
 			mRequestQueue.add(request);
 			DialogFactory.showPleaseWaitProgressDialog(getActivity());
 		}
 	}
-		
-	 private Response.ErrorListener createMLAIdErrorListener() {
-	        return new Response.ErrorListener() {
-	            @Override
-	            public void onErrorResponse(VolleyError error) {
-	            	Log.d(TAG, "try again");
-	            	DialogFactory.hideProgressDialog();
-	            }
-	        };
-	  }
-	 
-	 private Listener<JSONObject>  createCurrentMLAIDReqSuccessListener() {
-		 return new Response.Listener<JSONObject>() {
-	            @Override
-	            public void onResponse(JSONObject jsonObject) {
-	            	try {
-	            		Log.d(TAG, jsonObject.toString(2));
-						String mlaId = jsonObject.getString("consti_id");
-						constituencyId = Integer.parseInt(mlaId);
-						
-						executeAnalyticsRequest();
-						executeMLADetailsRequest(mlaId);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					} 
-	            }
-	        };
-	 }
-	 
-	 private void executeMLADetailsRequest(String mlaId) {
-			String url = "http://50.57.224.47/html/dev/micronews/mla-info/" + mlaId;
-			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLADetailsReqSuccessListener(), createMLADetailsReqErrorListener());
-			mRequestQueue.add(request);
-			DialogFactory.showPleaseWaitProgressDialog(getActivity());
-		}
-		
-		String MLAName;
-		String MLAPic;
-		
-		private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
-	        return new Response.Listener<JSONObject>() {
-	            @Override
-	            public void onResponse(JSONObject jsonObject) {
-	            	try {            	
-							JSONObject node = jsonObject.getJSONArray("nodes").getJSONObject(0).getJSONObject("node");
-							String constituency = node.getString("constituency");
-							autoCompleteButton.setText(constituency);
-							DialogFactory.hideProgressDialog();
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}        	
-	            }
-	        };
-	    }	
-		 private Response.ErrorListener createMLADetailsReqErrorListener() {
-		        return new Response.ErrorListener() {
-		            @Override
-		            public void onErrorResponse(VolleyError error) {	            	
-		            	if(isResumed) {
-			            	Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
-			            	DialogFactory.hideProgressDialog();
-		            	}
-		            }
-		        };
-		  }
-	 
-	
+
+	private Response.ErrorListener createMLAIdErrorListener() {
+		return new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Log.d(TAG, "try again");
+				DialogFactory.hideProgressDialog();
+			}
+		};
+	}
+
+	private Listener<JSONObject> createCurrentMLAIDReqSuccessListener() {
+		return new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject jsonObject) {
+				try {
+					Log.d(TAG, jsonObject.toString(2));
+					String mlaId = jsonObject.getString("consti_id");
+					constituencyId = Integer.parseInt(mlaId);
+
+					executeAnalyticsRequest();
+					executeMLADetailsRequest(mlaId);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+	}
+
+	private void executeMLADetailsRequest(String mlaId) {
+		String url = "http://50.57.224.47/html/dev/micronews/mla-info/" + mlaId;
+		JsonObjectRequest request = new JsonObjectRequest(Method.GET, url,
+				null, createMLADetailsReqSuccessListener(),
+				createMLADetailsReqErrorListener());
+		mRequestQueue.add(request);
+		DialogFactory.showPleaseWaitProgressDialog(getActivity());
+	}
+
+	private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
+		return new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject jsonObject) {
+				try {
+					JSONObject node = jsonObject.getJSONArray("nodes")
+							.getJSONObject(0).getJSONObject("node");
+					String constituency = node.getString("constituency");
+					autoCompleteButton.setText(constituency);
+					DialogFactory.hideProgressDialog();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+	}
+
+	private Response.ErrorListener createMLADetailsReqErrorListener() {
+		return new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if (isResumed) {
+					Toast.makeText(getActivity(), R.string.network_error,
+							Toast.LENGTH_LONG).show();
+					DialogFactory.hideProgressDialog();
+				}
+			}
+		};
+	}
+
 }
