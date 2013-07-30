@@ -120,7 +120,7 @@ public class IssueAdapter extends BaseAdapter {
 				
 				holder.complaints.setText(complaintCount + " complaints");
 				if(0  != totalComplaints) {
-					complaintPercentage = (complaintCount / totalComplaints) * 100;
+					complaintPercentage = (complaintCount  * 100) / totalComplaints;
 				}
 				holder.percentage.setText(complaintPercentage + "%");			 
 			}			
