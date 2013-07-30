@@ -38,7 +38,7 @@
     <dimen name="countdown_text">22dp</dimen>
     
     <dimen name="analytics_chooser_width">112dp</dimen>
-    <dimen name="analytics_chooser_height">48dp</dimen>
+    <dimen name="analytics_chooser_height">32dp</dimen>
     
     
     <dimen name="issue_row_color_width">8dp</dimen>

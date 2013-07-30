@@ -18,6 +18,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -30,18 +31,23 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
@@ -64,6 +70,8 @@ public class MainAnalyticsFragment extends Fragment {
 	TextView complaintsNumTV;
 	RadioButton overallButton;
 	RadioButton autoCompleteButton;
+	RadioGroup analyticsRadioGroup;
+	Spinner overallSpinner;
 	MyCount issueCounter;
 	MyCount complaintCounter;
 	
@@ -72,7 +80,16 @@ public class MainAnalyticsFragment extends Fragment {
 	private List<Constituency> locations;
 	private Constituency lastSelectedLocation;
 	
-	private int cityResId;
+	private int cityResId = -1;
+	private int constituencyId = -1;
+	
+	private void setCityResId(int cityResId) {
+		this.cityResId = cityResId;
+	}
+	
+	public int getCityResId() {
+		return cityResId;
+	}
 	
 
 	int[] vals;
@@ -117,6 +134,8 @@ public class MainAnalyticsFragment extends Fragment {
 		setButtons();
 		setPieChart();
 		initButtonListeners();
+		autoCompleteTextView = (AutoCompleteTextView) getActivity().findViewById(R.id.analytics_autocomplete);
+		overlay = getActivity().findViewById(R.id.analytics_overlay);
 	}
 	private void initButtonListeners() {
 		electricityButton.setOnClickListener(buttonListener);		
@@ -145,19 +164,7 @@ public class MainAnalyticsFragment extends Fragment {
 	private void setCounts(int issueCount, int complaintCount) {
 		issueNumTV = (TextView) getActivity().findViewById(R.id.issue_num);
 		complaintsNumTV = (TextView) getActivity().findViewById(
-				R.id.complaint_num);
-//		if (null != issueCounter) {
-//			issueCounter.cancel();
-//		}
-//		issueCounter = MyCount.newInstance(issueCount, issueNumTV);
-//		issueCounter.start();
-//
-//		if (null != complaintCounter) {
-//			complaintCounter.cancel();
-//		}
-//		complaintCounter = MyCount.newInstance(complaintCount, complaintsNumTV);
-//		complaintCounter.start();
-		
+				R.id.complaint_num);		
 		issueNumTV.setText(issueCount + "");
 		complaintsNumTV.setText(complaintCount + "");
 	}
@@ -186,18 +193,21 @@ public class MainAnalyticsFragment extends Fragment {
 	boolean autoCompleteCheck;
 
 	private void setButtons() {
+		
 		overallButton = (RadioButton) getActivity().findViewById(
 				R.id.analytics_overall);
+		overallSpinner = (Spinner) getActivity().findViewById(
+				R.id.analytics_overall_spinner);
 		autoCompleteButton = (RadioButton) getActivity().findViewById(R.id.analytics_spinner);
-		
-		((RadioGroup) getActivity().findViewById(R.id.analytics_chooser_container)).setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		analyticsRadioGroup = (RadioGroup) ((RadioGroup) getActivity().findViewById(R.id.analytics_chooser_container));
+		analyticsRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 				case R.id.analytics_overall:
 					Log.d(TAG, "clicked on overall");
-					fetchCityAnalytics(0);
+					fetchCityAnalytics();
 					break;
 					
 				case R.id.analytics_spinner:
@@ -219,7 +229,11 @@ public class MainAnalyticsFragment extends Fragment {
 			public void onClick(View arg0) {
 				if(autoCompleteCheck) {
 					autoCompleteCheck = false;
-					overallButton.setChecked(false);
+					if( -1 == constituencyId) {
+						executeCurrentMLAIdRequest();
+					} else {
+						executeAnalyticsRequest();
+					}
 					Log.d(TAG, "clicked on not already checked autocomplete: " + autoCompleteCheck);
 				} else {
 					onAutoCompleteRadioClick();
@@ -228,6 +242,67 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 		});
 		
+		
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+		        R.array.city, R.layout.analytics_city_selector_bg);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+	    overallSpinner.setAdapter(adapter);
+	    
+	    overallSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,int position, long arg3) {
+				Log.d(TAG, "in onitemselectedListener");
+				analyticsRadioGroup.check(R.id.analytics_overall);
+				switch (position) {
+				case 0:					
+					setCityResId(R.integer.id_city_delhi);
+					break;
+				case 1:
+					setCityResId(R.integer.id_city_bangalore);					
+					break;
+
+				default:
+					break;
+				}
+				Log.d(TAG, "call setCurrentCity from onitemselectedListener");
+				setCurrentCity();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				analyticsRadioGroup.check(R.id.analytics_overall);
+				
+			}
+		});
+		
+		overallSpinner.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				
+				if(R.id.analytics_overall == analyticsRadioGroup.getCheckedRadioButtonId()) {		
+					switch (getCityResId()) {
+					case R.integer.id_city_bangalore:
+						overallSpinner.setSelection(1);
+						break;
+					case R.integer.id_city_delhi:
+						overallSpinner.setSelection(0);						
+						break;
+
+					default:
+						break;
+					}
+					return false;
+				} else {
+					analyticsRadioGroup.check(R.id.analytics_overall);								
+					return true;
+				}
+			}
+		});
 		
 		electricityButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_electricity);
 		roadButton = (IssueButton) getActivity().findViewById(R.id.main_analytics_road);
@@ -238,6 +313,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 	
 	private void onAutoCompleteRadioClick() {
+		
 		if(autoCompleteTextView.getVisibility() == View.VISIBLE) {
 			disableAutoComplete();
 		} else {
@@ -261,8 +337,7 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	public void setAutoComplete() {
 		parseLocations();
-		autoCompleteTextView = (AutoCompleteTextView) getActivity().findViewById(R.id.analytics_autocomplete);
-		overlay = getActivity().findViewById(R.id.analytics_overlay);
+		
 		overlay.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -287,7 +362,7 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	public void parseLocations() {
 		try {
-			locations = ConstuencyParserHelper.readLocations(getActivity(), Constituency.getCityRefId(JanSamparkApplication.getInstance().getLastKnownConstituency().getAddress()));
+			locations = ConstuencyParserHelper.readLocations(getActivity(), getCityResId());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -399,7 +474,8 @@ public class MainAnalyticsFragment extends Fragment {
             	try {
             		Log.d(TAG, jsonObject.toString(2));
 					String mlaId = jsonObject.getString("consti_id");
-					executeAnalyticsRequest( mlaId);
+					constituencyId = Integer.parseInt(mlaId);
+					executeAnalyticsRequest();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}        	
@@ -407,14 +483,15 @@ public class MainAnalyticsFragment extends Fragment {
         };
     }
 	
-	private void executeAnalyticsRequest(String mlaId) {
-		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + mlaId + "&time_frame=1w";
-		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createMLADetailsReqSuccessListener(), createMyReqErrorListener());
+	private void executeAnalyticsRequest() {
+		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + constituencyId + "&time_frame=1w";
+		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createAnalyticsReqSuccessListener(), createMyReqErrorListener());
 		mRequestQueue.add(request);		
+		DialogFactory.showPleaseWaitProgressDialog(getActivity());
 	}
 	
 	
-	private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
+	private Response.Listener<JSONObject> createAnalyticsReqSuccessListener() {
         return new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -428,7 +505,7 @@ public class MainAnalyticsFragment extends Fragment {
 					e.printStackTrace();
 				}        	
             }
-
+            
 			
         };
     }
@@ -450,7 +527,7 @@ public class MainAnalyticsFragment extends Fragment {
 				analyticsList.add(analytics);
 			}
 			
-			Log.d(TAG, "analytics, array length: " + analyticsList.size());
+			//Log.d(TAG, "analytics, array length: " + analyticsList.size());
 			analyticsMap.put(keyInt, analyticsList);
 			setViewsAccordingToAnalytics();
 		}
@@ -491,18 +568,18 @@ public class MainAnalyticsFragment extends Fragment {
 			Integer issueCategory = resources.getInteger(categoryResId);
 			Set<Integer> anylyticsSet = analyticsMap.keySet();
 			for (Integer integer : anylyticsSet) {
-				Log.d(TAG, "KeySet: " + integer);
+				//Log.d(TAG, "KeySet: " + integer);
 			}
 			if(analyticsMap.containsKey(issueCategory)) {			
 				issueCount = getComplaintCountForCategory(issueCategory);
 				
 			}
 		
-			Log.d(TAG, "count: " + issueCount + ", complaintCount: " + complaintCount);
+			//Log.d(TAG, "count: " + issueCount + ", complaintCount: " + complaintCount);
 			if( complaintCount != 0) {
 				issuePercentage = (issueCount * 100) / complaintCount;
 			}
-			Log.d(TAG, "percentage: " + issuePercentage);
+			//Log.d(TAG, "percentage: " + issuePercentage);
 			issueButton.setPercentage(issuePercentage  );
 		} catch (Exception e) {
 			issueButton.setPercentage(0);
@@ -520,22 +597,33 @@ public class MainAnalyticsFragment extends Fragment {
 		return count;
 	}
 	
-	public void setCurrentCity() {
-		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
-			fetchCityAnalytics(0);
+	public void setCurrentCity() {		
+ 		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
+ 			if(getCityResId() == -1 ) {
+ 				setCityResId(Constituency.getCityRefId(JanSamparkApplication.getInstance().getLastKnownConstituency().getAddress()));
+ 			}
+			Log.d(TAG, "call fetch analytics from setCurrentCity");
 			setAutoComplete();
+			fetchCityAnalytics();
+			
 		} else {
 			Log.e(TAG, "last known constituency is null");
-		}
+		}	
 	}
 	
-	private void fetchCityAnalytics(int id) {		
-		if(id == 0) {
-			id = getResources().getInteger(Constituency.getCityRefId(JanSamparkApplication.getInstance().getLastKnownConstituency().getAddress()));
-		}
+	private String requestTag = "tag";
+	
+	
+	private void fetchCityAnalytics() {		
+		mRequestQueue.cancelAll(requestTag);
+		int id = getResources().getInteger(getCityResId());		
 		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid=" + id + "&time_frame=1w";
+		Log.d(TAG, "requesting city analytics for url: " + url);
 		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET, url, null, createCityDetailsReqSuccessListener(), createMyReqErrorListener());
-		mRequestQueue.add(request);						
+		request.setTag(requestTag);
+		mRequestQueue.add(request);		
+		DialogFactory.showPleaseWaitProgressDialog(getActivity());
+		
 	}
 	
 	private Response.Listener<JSONObject> createCityDetailsReqSuccessListener() {
@@ -543,19 +631,10 @@ public class MainAnalyticsFragment extends Fragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
             	try {         		
-            		if(isResumed) {
-						Log.d(TAG, jsonObject.toString(2));
-						parseJsonToAnalyticsMap(jsonObject);
-						if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
-							if(Constituency.getCityRefId(JanSamparkApplication.getInstance().getLastKnownConstituency().getAddress()) == R.integer.id_city_bangalore) {
-								overallButton.setText(R.string.city_bangalore);
-							} else {
-								overallButton.setText(R.string.city_delhi);
-							}
-						} else {
-							Log.e(TAG, "last known constituency is null");
-						}
-						
+            		if(R.id.analytics_overall == analyticsRadioGroup.getCheckedRadioButtonId()) {
+	            		if(isResumed) {
+							parseJsonToAnalyticsMap(jsonObject);						
+	            		}
             		}
             		DialogFactory.hideProgressDialog();
 				} catch (JSONException e) {
@@ -564,5 +643,86 @@ public class MainAnalyticsFragment extends Fragment {
             }
 
         };
-	} 		
+	} 
+	
+	private void executeCurrentMLAIdRequest()  {	
+		Location lastKnownLocation = JanSamparkApplication.getInstance().getLastKnownLocation();
+		if(null != lastKnownLocation) {
+			double lat = lastKnownLocation.getLatitude();
+			double lon = lastKnownLocation.getLongitude();
+			String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;		
+			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createCurrentMLAIDReqSuccessListener(), createMLAIdErrorListener());
+			
+			Log.d(TAG, "url: " + request.getUrl());
+			mRequestQueue.add(request);
+			DialogFactory.showPleaseWaitProgressDialog(getActivity());
+		}
+	}
+		
+	 private Response.ErrorListener createMLAIdErrorListener() {
+	        return new Response.ErrorListener() {
+	            @Override
+	            public void onErrorResponse(VolleyError error) {
+	            	Log.d(TAG, "try again");
+	            	DialogFactory.hideProgressDialog();
+	            }
+	        };
+	  }
+	 
+	 private Listener<JSONObject>  createCurrentMLAIDReqSuccessListener() {
+		 return new Response.Listener<JSONObject>() {
+	            @Override
+	            public void onResponse(JSONObject jsonObject) {
+	            	try {
+	            		Log.d(TAG, jsonObject.toString(2));
+						String mlaId = jsonObject.getString("consti_id");
+						constituencyId = Integer.parseInt(mlaId);
+						
+						executeAnalyticsRequest();
+						executeMLADetailsRequest(mlaId);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					} 
+	            }
+	        };
+	 }
+	 
+	 private void executeMLADetailsRequest(String mlaId) {
+			String url = "http://50.57.224.47/html/dev/micronews/mla-info/" + mlaId;
+			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLADetailsReqSuccessListener(), createMLADetailsReqErrorListener());
+			mRequestQueue.add(request);
+			DialogFactory.showPleaseWaitProgressDialog(getActivity());
+		}
+		
+		String MLAName;
+		String MLAPic;
+		
+		private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
+	        return new Response.Listener<JSONObject>() {
+	            @Override
+	            public void onResponse(JSONObject jsonObject) {
+	            	try {            	
+							JSONObject node = jsonObject.getJSONArray("nodes").getJSONObject(0).getJSONObject("node");
+							String constituency = node.getString("constituency");
+							autoCompleteButton.setText(constituency);
+							DialogFactory.hideProgressDialog();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}        	
+	            }
+	        };
+	    }	
+		 private Response.ErrorListener createMLADetailsReqErrorListener() {
+		        return new Response.ErrorListener() {
+		            @Override
+		            public void onErrorResponse(VolleyError error) {	            	
+		            	if(isResumed) {
+			            	Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
+			            	DialogFactory.hideProgressDialog();
+		            	}
+		            }
+		        };
+		  }
+	 
+	
 }

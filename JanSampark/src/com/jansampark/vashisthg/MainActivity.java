@@ -227,6 +227,7 @@ public class MainActivity extends FragmentActivity  {
 							issueFragment.showLocationName();
 						}
 						if(analyticsFragment != null) {
+							
 		    				analyticsFragment.setCurrentCity();
 		    			}
 					}
@@ -238,6 +239,7 @@ public class MainActivity extends FragmentActivity  {
 								issueFragment.showLocationName();
 							}
 							if(analyticsFragment != null) {
+							
 			    				analyticsFragment.setCurrentCity();
 			    			}
 						}						

@@ -38,7 +38,19 @@ public class SplashActivity extends FragmentActivity {
         setView();
         setUpPager();
         setUpRadioGroup();    
-        startAnimatingGallery();
+        
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	startAnimatingGallery();
+    }
+    
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	timer.cancel();
     }
 
     private void setView() {

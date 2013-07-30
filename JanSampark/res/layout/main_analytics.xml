@@ -17,25 +17,40 @@
             android:id="@+id/analytics_chooser_container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/analytics_chooser_height"
+            android:checkedButton="@+id/analytics_overall"
             android:gravity="center"
             android:orientation="horizontal" >
 
-            <RadioButton
-                android:id="@+id/analytics_overall"
-                android:layout_width="@dimen/analytics_chooser_width"
-                android:layout_height="wrap_content"
-                android:background="@drawable/analytics_choose_left"
-                android:button="@null"
-                android:gravity="center"
-                android:text="@string/analytics_overall"
-                android:textColor="@color/analytics_radio_text"
-                android:textOff="@string/analytics_overall"
-                android:textOn="@string/analytics_overall" />
+            <FrameLayout
+                android:id="@+id/analytics_overall_wrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/analytics_chooser_height" >
+
+                
+
+                <RadioButton
+                    android:id="@+id/analytics_overall"
+                    android:layout_width="@dimen/analytics_chooser_width"
+                    android:layout_height="@dimen/analytics_chooser_height"
+                    android:background="@drawable/analytics_choose_left"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text=""
+                    
+                    android:textOff=""
+                    android:textOn="" />
+                <Spinner
+                    android:id="@+id/analytics_overall_spinner"
+                    android:layout_width="@dimen/analytics_chooser_width"
+                    android:gravity="center"
+                    android:background="@null"
+                    android:layout_height="@dimen/analytics_chooser_height" />
+            </FrameLayout>
 
             <RadioButton
                 android:id="@+id/analytics_spinner"
                 android:layout_width="@dimen/analytics_chooser_width"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/analytics_chooser_height"
                 android:background="@drawable/analytics_choose_right"
                 android:button="@null"
                 android:gravity="center"
@@ -49,8 +64,8 @@
             android:layout_alignParentLeft="false"
             android:layout_below="@+id/analytics_chooser_container"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:layout_marginTop="4dp" >
+            android:layout_marginTop="4dp"
+            android:gravity="center" >
 
             <FrameLayout
                 android:id="@+id/pie_chart_holder"
@@ -61,10 +76,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/main_pie_padding"
                 android:layout_marginLeft="@dimen/main_pie_padding"
                 android:layout_marginRight="@dimen/main_pie_padding"
                 android:layout_marginTop="@dimen/main_pie_padding"
-                android:layout_marginBottom="@dimen/main_pie_padding"
                 android:background="@drawable/pie_chart_top"
                 android:gravity="center"
                 android:orientation="vertical" >
@@ -116,32 +131,25 @@
                     android:id="@+id/main_analytics_road"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    issueButton:tertiaryText="@null"
-                    issueButton:image="@drawable/ic_analytics_road"
                     issueButton:bottomText="@string/main_road"
-                    
-                     />
+                    issueButton:image="@drawable/ic_analytics_road"
+                    issueButton:tertiaryText="@null" />
 
                 <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_water"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    
-                    
-                    issueButton:tertiaryText="@null"
-                    issueButton:image="@drawable/ic_analytics_water"
                     issueButton:bottomText="@string/main_water"
-                     />
+                    issueButton:image="@drawable/ic_analytics_water"
+                    issueButton:tertiaryText="@null" />
 
                 <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_transportation"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"                    
-                    
-                    issueButton:tertiaryText="@null"
-                    issueButton:image="@drawable/ic_analytics_transport"
+                    android:layout_height="wrap_content"
                     issueButton:bottomText="@string/main_transportation"
-                     />
+                    issueButton:image="@drawable/ic_analytics_transport"
+                    issueButton:tertiaryText="@null" />
             </TableRow>
 
             <TableRow
@@ -152,30 +160,26 @@
                 <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_electricity"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"                 
-                    
-                    issueButton:tertiaryText="@null"
+                    android:layout_height="wrap_content"
+                    issueButton:bottomText="@string/main_electricity"
                     issueButton:image="@drawable/ic_analytics_electricity"
-                    issueButton:bottomText="@string/main_electricity" />
+                    issueButton:tertiaryText="@null" />
 
                 <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_law"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                                      
-                    issueButton:tertiaryText="@null"
-                    issueButton:image="@drawable/ic_analytics_law"
                     issueButton:bottomText="@string/main_law_and_order"
-                     />
+                    issueButton:image="@drawable/ic_analytics_law"
+                    issueButton:tertiaryText="@null" />
 
                 <com.jansampark.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_sewage"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" 
-                    
-                    issueButton:tertiaryText="@null"
+                    android:layout_height="wrap_content"
+                    issueButton:bottomText="@string/main_sewage"
                     issueButton:image="@drawable/ic_analytics_sewage"
-                    issueButton:bottomText="@string/main_sewage"/>
+                    issueButton:tertiaryText="@null" />
             </TableRow>
         </TableLayout>
 
