@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/main_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        layout="@layout/title_bar" />
+
+    <LinearLayout
+        android:id="@+id/infra_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/issue_row_color"
+            android:layout_width="@dimen/issue_row_color_width"
+            android:layout_height="match_parent"
+            android:background="@color/lack_of_infra" />
+
+        <Button
+            android:id="@+id/infra"
+            style="@style/other_issue_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onInfraClick"
+            android:text="@string/lack_of_infra"
+            android:textColor="@color/lack_of_infra" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/maintainence_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/issue_maintainence_row_color"
+            android:layout_width="@dimen/issue_row_color_width"
+            android:layout_height="match_parent"
+            android:background="@color/lack_of_maintainence" />
+
+        <Button
+            android:id="@+id/mainteinance"
+            style="@style/other_issue_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onMainteinanceClick"
+            android:text="@string/lack_of_main"
+            android:textColor="@color/lack_of_maintainence" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/quality_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/issue_quality_row_color"
+            android:layout_width="@dimen/issue_row_color_width"
+            android:layout_height="match_parent"
+            android:background="@color/lack_of_quality" />
+
+        <Button
+            android:id="@+id/quality"
+            style="@style/other_issue_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onQualityClick"
+            android:text="@string/lack_of_quality"
+            android:textColor="@color/lack_of_quality" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pricing_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/issue_pricing_row_color"
+            android:layout_width="@dimen/issue_row_color_width"
+            android:layout_height="match_parent"
+            android:background="@color/poor_pricing" />
+	    <Button
+	        android:id="@+id/pricing"
+	        style="@style/other_issue_button"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:onClick="onPricingClick"
+	        android:textColor="@color/poor_pricing"
+	        android:text="@string/poor_pricing" />
+	</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/awareness_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/issue_awareness_row_color"
+            android:layout_width="@dimen/issue_row_color_width"
+            android:layout_height="match_parent"
+            
+            android:background="@color/awareness" />
+	    <Button
+	        android:id="@+id/awareness"
+	        style="@style/other_issue_button"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:onClick="onAwarenessClick"
+	        android:textColor="@color/awareness"
+	        android:text="@string/awareness" />
+     </LinearLayout>
+
+</LinearLayout>

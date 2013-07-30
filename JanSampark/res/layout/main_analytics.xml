@@ -16,9 +16,10 @@
         <RadioGroup
             android:id="@+id/analytics_chooser_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/analytics_chooser_height"
+            android:layout_height="@dimen/analytics_chooser_container_height"
             android:checkedButton="@+id/analytics_overall"
-            android:gravity="center"
+            android:gravity="center|bottom"
+            
             android:orientation="horizontal" >
 
             <FrameLayout

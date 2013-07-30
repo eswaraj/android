@@ -90,6 +90,14 @@
         <item>0</item>
     </integer-array>
     
+    <integer-array name="other_template_id">
+        <item>0</item>
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+    </integer-array>
+    
     <integer-array name="basic_items_index">
         <item>@integer/water</item>
         <item>@integer/lawandorder</item>

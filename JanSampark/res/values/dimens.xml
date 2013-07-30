@@ -39,6 +39,7 @@
     
     <dimen name="analytics_chooser_width">112dp</dimen>
     <dimen name="analytics_chooser_height">32dp</dimen>
+    <dimen name="analytics_chooser_container_height">40dp</dimen>
     
     
     <dimen name="issue_row_color_width">8dp</dimen>

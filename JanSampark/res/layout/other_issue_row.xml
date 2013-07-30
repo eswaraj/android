@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:gravity="center_vertical"
+    
+    android:orientation="horizontal" >
+
+    <View
+        android:id="@+id/issue_row_color"
+        android:layout_width="@dimen/issue_row_color_width"
+        android:layout_height="match_parent" />
+
+
+
+        <TextView
+            android:id="@+id/issue_row_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="abc"
+            android:paddingTop="@dimen/isssue_list_padding"
+        android:paddingBottom="@dimen/isssue_list_padding"
+        android:paddingLeft="@dimen/issue_row_text_left_padding"
+         android:paddingRight="@dimen/issue_row_text_right_padding"
+            android:textSize="@dimen/issue_row_text_type"
+             />
+
+
+
+</LinearLayout>

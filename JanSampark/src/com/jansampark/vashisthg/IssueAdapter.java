@@ -72,6 +72,7 @@ public class IssueAdapter extends BaseAdapter {
 	
 	
 	
+	
 
 	
 	

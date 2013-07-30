@@ -180,10 +180,16 @@ public class IssueActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 			if(!isAnalytics) {
-				Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
-				intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position - 1));
-				intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
-				startActivity(intent);			
+				if(position != adapterView.getCount() - 1) {
+					Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
+					intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position - 1));
+					intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
+					startActivity(intent);	
+				} else {
+					Intent intent = new Intent(IssueActivity.this, OtherIssuesActivity.class);
+					intent.putExtra(OtherIssuesActivity.EXTRA_ISSUE_CATEGORY_ID, IssueFactory.getIssueId(IssueActivity.this, issue));
+					startActivity(intent);
+				}
 			}
 		}
 	};

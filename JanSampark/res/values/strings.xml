@@ -87,15 +87,23 @@
         <item>sewage</item>
     </string-array>
     
+    <string name="lack_of_infra">Lack of infrastructure</string>
+    <string name="lack_of_main">Lack of mainteinance</string>
+    <string name="lack_of_quality">Lack of Quality of staff</string>
+    <string name="poor_pricing">Poor Pricing</string>
+    <string name="awareness">Awareness</string>
+    <string name="others">Others</string>
     
     <string-array name="infra">
-        <item>Lack of infrastructure</item>
-        <item>Lack of maintainance</item>
-        <item>Lack of Quality of staff</item>
-        <item>Poor Pricing</item>
-        <item>Awareness</item>
-        <item>Others</item>
+        <item>@string/lack_of_infra</item>
+        <item>@string/lack_of_main</item>
+        <item>@string/lack_of_quality</item>
+        <item>@string/poor_pricing</item>
+        <item>@string/awareness</item>
+        <item>@string/others</item>
     </string-array>
+    
+    
     
     
     <string-array name="lawandorder">
@@ -165,11 +173,11 @@
     <string-array name="road">
         <item>What will we do without roads, no roads here city sucks.</item>
         <item>No roads in my area.</item>
-        <item>there  are potholes everywhere on this road.</item>
-        <item>road is  in bad shape.</item>
-        <item>these Roads are dirty all the time do somethings.</item>
+        <item>There are potholes everywhere on this road.</item>
+        <item>Road is  in bad shape.</item>
+        <item>These Roads are dirty all the time do somethings.</item>
         <item>Road tax too much.</item>
-        <item>How these road tender get allocate , as citizen we need to know , please launch a awareness programme.</item>
+        <item>How these road tender get allocate, as citizen we need to know, please launch a awareness programme.</item>
         <item>No cleanliness, launch an awareness programme on how citizens can help.</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
@@ -183,8 +191,8 @@
         <item>Lot of garbage is left unaddressed.</item>
         <item>My surrounding has become a garbage yard, please take care of it.</item>
         <item>Garbage has made environment like hell, is this the city we dreamt of.</item>
-        <item>Sewage / Sanitation department staff very rude.</item>
-        <item>Sewage/Sanitation  department staff totally outdated&#8230; Stoneage.</item>
+        <item>Sewage / Sanitation department staff is very rude.</item>
+        <item>Sewage/Sanitation department staff is totally outdated&#8230; Stoneage.</item>
         <item>Sewage charges are too much.</item>
         <item>Streets are dirty all the time, please launch awareness programme. Explain how citizens can help.</item>
         <item>@string/otherTypeOfComplaint</item>
