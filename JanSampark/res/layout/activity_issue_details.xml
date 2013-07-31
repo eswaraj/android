@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="IssueDetailsActivity" >
 
     <include
@@ -16,190 +16,193 @@
         android:id="@+id/issue_details_scroll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/main_title_bar"
         android:fillViewport="true" >
 
-        <FrameLayout
-            android:id="@+id/frame_layout"
+        <LinearLayout
+            android:id="@+id/issue_detail_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin" >
 
-            <LinearLayout
-                android:id="@+id/issue_detail_wrapper"
+            <TextView
+                android:id="@+id/issue_detail_category_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/issue_details_text_top_margin"
+                android:text="@string/issue_details_category_label"
+                android:textColor="@color/issue_details_dark"
+                android:textSize="@dimen/issue_details_text" />
+
+            <TextView
+                android:id="@+id/issue_detail_category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/issue_details_red"
+                android:textSize="@dimen/issue_details_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/issue_detail_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/issue_details_text_top_margin"
+                android:text="@string/issue_details_name_label"
+                android:textColor="@color/issue_details_dark"
+                android:textSize="@dimen/issue_details_text" />
+
+            <TextView
+                android:id="@+id/issue_detail_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/issue_details_red"
+                android:textSize="@dimen/issue_details_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/issue_detail_system_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/issue_details_text_top_margin"
+                android:text="@string/issue_details_system_label"
+                android:textColor="@color/issue_details_dark"
+                android:textSize="@dimen/issue_details_text" />
+
+            <TextView
+                android:id="@+id/issue_detail_system_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/issue_details_red"
+                android:textSize="@dimen/issue_details_text"
+                android:textStyle="bold" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin" >
+                android:layout_marginTop="@dimen/issue_details_text_top_margin"
+                android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/issue_detail_category_label"
+                    android:id="@+id/issue_detail_description_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/issue_details_text_top_margin"
-                    android:text="@string/issue_details_category_label"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/issue_details_description_label"
                     android:textColor="@color/issue_details_dark"
                     android:textSize="@dimen/issue_details_text" />
-
-                <TextView
-                    android:id="@+id/issue_detail_category_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/issue_details_red"
-                    android:textSize="@dimen/issue_details_text"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/issue_detail_name_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/issue_details_text_top_margin"
-                    android:text="@string/issue_details_name_label"
-                    android:textColor="@color/issue_details_dark"
-                    android:textSize="@dimen/issue_details_text" />
-
-                <TextView
-                    android:id="@+id/issue_detail_name_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/issue_details_red"
-                    android:textSize="@dimen/issue_details_text"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/issue_detail_system_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/issue_details_text_top_margin"
-                    android:text="@string/issue_details_system_label"
-                    android:textColor="@color/issue_details_dark"
-                    android:textSize="@dimen/issue_details_text" />
-
-                <TextView
-                    android:id="@+id/issue_detail_system_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/issue_details_red"
-                    android:textSize="@dimen/issue_details_text"
-                    android:textStyle="bold" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/issue_details_text_top_margin"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/issue_detail_description_label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:text="@string/issue_details_description_label"
-                        android:textColor="@color/issue_details_dark"
-                        android:textSize="@dimen/issue_details_text" />
-
-                    <Button
-                        android:id="@+id/issue_detail_descption_edit_btn"
-                        android:layout_width="@dimen/issue_details_edit_description_width"
-                        android:layout_height="@dimen/issue_details_edit_description_height"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:background="@drawable/issue_detail_button"
-                        android:drawableLeft="@drawable/ic_edit"
-                        android:drawablePadding="@dimen/issue_details_edit_description_left_drawable_padding"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:gravity="center"
-                        android:text="@string/issue_details_edit_description_button"
-                        android:textColor="@color/issue_details_dark"
-                        android:textSize="@dimen/issue_details_small_text" />
-
-                    <Button
-                        android:id="@+id/issue_detail_descption_add_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/issue_details_add_desctiption_height"
-                        android:layout_below="@+id/issue_detail_description_label"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/issue_detail_button"
-                        android:drawableRight="@drawable/ic_plus"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/issue_details_edit_description_padding"
-                        android:paddingRight="@dimen/issue_details_edit_description_padding"
-                        android:text="@string/issue_details_add_description_button"
-                        android:textColor="@color/issue_details_dark"
-                        android:textSize="@dimen/issue_details_text" />
-
-                    <EditText
-                        android:id="@+id/issue_detail_description_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/issue_detail_descption_edit_btn"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/issue_detail_button"
-                        android:inputType="text"
-                        android:minHeight="@dimen/issue_details_edit_text_min_height"
-                        android:paddingBottom="@dimen/issue_details_edit_text_padding"
-                        android:paddingTop="@dimen/issue_details_edit_text_padding"
-                        android:textColor="@color/issue_details_red"
-                        android:textSize="@dimen/issue_details_text"
-                        android:textStyle="bold" >
-
-                        <requestFocus />
-                    </EditText>
-
-                    <TextView
-                        android:id="@+id/issue_detail_description_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/issue_detail_description_edit_text"
-                        android:layout_alignTop="@+id/issue_detail_description_edit_text"
-                        android:text="@color/issue_details_red"
-                        android:textSize="@dimen/issue_details_text"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <include
-                    android:id="@+id/take_photo_container_ref"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/take_photo_container" />
-
-                <include
-                    android:id="@+id/photo_taken_container_ref"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/issue_details_retake_container_height"
-                    layout="@layout/photo_taken_container" />
 
                 <Button
-                    android:id="@+id/issue_details_post"
+                    android:id="@+id/issue_detail_descption_edit_btn"
+                    android:layout_width="@dimen/issue_details_edit_description_width"
+                    android:layout_height="@dimen/issue_details_edit_description_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/issue_detail_button"
+                    android:drawableLeft="@drawable/ic_edit"
+                    android:drawablePadding="@dimen/issue_details_edit_description_left_drawable_padding"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:text="@string/issue_details_edit_description_button"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_details_small_text" />
+
+                <Button
+                    android:id="@+id/issue_detail_descption_add_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/issue_details_add_desctiption_height"
+                    android:layout_below="@+id/issue_detail_description_label"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/issue_detail_button"
+                    android:drawableRight="@drawable/ic_plus"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/issue_details_edit_description_padding"
+                    android:paddingRight="@dimen/issue_details_edit_description_padding"
+                    android:text="@string/issue_details_add_description_button"
+                    android:textColor="@color/issue_details_dark"
+                    android:textSize="@dimen/issue_details_text" />
+
+                <EditText
+                    android:id="@+id/issue_detail_description_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/issue_detail_descption_edit_btn"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/issue_detail_button"
+                    android:inputType="text"
+                    android:minHeight="@dimen/issue_details_edit_text_min_height"
+                    android:paddingBottom="@dimen/issue_details_edit_text_padding"
+                    android:paddingTop="@dimen/issue_details_edit_text_padding"
+                    android:textColor="@color/issue_details_red"
+                    android:textSize="@dimen/issue_details_text"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/issue_detail_description_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/post_button"
-                    android:onClick="onPostClick"
-                    android:text="@string/issue_details_post"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
+                    android:layout_alignLeft="@+id/issue_detail_description_edit_text"
+                    android:layout_alignTop="@+id/issue_detail_description_edit_text"
+                    android:text="@color/issue_details_red"
+                    android:textSize="@dimen/issue_details_text"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <FrameLayout
-                android:id="@+id/issue_details_overlay"
+            <include
+                android:id="@+id/take_photo_container_ref"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#77000000"
-                android:focusableInTouchMode="true"
-                android:visibility="gone" >
-                    
-            </FrameLayout>
-            <ImageView
-           		android:id="@+id/issue_details_sending_image"
-           		android:layout_width="wrap_content"
-           		android:layout_height="wrap_content"
-           		android:contentDescription="@string/app_name"
-           		android:layout_gravity="center" />
+                android:layout_height="wrap_content"
+                layout="@layout/take_photo_container" />
 
+            <include
+                android:id="@+id/photo_taken_container_ref"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/issue_details_retake_container_height"
+                layout="@layout/photo_taken_container" />
 
-        </FrameLayout>
+            <Button
+                android:id="@+id/issue_details_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/post_button"
+                android:onClick="onPostClick"
+                android:text="@string/issue_details_post"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/issue_details_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#77000000"
+        android:focusableInTouchMode="true"
+        android:visibility="gone" >
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/issue_details_sending_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/issue_details_sending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/issue_details_sending_image"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/issue_details_sending"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/issue_details_sending_text_size"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</RelativeLayout>

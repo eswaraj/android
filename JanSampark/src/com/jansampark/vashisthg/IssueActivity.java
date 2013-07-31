@@ -134,7 +134,7 @@ public class IssueActivity extends Activity {
     private void setListView() {
     	
     	if(isAnalytics) {
-    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_analytics_row, analyticsList);
+    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_analytics_row, getAnalyticsList());
     	} else {
     		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_row, null);
     	}
@@ -158,7 +158,7 @@ public class IssueActivity extends Activity {
     
     private int getTotalComplaints() {
     	int count = 0;
-    	for (Analytics analytics : analyticsList) {
+    	for (Analytics analytics : getAnalyticsList()) {
 			count += analytics.getCount();
 		}
     	return count;

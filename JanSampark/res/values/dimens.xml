@@ -37,9 +37,10 @@
     <dimen name="countdown_label_text">14dp</dimen>
     <dimen name="countdown_text">22dp</dimen>
     
-    <dimen name="analytics_chooser_width">112dp</dimen>
+    <dimen name="analytics_chooser_width">160dp</dimen>
     <dimen name="analytics_chooser_height">32dp</dimen>
     <dimen name="analytics_chooser_container_height">40dp</dimen>
+    <dimen name="analytics_chooser_horizontal_padding">40dp</dimen>
     
     
     <dimen name="issue_row_color_width">8dp</dimen>
@@ -71,6 +72,8 @@
     <dimen name="issue_details_edit_text_min_height">64dp</dimen>
     <dimen name="issue_details_take_attach_drawable_padding">8dp</dimen>
     <dimen name="issue_details_OR_text_width">40dp</dimen>
+    <dimen name="issue_details_sending_bottom_margin">160dp</dimen>
+    <dimen name="issue_details_sending_text_size">15sp</dimen>
     
     <dimen name="issue_summary_horizontal_padding">16dp</dimen>
     <dimen name="issue_summary_big_text">22sp</dimen>

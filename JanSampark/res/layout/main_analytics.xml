@@ -19,19 +19,21 @@
             android:layout_height="@dimen/analytics_chooser_container_height"
             android:checkedButton="@+id/analytics_overall"
             android:gravity="center|bottom"
-            
+            android:paddingLeft="@dimen/analytics_chooser_horizontal_padding"
+            android:paddingRight="@dimen/analytics_chooser_horizontal_padding"
             android:orientation="horizontal" >
 
             <FrameLayout
                 android:id="@+id/analytics_overall_wrapper"
                 android:layout_width="wrap_content"
+                android:layout_weight="1"
                 android:layout_height="@dimen/analytics_chooser_height" >
 
                 
 
                 <RadioButton
                     android:id="@+id/analytics_overall"
-                    android:layout_width="@dimen/analytics_chooser_width"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/analytics_chooser_height"
                     android:background="@drawable/analytics_choose_left"
                     android:button="@null"
@@ -42,7 +44,7 @@
                     android:textOn="" />
                 <Spinner
                     android:id="@+id/analytics_overall_spinner"
-                    android:layout_width="@dimen/analytics_chooser_width"
+                    android:layout_width="match_parent"
                     android:gravity="center"
                     android:background="@null"
                     android:layout_height="@dimen/analytics_chooser_height" />
@@ -50,8 +52,9 @@
 
             <RadioButton
                 android:id="@+id/analytics_spinner"
-                android:layout_width="@dimen/analytics_chooser_width"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/analytics_chooser_height"
+                android:layout_weight="1"
                 android:background="@drawable/analytics_choose_right"
                 android:button="@null"
                 android:gravity="center"

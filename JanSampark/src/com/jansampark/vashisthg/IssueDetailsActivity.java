@@ -66,11 +66,13 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	private EditText descriptionET;
 	private TextView descriptionTextView;
 	private Button editDesctiption;
+	
 		
 	private ViewGroup takeImageContainer;
 	private ViewGroup imageTakenContainer;
 	private ImageView issueImageView;
 	private ImageView sendingImage;
+	private TextView sendingText;
 	private View darkOverlay;
 	private Button postButton;
 	
@@ -150,6 +152,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		darkOverlay = findViewById(R.id.issue_details_overlay);
 		sendingImage = (ImageView)findViewById(R.id.issue_details_sending_image);
 		postButton = (Button) findViewById(R.id.issue_details_post);
+		sendingText = (TextView) findViewById(R.id.issue_details_sending);
 				
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		nameTV.setText(issueItem.getIssueName());
@@ -285,11 +288,13 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		sendingImage.setBackgroundResource(R.drawable.running_man);
 		AnimationDrawable frameAnimation = (AnimationDrawable) sendingImage.getBackground();
 		frameAnimation.start();
+		sendingText.setVisibility(View.VISIBLE);
 	}
 	
 	private void hideSendingOverlay() {
-		darkOverlay.setVisibility(View.INVISIBLE);
+		darkOverlay.setVisibility(View.GONE);
 		sendingImage.setVisibility(View.GONE);
+		sendingText.setVisibility(View.GONE);
 	}
 	
 	@Override

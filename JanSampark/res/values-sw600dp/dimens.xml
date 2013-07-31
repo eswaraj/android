@@ -36,6 +36,8 @@
     
     <dimen name="isssue_list_padding">24dp</dimen>
     
+    <dimen name="issue_details_sending_bottom_margin">240dp</dimen>
+    <dimen name="issue_details_sending_text_size">18sp</dimen>
     
     <dimen name="issue_button_width">196dp</dimen>
     <dimen name="issue_button_image_size">136dp</dimen>

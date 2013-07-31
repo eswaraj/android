@@ -213,7 +213,7 @@
         <item>@string/city_delhi</item>
         <item>@string/city_bangalore</item>
     </string-array>
-
+	<string name="issue_details_sending">Submitting Issue and retrieving responsible MLA information.</string>
    
 
 </resources>
