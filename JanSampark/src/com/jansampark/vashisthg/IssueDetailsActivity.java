@@ -36,6 +36,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.jansampark.vashisthg.helpers.CameraHelper;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
+import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.models.IssueItem;
 import com.jansampark.vashisthg.volley.MultipartRequest;
@@ -433,7 +434,12 @@ public class IssueDetailsActivity extends CameraUtilActivity {
             		Log.d(TAG, jsonObject.toString(1));
 					String mlaId = jsonObject.getString("consti_id");
 					Log.d(TAG, "consti_id: " + mlaId);
-					executeMLADetailsRequest(mlaId);
+					if(getResources().getInteger(R.integer.invalid_constituency) == Integer.parseInt(mlaId)) {
+						DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_post)).show(getSupportFragmentManager(), "FAIL");
+						hideSendingOverlay();
+					} else {
+						executeMLADetailsRequest(mlaId);
+					}					
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}        	
@@ -459,6 +465,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 						String url = node.getString("image");					
 						String name = node.getString("mla_name");
 						String constituency = node.getString("constituency");
+						
+						
 						nameTV.setText(name);
 						
 						Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);

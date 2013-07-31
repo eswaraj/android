@@ -119,6 +119,8 @@
     <integer name="id_city_delhi">999</integer>
     <integer name="id_city_bangalore">998</integer>
     
+    <integer name="invalid_constituency">74</integer>
+    
     
     
 </resources>

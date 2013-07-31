@@ -51,6 +51,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
 import com.jansampark.vashisthg.helpers.ConstuencyParserHelper;
+import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.models.Analytics;
 import com.jansampark.vashisthg.models.Constituency;
@@ -106,6 +107,14 @@ public class MainAnalyticsFragment extends Fragment {
 	private IssueButton electricityButton;
 	private IssueButton lawButton;
 	private IssueButton sewageButton;
+
+	public int getConstituencyId() {
+		return constituencyId;
+	}
+
+	public void setConstituencyId(int constituencyId) {
+		this.constituencyId = constituencyId;
+	}
 
 	public static MainAnalyticsFragment newInstance(Bundle args) {
 		return new MainAnalyticsFragment();
@@ -245,9 +254,10 @@ public class MainAnalyticsFragment extends Fragment {
 			public void onClick(View arg0) {
 				if (autoCompleteCheck) {
 					autoCompleteCheck = false;
-					if (-1 == constituencyId) {
+					if (-1 == getConstituencyId()) {
 						executeCurrentMLAIdRequest();
 					} else {
+						
 						executeAnalyticsRequest();
 					}
 					Log.d(TAG, "clicked on not already checked autocomplete: "
@@ -518,8 +528,12 @@ public class MainAnalyticsFragment extends Fragment {
 				try {
 					Log.d(TAG, jsonObject.toString(2));
 					String mlaId = jsonObject.getString("consti_id");
-					constituencyId = Integer.parseInt(mlaId);
-					executeAnalyticsRequest();
+					if(getResources().getInteger(R.integer.invalid_constituency) == Integer.parseInt(mlaId)) {
+						handleInvalidLocation();
+					} else {
+						setConstituencyId(Integer.parseInt(mlaId));
+						executeAnalyticsRequest();
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -530,7 +544,7 @@ public class MainAnalyticsFragment extends Fragment {
 	private void executeAnalyticsRequest() {
 		mRequestQueue.cancelAll(requestTag);
 		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid="
-				+ constituencyId + "&time_frame=1w";
+				+ getConstituencyId() + "&time_frame=1w";
 		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
 				url, null, createAnalyticsReqSuccessListener(),
 				createMyReqErrorListener());
@@ -739,15 +753,25 @@ public class MainAnalyticsFragment extends Fragment {
 				try {
 					Log.d(TAG, jsonObject.toString(2));
 					String mlaId = jsonObject.getString("consti_id");
-					constituencyId = Integer.parseInt(mlaId);
-
-					executeAnalyticsRequest();
-					executeMLADetailsRequest(mlaId);
+					if(getResources().getInteger(R.integer.invalid_constituency) == Integer.parseInt(mlaId)) {
+						handleInvalidLocation();
+					} else {
+						setConstituencyId(Integer.parseInt(mlaId));
+						executeAnalyticsRequest();
+						executeMLADetailsRequest(mlaId);
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 			}
 		};
+	}
+	
+	private void handleInvalidLocation() {
+		DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_analytics)).show(getFragmentManager(), "FAIL");
+		Constituency firstConstituency = locations.get(0);
+		executeMLAIdRequest(firstConstituency.getLatLong());
+		setLocation(firstConstituency);
 	}
 
 	private void executeMLADetailsRequest(String mlaId) {
