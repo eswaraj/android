@@ -11,6 +11,10 @@
     <dimen name="splash_seperator_width">160dp</dimen>
     <dimen name="splash_done_button_margin">40dp</dimen>
     
+    <dimen name="analytics_chooser_height">40dp</dimen>
+    <dimen name="analytics_chooser_container_height">64dp</dimen>
+    <dimen name="analytics_chooser_horizontal_padding">80dp</dimen>
+    
     <dimen name="main_pie_size">200dp</dimen>
     <dimen name="main_pie_padding">24dp</dimen>
     

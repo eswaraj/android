@@ -25,7 +25,7 @@
 
             <FrameLayout
                 android:id="@+id/analytics_overall_wrapper"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="@dimen/analytics_chooser_height" >
 
@@ -57,8 +57,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/analytics_choose_right"
                 android:button="@null"
+                android:ellipsize="end"
                 android:gravity="center"
                 android:textColor="@color/analytics_radio_text" />
+
         </RadioGroup>
 
         <RelativeLayout
