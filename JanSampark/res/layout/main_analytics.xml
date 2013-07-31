@@ -95,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/countdown_text"
+                    android:text="@string/total_issues"
                     android:textStyle="bold" />
 
                 <TextView

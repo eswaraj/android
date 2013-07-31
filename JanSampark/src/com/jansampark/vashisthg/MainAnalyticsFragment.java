@@ -155,7 +155,7 @@ public class MainAnalyticsFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		isResumed = true;
-		setCounts(issueCount, complaintCount);
+		setCounts(complaintCount);
 	}
 
 	@Override
@@ -164,11 +164,10 @@ public class MainAnalyticsFragment extends Fragment {
 		super.onPause();
 	}
 
-	private void setCounts(int issueCount, int complaintCount) {
+	private void setCounts( int complaintCount) {
 		issueNumTV = (TextView) getActivity().findViewById(R.id.issue_num);
 		complaintsNumTV = (TextView) getActivity().findViewById(
 				R.id.complaint_num);
-		issueNumTV.setText(issueCount + "");
 		complaintsNumTV.setText(complaintCount + "");
 	}
 
@@ -178,9 +177,18 @@ public class MainAnalyticsFragment extends Fragment {
 		if(pieChartHolder.getChildCount() > 0) {
 			pieChartHolder.removeAllViews();
 		}
-		if(values.length == 0) {
-			values = new int[] { 12, 23, 23, 23, 23, 2 };
+		
+		boolean allZero = true;
+		for (int i = 0; i < values.length; i++) {
+			if(values[i] != 0) {
+				allZero = false;
+				break;
+			}
 		}
+		if(values.length == 0 || allZero) {
+			values = new int[] { 16, 16, 16, 16, 16, 17 };
+		} 
+		
 		GraphicalView chartView = PieChartView.getNewInstance(getActivity(),
 				values);
 		chartView.setOnTouchListener(new OnTouchListener() {
@@ -193,7 +201,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	public void onFragmentShown() {
-		setCounts(issueCount, complaintCount);
+		setCounts(complaintCount);
 	}
 
 	boolean autoCompleteCheck;
@@ -572,8 +580,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	int complaintCount = 0;
-	int issueCount = 0;
-
+	
 	private void setViewsAccordingToAnalytics() {
 		setTotalComplaintCount();
 		int percentage[]= new int[6];
@@ -600,7 +607,7 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 		}
 		complaintCount = totalCount;
-		setCounts(issueCount, complaintCount);
+		setCounts(complaintCount);
 	}
 
 	private int setIssueCountAndReturnPercentage(IssueButton issueButton, int categoryResId) {

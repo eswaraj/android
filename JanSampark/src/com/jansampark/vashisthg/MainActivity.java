@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity  {
 	TitleBarHelper titleBarHelper;
 	Location lastKnownLocation;
 	
-	   LocationRequest locationRequest;
+	  // LocationRequest locationRequest;
 	    LocationClient locationClient;
 	    boolean isResumed;
 
