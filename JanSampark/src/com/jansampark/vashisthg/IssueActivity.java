@@ -202,8 +202,4 @@ public class IssueActivity extends Activity {
 	public void onTitleBarRightButtonClick(View view) {
 		
 	}	
-	
-	public void showProgressInTitleBar() {
-		
-	}
 }

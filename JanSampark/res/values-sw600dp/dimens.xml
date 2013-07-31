@@ -40,6 +40,11 @@
     
     <dimen name="isssue_list_padding">24dp</dimen>
     
+     <dimen name="issue_row_text_title">19sp</dimen>
+    <dimen name="issue_row_text_percentage">22sp</dimen>
+    <dimen name="issue_row_text_type">17sp</dimen>
+    <dimen name="issue_row_min_height">80dp</dimen>
+    
     <dimen name="issue_details_sending_bottom_margin">240dp</dimen>
     <dimen name="issue_details_sending_text_size">18sp</dimen>
     

@@ -13,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.LruBitmapCache;
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.models.Constituency;
@@ -44,6 +45,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	TextView addressTV;
 	
 	boolean isResumed;
+	boolean invalidShown;
 	
 	
 	@Override
@@ -58,6 +60,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 			mlaName = getIntent().getStringExtra(EXTRA_MLA_NAME);
 			mlaUrl = getIntent().getStringExtra(EXTRA_MLA_PIC);
 			constituency = getIntent().getStringExtra(EXTRA_CONSTITUENCY);
+			
 		} else {
 			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);
 			location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
@@ -67,16 +70,26 @@ public class IssueSummaryActivity extends FragmentActivity {
 		}
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		imageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(4 * 1024 * 1024));
-		//executeMLAIdRequest();
 		setMLA();
 		setCategoryAndSystem();
 		fetchAddress();
 	}
 	
+	public void showInvalidConstituency(String constituency) {
+		if(!invalidShown) {
+			if("Rest_of_India".equals(constituency)) {
+				DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_post)).show(getSupportFragmentManager(), "FAIL");
+				invalidShown = true;
+			} 
+		}
+	}
+	
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
 		isResumed = true;
+		showInvalidConstituency(constituency);
 	}
 	
 	@Override
@@ -92,6 +105,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 		outState.putParcelable(EXTRA_LOCATION, location);
 		outState.putString(EXTRA_MLA_NAME, mlaName);
 		outState.putString(EXTRA_MLA_PIC, EXTRA_MLA_PIC);
+		
 	}
 	
 	private void setView() {

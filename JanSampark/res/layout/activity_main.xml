@@ -38,5 +38,15 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         layout="@layout/main_tabs" />
+    
+    <SeekBar
+        android:id="@+id/tab_anim_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/main_tabs"
+        android:maxHeight="1dp"
+        android:progress="25"
+        android:progressDrawable="@drawable/seek_bar_progress_drawable"
+        android:thumb="@drawable/tab_arrow" />
 
 </RelativeLayout>

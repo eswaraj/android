@@ -79,6 +79,17 @@ public class MainAnalyticsFragment extends Fragment {
 	private AutoCompleteTextView autoCompleteTextView;
 	private View overlay;
 	private List<Constituency> locations;
+	public List<Constituency> getLocations() {
+		if(null == locations) {
+			locations = new ArrayList<Constituency>();
+		}
+		return locations;
+	}
+
+	public void setLocations(List<Constituency> locations) {
+		this.locations = locations;
+	}
+
 	private Constituency lastSelectedLocation;
 
 	private int cityResId = -1;
@@ -233,12 +244,14 @@ public class MainAnalyticsFragment extends Fragment {
 						switch (checkedId) {
 						case R.id.analytics_overall:
 							Log.d(TAG, "clicked on overall");
+							overallSpinner.setSelected(true);
 							fetchCityAnalytics();
 							break;
 
 						case R.id.analytics_spinner:
 							autoCompleteCheck = true;
 							Log.d(TAG, "clicked on autocomplete: ");
+							overallSpinner.setSelected(false);
 							break;
 
 						default:
@@ -256,8 +269,7 @@ public class MainAnalyticsFragment extends Fragment {
 					autoCompleteCheck = false;
 					if (-1 == getConstituencyId()) {
 						executeCurrentMLAIdRequest();
-					} else {
-						
+					} else {					
 						executeAnalyticsRequest();
 					}
 					Log.d(TAG, "clicked on not already checked autocomplete: "
@@ -357,6 +369,7 @@ public class MainAnalyticsFragment extends Fragment {
 			autoCompleteTextView.setVisibility(View.VISIBLE);
 
 			autoCompleteTextView.requestFocus();
+			autoCompleteTextView.setSelection(autoCompleteTextView.getText().length());
 			InputMethodManager imm = (InputMethodManager) getActivity()
 					.getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
@@ -380,7 +393,7 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 		});
 		LocationAutoCompleteAdapter adapter = new LocationAutoCompleteAdapter(
-				getActivity(), locations);
+				getActivity(), getLocations());
 		autoCompleteTextView.setAdapter(adapter);
 		autoCompleteTextView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -399,8 +412,8 @@ public class MainAnalyticsFragment extends Fragment {
 
 	public void parseLocations() {
 		try {
-			locations = ConstuencyParserHelper.readLocations(getActivity(),
-					getCityResId());
+			setLocations(ConstuencyParserHelper.readLocations(getActivity(),
+					getCityResId()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -769,9 +782,14 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	private void handleInvalidLocation() {
 		DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_analytics)).show(getFragmentManager(), "FAIL");
-		Constituency firstConstituency = locations.get(0);
-		executeMLAIdRequest(firstConstituency.getLatLong());
-		setLocation(firstConstituency);
+		if(!getLocations().isEmpty()) {
+			Constituency firstConstituency = getLocations().get(0);
+			executeMLAIdRequest(firstConstituency.getLatLong());
+			setLocation(firstConstituency);
+		} else {
+			analyticsRadioGroup.check(R.id.analytics_overall);
+			Toast.makeText(getActivity(), "Could not load current locations.", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void executeMLADetailsRequest(String mlaId) {

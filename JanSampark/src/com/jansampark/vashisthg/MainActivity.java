@@ -5,6 +5,8 @@ import java.util.List;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +14,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
@@ -41,6 +46,16 @@ public class MainActivity extends FragmentActivity  {
 	TitleBarHelper titleBarHelper;
 	Location lastKnownLocation;
 	
+	public final static int PROGRESS_POSITION1 = 25;
+	public final static int PROGRESS_POSITION3 = 75;
+	
+	SeekBar seekBar;
+	Handler seekHandler;
+	int seekBarAnimProgress;
+	int seekBarProgress;
+	RepeatTimer seekTimer;
+	
+	
 	  // LocationRequest locationRequest;
 	    LocationClient locationClient;
 	    boolean isResumed;
@@ -52,6 +67,7 @@ public class MainActivity extends FragmentActivity  {
         viewPager = (ViewPager) findViewById(R.id.main_pager);
         footerTab = (RadioGroup) findViewById(R.id.main_tabs);
         titleBar = (ViewGroup) findViewById(R.id.main_title_bar);
+        seekBar = (SeekBar) findViewById(R.id.tab_anim_seekbar);
                 
         if(null == savedInstanceState) {
         	initFragments();
@@ -59,7 +75,8 @@ public class MainActivity extends FragmentActivity  {
         	lastKnownLocation = savedInstanceState.getParcelable(EXTRA_LOCATION);
         }
         initViewPagingAndTabs();
-        setTitleBar();        
+        setTitleBar();   
+        setUpSeekBar();
     }
     
     @Override
@@ -138,9 +155,12 @@ public class MainActivity extends FragmentActivity  {
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			if (checkedId == R.id.tab_issue) {				
 				viewPager.setCurrentItem(0);
+				seekBarProgress = PROGRESS_POSITION1;
 			} else if (checkedId == R.id.tab_analytics) {
 				viewPager.setCurrentItem(1);
+				seekBarProgress = PROGRESS_POSITION3;
 			}
+			new Thread(seekTimer).start();
 		}
 	};
 	
@@ -165,6 +185,45 @@ public class MainActivity extends FragmentActivity  {
 			}	
 		}
 	}; 
+	
+	private void setUpSeekBar() {
+		seekBar.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return true;
+			}
+		});
+		
+		seekHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				seekBar.setProgress(seekBarAnimProgress);
+			}
+		};
+		seekTimer = new RepeatTimer();
+	}
+	
+	
+	private class RepeatTimer implements Runnable {
+
+		@Override
+		public void run() {
+			while (seekBarAnimProgress != seekBarProgress) {
+				if (seekBarAnimProgress < seekBarProgress) {
+					seekBarAnimProgress ++;
+				} else {
+					seekBarAnimProgress --;
+				}
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				seekHandler.sendEmptyMessage(0);
+			}
+		}
+	}
 	
 	
 	public void onTitleBarLeftButtonClick(View view) {

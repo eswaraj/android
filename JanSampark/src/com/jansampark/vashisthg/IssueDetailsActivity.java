@@ -434,12 +434,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
             		Log.d(TAG, jsonObject.toString(1));
 					String mlaId = jsonObject.getString("consti_id");
 					Log.d(TAG, "consti_id: " + mlaId);
-					if(getResources().getInteger(R.integer.invalid_constituency) == Integer.parseInt(mlaId)) {
-						DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_post)).show(getSupportFragmentManager(), "FAIL");
-						hideSendingOverlay();
-					} else {
-						executeMLADetailsRequest(mlaId);
-					}					
+					
+					executeMLADetailsRequest(mlaId);
+										
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}        	
