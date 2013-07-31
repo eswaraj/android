@@ -9,6 +9,7 @@
     <string name="title_activity_main">Main Activity</string>
     <string name="title_activity_issue_summary">Issue Summary</string>
     <string name="title_activity_issue_details">Issue Details</string>
+    <string name="title_activity_info">Info</string>
 
 
     <string name="main_select">Select Category</string>

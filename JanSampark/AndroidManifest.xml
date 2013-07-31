@@ -93,6 +93,13 @@
             >
         </activity>
         <activity
+            android:name="com.jansampark.vashisthg.InfoActivity"
+            android:label="@string/title_activity_info"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        
+        <activity
             android:name="com.jansampark.vashisthg.IssueActivity"
             android:label="@string/title_activity_issue"
             android:screenOrientation="portrait"

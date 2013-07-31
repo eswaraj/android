@@ -168,7 +168,7 @@ public class MainActivity extends FragmentActivity  {
 	
 	
 	public void onTitleBarLeftButtonClick(View view) {
-		
+		startActivity(new Intent(this, InfoActivity.class));
 	}
 	
 	public void onTitleBarRightButtonClick(View view) {
