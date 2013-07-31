@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.achartengine.GraphicalView;
 import org.json.JSONArray;
@@ -65,6 +64,8 @@ import com.jansampark.vashisthg.widget.PieChartView;
 public class MainAnalyticsFragment extends Fragment {
 
 	private static final String TAG = "Analytics";
+	private final String requestTag = "tag";
+	
 	FrameLayout pieChartHolder;
 	TextView issueNumTV;
 	TextView complaintsNumTV;
@@ -493,7 +494,7 @@ public class MainAnalyticsFragment extends Fragment {
 		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
 				url, null, createMLAIDReqSuccessListener(),
 				createMyReqErrorListener());
-
+		request.setTag(requestTag);
 		mRequestQueue.add(request);
 		DialogFactory.showPleaseWaitProgressDialog(getActivity());
 	}
@@ -528,12 +529,14 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void executeAnalyticsRequest() {
+		mRequestQueue.cancelAll(requestTag);
 		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid="
 				+ constituencyId + "&time_frame=1w";
 		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
 				url, null, createAnalyticsReqSuccessListener(),
 				createMyReqErrorListener());
 		mRequestQueue.add(request);
+		request.setTag(requestTag);
 		DialogFactory.showPleaseWaitProgressDialog(getActivity());
 	}
 
@@ -655,8 +658,6 @@ public class MainAnalyticsFragment extends Fragment {
 		}
 	}
 
-	private String requestTag = "tag";
-
 	private void fetchCityAnalytics() {
 		mRequestQueue.cancelAll(requestTag);
 		int id = getResources().getInteger(getCityResId());
@@ -705,6 +706,7 @@ public class MainAnalyticsFragment extends Fragment {
 					createMLAIdErrorListener());
 
 			Log.d(TAG, "url: " + request.getUrl());
+			request.setTag(requestTag);
 			mRequestQueue.add(request);
 			DialogFactory.showPleaseWaitProgressDialog(getActivity());
 		}
@@ -743,6 +745,7 @@ public class MainAnalyticsFragment extends Fragment {
 		JsonObjectRequest request = new JsonObjectRequest(Method.GET, url,
 				null, createMLADetailsReqSuccessListener(),
 				createMLADetailsReqErrorListener());
+		request.setTag(requestTag);
 		mRequestQueue.add(request);
 		DialogFactory.showPleaseWaitProgressDialog(getActivity());
 	}
