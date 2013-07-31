@@ -133,7 +133,7 @@ public class MainAnalyticsFragment extends Fragment {
 
 	private void setViews(View view) {
 		setButtons();
-		setPieChart();
+		setPieChart(new int[]{});
 		initButtonListeners();
 		autoCompleteTextView = (AutoCompleteTextView) getActivity()
 				.findViewById(R.id.analytics_autocomplete);
@@ -172,10 +172,15 @@ public class MainAnalyticsFragment extends Fragment {
 		complaintsNumTV.setText(complaintCount + "");
 	}
 
-	public void setPieChart() {
+	public void setPieChart(int values[]) {
 		pieChartHolder = (FrameLayout) getActivity().findViewById(
 				R.id.pie_chart_holder);
-		int values[] = new int[] { 12, 23, 23, 23, 23, 2 };
+		if(pieChartHolder.getChildCount() > 0) {
+			pieChartHolder.removeAllViews();
+		}
+		if(values.length == 0) {
+			values = new int[] { 12, 23, 23, 23, 23, 2 };
+		}
 		GraphicalView chartView = PieChartView.getNewInstance(getActivity(),
 				values);
 		chartView.setOnTouchListener(new OnTouchListener() {
@@ -571,13 +576,17 @@ public class MainAnalyticsFragment extends Fragment {
 
 	private void setViewsAccordingToAnalytics() {
 		setTotalComplaintCount();
-		setIssueCount(waterButton, R.integer.water);
-		setIssueCount(sewageButton, R.integer.sewage);
-		setIssueCount(lawButton, R.integer.sewage);
-		setIssueCount(roadButton, R.integer.road);
-		setIssueCount(electricityButton, R.integer.electricity);
-		setIssueCount(transportationButton, R.integer.transportation);
+		int percentage[]= new int[6];
+		percentage[1] = setIssueCountAndReturnPercentage(waterButton, R.integer.water);
+		percentage[5] = setIssueCountAndReturnPercentage(sewageButton, R.integer.sewage);
+		percentage[4] = setIssueCountAndReturnPercentage(lawButton, R.integer.sewage);
+		percentage[0] = setIssueCountAndReturnPercentage(roadButton, R.integer.road);
+		percentage[4] = setIssueCountAndReturnPercentage(electricityButton, R.integer.electricity);
+		percentage[2] = setIssueCountAndReturnPercentage(transportationButton, R.integer.transportation);
+		setPieChart(percentage);
 	}
+	
+	
 
 	private void setTotalComplaintCount() {
 		int totalCount = 0;
@@ -594,33 +603,25 @@ public class MainAnalyticsFragment extends Fragment {
 		setCounts(issueCount, complaintCount);
 	}
 
-	private void setIssueCount(IssueButton issueButton, int categoryResId) {
+	private int setIssueCountAndReturnPercentage(IssueButton issueButton, int categoryResId) {
+		int issuePercentage = 0;
+		int issueCount = 0;
 		try {
-			int issuePercentage = 0;
-			int issueCount = 0;
-
 			Resources resources = getActivity().getResources();
 			Integer issueCategory = resources.getInteger(categoryResId);
-			Set<Integer> anylyticsSet = analyticsMap.keySet();
-			for (Integer integer : anylyticsSet) {
-				// Log.d(TAG, "KeySet: " + integer);
-			}
 			if (analyticsMap.containsKey(issueCategory)) {
 				issueCount = getComplaintCountForCategory(issueCategory);
-
 			}
 
-			// Log.d(TAG, "count: " + issueCount + ", complaintCount: " +
-			// complaintCount);
 			if (complaintCount != 0) {
 				issuePercentage = (issueCount * 100) / complaintCount;
 			}
-			// Log.d(TAG, "percentage: " + issuePercentage);
 			issueButton.setPercentage(issuePercentage);
 		} catch (Exception e) {
-			issueButton.setPercentage(0);
+			issueButton.setPercentage(issuePercentage);
 			e.printStackTrace();
 		}
+		return issuePercentage;
 	}
 
 	private int getComplaintCountForCategory(int issueCategory) {

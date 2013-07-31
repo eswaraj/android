@@ -159,9 +159,9 @@ public class MainActivity extends FragmentActivity  {
 				if(null != analyticsFragment) {
 					analyticsFragment.onFragmentShown();
 				}
-				if(analyticsFragment != null) {
-    				analyticsFragment.setCurrentCity();
-    			}
+//				if(analyticsFragment != null) {
+//    				analyticsFragment.setCurrentCity();
+//    			}
 			}	
 		}
 	}; 

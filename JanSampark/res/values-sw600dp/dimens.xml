@@ -11,6 +11,9 @@
     <dimen name="splash_seperator_width">160dp</dimen>
     <dimen name="splash_done_button_margin">40dp</dimen>
     
+    <dimen name="main_pie_size">200dp</dimen>
+    <dimen name="main_pie_padding">24dp</dimen>
+    
     <dimen name="activity_horizontal_margin">40dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="issue_top_banner_height">144dp</dimen>
@@ -19,7 +22,7 @@
     <dimen name="title_bar_height">64dp</dimen>
     <dimen name="title_bar_button_width">80dp</dimen>
     
-    <dimen name="main_map_height">400dp</dimen>
+    <dimen name="main_map_height">200dp</dimen>
     <dimen name="main_select_text">28sp</dimen>
     <dimen name="main_select_margin_top">32dp</dimen>
     <dimen name="main_select_margin_bottom">16dp</dimen>
