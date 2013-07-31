@@ -175,6 +175,14 @@ public class MainActivity extends FragmentActivity  {
 		startActivity(new Intent(MainActivity.this, UserImageActivity.class));
 	}
 	
+	public void showTitleBarProgress() {
+		titleBarHelper.showProgressBar();
+	}
+	
+	public void hideTitleBarProgress() {
+		titleBarHelper.hideProgressBar();
+	}
+	
 	protected void startLocationTracking() {	
 	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
 	        locationClient = new LocationClient(this, mConnectionCallbacks, mConnectionFailedListener);
@@ -226,8 +234,7 @@ public class MainActivity extends FragmentActivity  {
 						if(issueFragment != null) {
 							issueFragment.showLocationName();
 						}
-						if(analyticsFragment != null) {
-							
+						if(analyticsFragment != null) {							
 		    				analyticsFragment.setCurrentCity();
 		    			}
 					}

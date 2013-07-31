@@ -51,7 +51,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
 import com.jansampark.vashisthg.helpers.ConstuencyParserHelper;
-import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.models.Analytics;
 import com.jansampark.vashisthg.models.Constituency;
@@ -496,7 +495,7 @@ public class MainAnalyticsFragment extends Fragment {
 				createMyReqErrorListener());
 		request.setTag(requestTag);
 		mRequestQueue.add(request);
-		DialogFactory.showPleaseWaitProgressDialog(getActivity());
+		showProgressBar();
 	}
 
 	private Response.ErrorListener createMyReqErrorListener() {
@@ -506,7 +505,7 @@ public class MainAnalyticsFragment extends Fragment {
 				if (isResumed) {
 					Toast.makeText(getActivity(), R.string.network_error,
 							Toast.LENGTH_LONG).show();
-					DialogFactory.hideProgressDialog();
+					hideProgressBar();
 				}
 			}
 		};
@@ -537,7 +536,7 @@ public class MainAnalyticsFragment extends Fragment {
 				createMyReqErrorListener());
 		mRequestQueue.add(request);
 		request.setTag(requestTag);
-		DialogFactory.showPleaseWaitProgressDialog(getActivity());
+		showProgressBar();
 	}
 
 	private Response.Listener<JSONObject> createAnalyticsReqSuccessListener() {
@@ -549,7 +548,7 @@ public class MainAnalyticsFragment extends Fragment {
 						Log.d(TAG, jsonObject.toString(2));
 						parseJsonToAnalyticsMap(jsonObject);
 					}
-					DialogFactory.hideProgressDialog();
+					hideProgressBar();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -645,8 +644,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	public void setCurrentCity() {
-		if (null != JanSamparkApplication.getInstance()
-				.getLastKnownConstituency()) {
+		if (null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
 			if (getCityResId() == -1) {
 				setCityResId(Constituency.getCityRefId(JanSamparkApplication
 						.getInstance().getLastKnownConstituency().getAddress()));
@@ -669,7 +667,7 @@ public class MainAnalyticsFragment extends Fragment {
 				createMyReqErrorListener());
 		request.setTag(requestTag);
 		mRequestQueue.add(request);
-		DialogFactory.showPleaseWaitProgressDialog(getActivity());
+		showProgressBar();
 
 	}
 
@@ -684,7 +682,7 @@ public class MainAnalyticsFragment extends Fragment {
 							parseJsonToAnalyticsMap(jsonObject);
 						}
 					}
-					DialogFactory.hideProgressDialog();
+					hideProgressBar();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -708,7 +706,7 @@ public class MainAnalyticsFragment extends Fragment {
 			Log.d(TAG, "url: " + request.getUrl());
 			request.setTag(requestTag);
 			mRequestQueue.add(request);
-			DialogFactory.showPleaseWaitProgressDialog(getActivity());
+			showProgressBar();
 		}
 	}
 
@@ -717,9 +715,21 @@ public class MainAnalyticsFragment extends Fragment {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				Log.d(TAG, "try again");
-				DialogFactory.hideProgressDialog();
+				hideProgressBar();
 			}
 		};
+	}
+	
+	private void showProgressBar() {
+		if(isResumed) {
+			((MainActivity)getActivity()).showTitleBarProgress();
+		}
+	}
+	
+	private void hideProgressBar() {
+		if(isResumed) {
+			((MainActivity)getActivity()).hideTitleBarProgress();
+		}
 	}
 
 	private Listener<JSONObject> createCurrentMLAIDReqSuccessListener() {
@@ -747,7 +757,7 @@ public class MainAnalyticsFragment extends Fragment {
 				createMLADetailsReqErrorListener());
 		request.setTag(requestTag);
 		mRequestQueue.add(request);
-		DialogFactory.showPleaseWaitProgressDialog(getActivity());
+		showProgressBar();
 	}
 
 	private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
@@ -759,7 +769,7 @@ public class MainAnalyticsFragment extends Fragment {
 							.getJSONObject(0).getJSONObject("node");
 					String constituency = node.getString("constituency");
 					autoCompleteButton.setText(constituency);
-					DialogFactory.hideProgressDialog();
+					hideProgressBar();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -774,7 +784,7 @@ public class MainAnalyticsFragment extends Fragment {
 				if (isResumed) {
 					Toast.makeText(getActivity(), R.string.network_error,
 							Toast.LENGTH_LONG).show();
-					DialogFactory.hideProgressDialog();
+					hideProgressBar();
 				}
 			}
 		};

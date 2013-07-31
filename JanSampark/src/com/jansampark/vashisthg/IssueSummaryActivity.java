@@ -59,7 +59,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 			mlaUrl = getIntent().getStringExtra(EXTRA_MLA_PIC);
 			constituency = getIntent().getStringExtra(EXTRA_CONSTITUENCY);
 		} else {
-			issueItem = (IssueItem) savedInstanceState.getSerializable(EXTRA_ISSUE_ITEM);
+			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);
 			location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
 			mlaName = savedInstanceState.getString(EXTRA_MLA_NAME);
 			mlaUrl = savedInstanceState.getString(EXTRA_MLA_PIC);
@@ -176,7 +176,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	
 	
 	public void onTitleBarLeftButtonClick(View view) {
-		
+		onBackPressed();
 	}
 	
 	public void onTitleBarRightButtonClick(View view) {

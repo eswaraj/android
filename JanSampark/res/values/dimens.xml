@@ -88,5 +88,8 @@
     <dimen name="issue_button_height">120dp</dimen>
     <dimen name="issue_button_padding">0dp</dimen>
     
+    <dimen name="info_title">17sp</dimen>
+    <dimen name="info_text">15sp</dimen>
+    
     
 </resources>

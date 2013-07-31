@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_bar_height"
     android:background="@android:color/white"
@@ -9,28 +10,44 @@
         android:id="@+id/title_bar_left_button"
         android:layout_width="@dimen/title_bar_button_width"
         android:layout_height="match_parent"
-        android:layout_gravity="left|center_vertical"
+        android:layout_alignParentLeft="true"
+		android:layout_centerHorizontal="true"
+        android:background="@null"
         android:contentDescription="@string/app_name"
         android:onClick="onTitleBarLeftButtonClick"
-        android:background="@null" />
+        android:src="@drawable/back_button" />
 
     <ImageButton
         android:id="@+id/title_bar_right_button"
         android:layout_width="@dimen/title_bar_button_width"
         android:layout_height="match_parent"
-        android:layout_gravity="right|center_vertical"
+        
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:background="@null"
         android:contentDescription="@string/app_name"
-        android:onClick="onTitleBarRightButtonClick"
-        android:background="@null"  />
+        android:onClick="onTitleBarRightButtonClick" />
 
     <ImageView
         android:id="@+id/title_bar_center_image"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:layout_centerInParent="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        android:layout_margin="8dp"
         android:src="@drawable/navbar_logo" />
 
-</FrameLayout>
+    <ProgressBar
+        android:id="@+id/title_bar_progress"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        
+        android:layout_toLeftOf="@+id/title_bar_right_button" />
+
+</RelativeLayout>

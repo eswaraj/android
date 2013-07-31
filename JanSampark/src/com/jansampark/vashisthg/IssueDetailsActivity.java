@@ -493,7 +493,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	
 	public void onTitleBarLeftButtonClick(View view) {
-		
+		onBackPressed();
 	}
 	
 	public void onTitleBarRightButtonClick(View view) {

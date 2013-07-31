@@ -39,6 +39,8 @@ public class IssueActivity extends Activity {
     private View headerView;
     
     
+    
+    
     public static final String EXTRA_IS_ANALYTICS = "isAnalytics";
     private boolean isAnalytics;
     private ArrayList<Analytics> analyticsList;
@@ -194,10 +196,14 @@ public class IssueActivity extends Activity {
 	};
 	
 	public void onTitleBarLeftButtonClick(View view) {
-		
+		onBackPressed();		
 	}
 	
 	public void onTitleBarRightButtonClick(View view) {
 		
 	}	
+	
+	public void showProgressInTitleBar() {
+		
+	}
 }

@@ -1,9 +1,11 @@
 package com.jansampark.vashisthg.helpers;
 
 import android.view.View.OnClickListener;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.jansampark.vashisthg.R;
 
@@ -12,6 +14,7 @@ public class TitleBarHelper {
 	private ViewGroup titleBar;
 	private ImageButton leftButton;
 	private ImageButton rightButton;
+	private ProgressBar progressBar;
 
 	public ViewGroup getTitleBar() {
 		return titleBar;
@@ -21,6 +24,7 @@ public class TitleBarHelper {
 		this.titleBar = titleBar;
 		this.rightButton =  (ImageButton) titleBar.findViewById(R.id.title_bar_right_button);
 		this.leftButton = (ImageButton) titleBar.findViewById(R.id.title_bar_left_button);
+		this.progressBar = (ProgressBar) titleBar.findViewById(R.id.title_bar_progress);
 	}
 	
 	public ImageButton getRightButton() {
@@ -49,6 +53,14 @@ public class TitleBarHelper {
 	
 	public ImageView getCenterImageView() {
 		return (ImageView) titleBar.findViewById(R.id.title_bar_center_image);
+	}
+	
+	public void showProgressBar() {
+		progressBar.setVisibility(View.VISIBLE);
+	}
+	
+	public void hideProgressBar() {
+		progressBar.setVisibility(View.GONE);
 	}
 
 }
