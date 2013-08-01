@@ -44,6 +44,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	TextView categoryTV;
 	TextView systemTV;
 	TextView addressTV;
+	TextView issueNameTV;
 	
 	boolean isResumed;
 	boolean invalidShown;
@@ -72,7 +73,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		imageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(4 * 1024 * 1024));
 		setMLA();
-		setCategoryAndSystem();
+		setIssueDetails();
 		fetchAddress();
 	}
 	
@@ -116,17 +117,19 @@ public class IssueSummaryActivity extends FragmentActivity {
 		categoryTV = (TextView) findViewById(R.id.issue_summary_category);
 		systemTV = (TextView) findViewById(R.id.issue_summary_system);
 		addressTV = (TextView) findViewById(R.id.issue_summary_address);
+		issueNameTV = (TextView) findViewById(R.id.issue_summary_name);
 	}
 	
-	private void setCategoryAndSystem() {
+	private void setIssueDetails() {
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
+		issueNameTV.setText(issueItem.getIssueName());
 	}	
 	
 	private void setMLA() {
 		nameTV.setText(mlaName);
 		mlaImageView.setImageUrl(mlaUrl, imageLoader);
-		constituencyTV.setText(constituency);
+		constituencyTV.setText("MLA, " + constituency);
 	}
 	
 	
