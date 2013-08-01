@@ -186,11 +186,11 @@ public class IssueActivity extends Activity {
 					Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
 					intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position - 1));
 					intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
-					startActivity(intent);	
+					WindowAnimationHelper.startActivityWithSlideFromRight(IssueActivity.this, intent);
 				} else {
 					Intent intent = new Intent(IssueActivity.this, OtherIssuesActivity.class);
 					intent.putExtra(OtherIssuesActivity.EXTRA_ISSUE_CATEGORY_ID, IssueFactory.getIssueId(IssueActivity.this, issue));
-					startActivity(intent);
+					WindowAnimationHelper.startActivityWithSlideFromRight(IssueActivity.this, intent);
 				}
 			}
 		}

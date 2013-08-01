@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.LruBitmapCache;
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
+import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.Constituency;
 import com.jansampark.vashisthg.models.IssueItem;
 
@@ -184,7 +185,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		startActivity(intent);
+		WindowAnimationHelper.startActivityWithSlideFromRight(this, intent);
 		finish();
 	}	
 	
@@ -195,6 +196,12 @@ public class IssueSummaryActivity extends FragmentActivity {
 	
 	public void onTitleBarRightButtonClick(View view) {
 		
+	}
+	
+	@Override
+	public void finish() {
+		super.finish();
+		WindowAnimationHelper.finish(this);
 	}
 	
 }

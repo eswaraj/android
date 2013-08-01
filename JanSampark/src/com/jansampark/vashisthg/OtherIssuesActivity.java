@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.IssueItem;
 
 public class OtherIssuesActivity extends FragmentActivity {
@@ -67,7 +68,7 @@ public class OtherIssuesActivity extends FragmentActivity {
 		Intent intent = new Intent(this, IssueDetailsActivity.class);
 		intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, item);
 		intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, JanSamparkApplication.getInstance().getLastKnownLocation());
-		startActivity(intent);
+		WindowAnimationHelper.startActivityWithSlideFromRight(this, intent);
 	}
 	
 	
@@ -77,6 +78,12 @@ public class OtherIssuesActivity extends FragmentActivity {
 	
 	public void onTitleBarRightButtonClick(View view) {
 		
+	}
+	
+	@Override
+	public void finish() {
+		super.finish();
+		WindowAnimationHelper.finish(this);
 	}
 	
 }

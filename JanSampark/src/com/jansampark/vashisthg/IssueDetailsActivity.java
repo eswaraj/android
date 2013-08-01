@@ -38,6 +38,7 @@ import com.jansampark.vashisthg.helpers.CameraHelper;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
 import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.Utils;
+import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.IssueItem;
 import com.jansampark.vashisthg.volley.MultipartRequest;
 
@@ -472,7 +473,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_CONSTITUENCY, constituency);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_NAME, name);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_PIC, url);
-		            	startActivity(intent);   
+		            	WindowAnimationHelper.startActivityWithSlideFromRight(IssueDetailsActivity.this, intent);
 		            	hideSendingOverlay();
 		            	finish();
             		
@@ -503,6 +504,12 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	public void onTitleBarRightButtonClick(View view) {
 		
+	}
+	
+	@Override
+	public void finish() {
+		super.finish();
+		WindowAnimationHelper.finish(this);
 	}
 	
 }
