@@ -32,7 +32,7 @@
     <color name="issue_details_red">#c34a4a</color>
     
     <color name="lack_of_infra">#ff001a</color>
-    <color name="lack_of_maintainence">#fefe56</color>
+    <color name="lack_of_maintainence">#ffcc33</color>
     <color name="lack_of_quality">#0771ba</color>
     <color name="poor_pricing">#c04f50</color>
     <color name="awareness">#00b05d</color>

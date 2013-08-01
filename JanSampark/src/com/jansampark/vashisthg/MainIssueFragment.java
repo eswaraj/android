@@ -121,7 +121,9 @@ public class MainIssueFragment extends Fragment {
 			gMap.addMarker(new MarkerOptions().position(lastKnownLatLng).icon(
 					BitmapDescriptorFactory
 							.fromResource(R.drawable.ic_main_annotation)));
-		} 
+		}  else {
+			Log.e("ISSUE", "location is null");
+		}
 	}
 	
 	public void showLocationName() {

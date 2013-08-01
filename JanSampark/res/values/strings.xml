@@ -193,4 +193,6 @@
 	<string name="invalid_constituency_analytics">Analytics currently available only for Delhi and Bangalore. Coming to your area soon!</string>
 	<string name="invalid_constituency_post">MLA information could not be fetched as the service is currently not available in this location. Will be coming here soon!.</string>
     
+	
+	<string name="other_activity_title">Select System Level</string>
 </resources>

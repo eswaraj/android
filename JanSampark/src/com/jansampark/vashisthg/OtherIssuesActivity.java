@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.jansampark.vashisthg.helpers.TitleBarHelper;
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.IssueItem;
 
@@ -14,6 +16,8 @@ public class OtherIssuesActivity extends FragmentActivity {
 	
 	private int issueCategory;
 	private int[] otherTemplateId;
+	
+	TitleBarHelper titleBarHelper;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,8 +29,13 @@ public class OtherIssuesActivity extends FragmentActivity {
 		} else {
 			issueCategory = savedInstanceState.getInt(EXTRA_ISSUE_CATEGORY_ID);
 		}
-		
+		setTitleBar();
 	}
+	private void setTitleBar() {
+    	titleBarHelper = new TitleBarHelper();
+    	titleBarHelper.setTitleBar((ViewGroup)findViewById(R.id.main_title_bar));
+    	titleBarHelper.setTitleBarText(R.string.other_activity_title);
+    }
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
