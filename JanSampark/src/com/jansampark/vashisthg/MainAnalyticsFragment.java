@@ -53,6 +53,7 @@ import com.jansampark.vashisthg.adapters.LocationAutoCompleteAdapter;
 import com.jansampark.vashisthg.helpers.ConstuencyParserHelper;
 import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.Utils;
+import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.Analytics;
 import com.jansampark.vashisthg.models.Constituency;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
@@ -468,8 +469,8 @@ public class MainAnalyticsFragment extends Fragment {
 		intent.putExtra(IssueActivity.EXTRA_IS_ANALYTICS, true);
 		intent.putParcelableArrayListExtra(IssueActivity.EXTRA_ANALYTICS_LIST,
 				(ArrayList<Analytics>) analytics);
-		startActivity(intent);
-
+		
+		WindowAnimationHelper.startActivityWithSlideFromRight(getActivity(), intent);
 	}
 
 	android.view.View.OnClickListener buttonListener = new OnClickListener() {

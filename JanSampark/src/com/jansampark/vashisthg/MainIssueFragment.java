@@ -21,6 +21,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.widget.CustomSupportMapFragment;
 
@@ -158,8 +159,8 @@ public class MainIssueFragment extends Fragment {
 	private void openIssueActivity(ISSUE_CATEGORY issue) {
 		Intent intent = new Intent(getActivity(), IssueActivity.class);
 		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
-		intent.putExtra(IssueActivity.EXTRA_LOCATION, JanSamparkApplication.getInstance().getLastKnownLocation());
-		startActivity(intent);
+		intent.putExtra(IssueActivity.EXTRA_LOCATION, JanSamparkApplication.getInstance().getLastKnownLocation());		
+		WindowAnimationHelper.startActivityWithSlideFromRight(getActivity(), intent);
 	}
 	android.view.View.OnClickListener buttonListener = new OnClickListener() {
 		

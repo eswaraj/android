@@ -17,6 +17,14 @@ public class WindowAnimationHelper {
         ActivityCompat.startActivity(activity, subActivity, translateBundle);
 	}
 	
+	public static void startActivityWithSlideFromRight(Activity activity, Intent subActivity) {					
+        Bundle translateBundle =ActivityOptionsCompat.makeCustomAnimation(activity,
+                R.anim.slide_in_left, R.anim.slide_out_left).toBundle();
+        ActivityCompat.startActivity(activity, subActivity, translateBundle);
+	}
+	
+	
+	
 	public static void finish(Activity activity) {
 		activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 	}
