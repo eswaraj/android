@@ -9,7 +9,6 @@ import android.view.View;
 
 public class TextPagerAdapter extends FragmentPagerAdapter {
 	
-	private final int COUNT = 3;
 	LayoutInflater inflater;
 	View view;
 	String[] splashText;

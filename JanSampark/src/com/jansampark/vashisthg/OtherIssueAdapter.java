@@ -1,7 +1,5 @@
 package com.jansampark.vashisthg;
 
-import com.jansampark.vashisthg.IssueAdapter.ViewHolder;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

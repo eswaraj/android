@@ -589,7 +589,7 @@ public class MainAnalyticsFragment extends Fragment {
 
 	private void parseJsonToAnalyticsMap(JSONObject jsonObject)
 			throws JSONException {
-		Iterator<String> iter = jsonObject.keys();
+		Iterator<String> iter = (Iterator<String>) jsonObject.keys();
 		while (iter.hasNext()) {
 			String key = iter.next().toString();
 			int keyInt = Integer.parseInt(key);

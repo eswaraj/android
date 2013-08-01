@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.location.Location;
 
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
-import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask.GeoCodingTaskListener;
 import com.jansampark.vashisthg.models.Constituency;
 
 public class LocationDataManager {

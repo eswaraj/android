@@ -6,18 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.jansampark.vashisthg.models.Analytics;
-import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
-import com.jansampark.vashisthg.models.IssueItem;
-
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.jansampark.vashisthg.models.Analytics;
+import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
+import com.jansampark.vashisthg.models.IssueItem;
 
 
 public class IssueAdapter extends BaseAdapter {
@@ -53,7 +51,7 @@ public class IssueAdapter extends BaseAdapter {
 		if(null != analyticsList) {
 			for (Analytics analytics : analyticsList) {
 				if(analytics.getTemplateId() % 10 == 0) {
-					if(adapter.templateCount.containsKey(new Integer(0))) {
+					if(adapter.templateCount.containsKey(Integer.valueOf(0))) {
 						int oldCount = adapter.templateCount.get(0);
 						adapter.templateCount.put(0, analytics.getCount() + oldCount);
 					} else {

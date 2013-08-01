@@ -21,10 +21,10 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
@@ -36,7 +36,6 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.jansampark.vashisthg.helpers.CameraHelper;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
-import com.jansampark.vashisthg.helpers.DialogFactory;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.IssueItem;
@@ -115,7 +114,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	protected void onPause() {
 		super.onPause();
 		if(null != locationClient) {
-			locationClient.removeLocationUpdates(mLocationListener);
+			if(locationClient.isConnected()) {
+				locationClient.removeLocationUpdates(mLocationListener);
+			}
 		}
 	}
 	
@@ -333,13 +334,15 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 
 	    @Override
 	    public void onConnected(Bundle arg0) {
-	    	if(lastKnownLocation == null) {
-				lastKnownLocation = locationClient.getLastLocation();
-			}
-	    	
-	        LocationRequest locationRequest = LocationRequest.create();
-	        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-	        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
+	    	if(locationClient.isConnected()) {
+		    	if(lastKnownLocation == null) {
+					lastKnownLocation = locationClient.getLastLocation();
+				}
+		    	
+		        LocationRequest locationRequest = LocationRequest.create();
+		        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+		        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
+	    	}
 	    }
 	};
 
