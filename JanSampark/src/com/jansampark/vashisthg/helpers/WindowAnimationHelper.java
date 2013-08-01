@@ -24,8 +24,7 @@ public class WindowAnimationHelper {
         ActivityCompat.startActivity(activity, subActivity, translateBundle);
 	}
 	
-	public static void startActivityWithScaleAnimation(Activity activity, Intent subActivity, View v) {
-		
+	public static void startActivityWithScaleAnimation(Activity activity, Intent subActivity, View v) {		
         Bundle scaleBundle = ActivityOptionsCompat.makeScaleUpAnimation(
                 v, 0, 0, v.getWidth(), v.getHeight()).toBundle();
         ActivityCompat.startActivity(activity, subActivity, scaleBundle);

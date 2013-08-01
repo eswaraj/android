@@ -5,6 +5,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/analytics_radio_text"
-           
+        android:visibility="invisible"
         android:padding="2dp"
         />

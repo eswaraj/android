@@ -327,9 +327,11 @@ public class MainAnalyticsFragment extends Fragment {
 						.getCheckedRadioButtonId()) {
 					switch (getCityResId()) {
 					case R.integer.id_city_bangalore:
+						overallButton.setText(getString(R.string.city_bangalore));
 						overallSpinner.setSelection(1);
 						break;
 					case R.integer.id_city_delhi:
+						overallButton.setText(getString(R.string.city_delhi));
 						overallSpinner.setSelection(0);
 						break;
 
@@ -706,6 +708,8 @@ public class MainAnalyticsFragment extends Fragment {
 				try {
 					if (R.id.analytics_overall == analyticsRadioGroup
 							.getCheckedRadioButtonId()) {
+						
+						setAppropriateCity();
 						if (isResumed) {
 							parseJsonToAnalyticsMap(jsonObject);
 						}
@@ -717,6 +721,20 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 
 		};
+	}
+	
+	private void setAppropriateCity() {
+		switch (getCityResId()) {
+		case R.integer.id_city_bangalore:
+			overallButton.setText(getString(R.string.city_bangalore));
+			break;
+		case R.integer.id_city_delhi:
+			overallButton.setText(getString(R.string.city_delhi));
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	private void executeCurrentMLAIdRequest() {

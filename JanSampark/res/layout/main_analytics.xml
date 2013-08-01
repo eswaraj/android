@@ -39,7 +39,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text=""
-                    
+                    android:textColor="@color/analytics_radio_text"
                     android:textOff=""
                     android:textOn="" />
                 <Spinner
