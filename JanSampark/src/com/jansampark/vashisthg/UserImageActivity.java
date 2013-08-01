@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.jansampark.vashisthg.helpers.CameraHelper;
+import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
 import com.jansampark.vashisthg.helpers.Utils;
 
@@ -127,5 +128,11 @@ public class UserImageActivity extends CameraUtilActivity {
 	public void onTitleBarRightButtonClick(View view) {
 		
 	}
+	
+	@Override
+    public void finish() {
+        super.finish();
+        WindowAnimationHelper.finish(this);
+    }
 	
 }

@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/issue_row_text_title"
+            android:textSize="@dimen/issue_row_text_percentage"
              />
 
         <TextView

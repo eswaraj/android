@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +31,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.helpers.TitleBarHelper;
+import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.Constituency;
 
 public class MainActivity extends FragmentActivity  {
@@ -77,6 +79,8 @@ public class MainActivity extends FragmentActivity  {
         initViewPagingAndTabs();
         setTitleBar();   
         setUpSeekBar();
+        
+        
     }
     
     @Override
@@ -227,11 +231,11 @@ public class MainActivity extends FragmentActivity  {
 	
 	
 	public void onTitleBarLeftButtonClick(View view) {
-		startActivity(new Intent(this, InfoActivity.class));
+		WindowAnimationHelper.startActivityWithSlideFromRight(this, InfoActivity.class);
 	}
 	
 	public void onTitleBarRightButtonClick(View view) {
-		startActivity(new Intent(MainActivity.this, UserImageActivity.class));
+		WindowAnimationHelper.startActivityWithSlideFromRight(this, UserImageActivity.class);
 	}
 	
 	public void showTitleBarProgress() {

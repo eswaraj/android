@@ -12,6 +12,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.Analytics;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.models.IssueItem;
@@ -201,5 +202,11 @@ public class IssueActivity extends Activity {
 	
 	public void onTitleBarRightButtonClick(View view) {
 		
-	}	
+	}
+	
+	@Override
+    public void finish() {
+        super.finish();
+        WindowAnimationHelper.finish(this);
+    }
 }
