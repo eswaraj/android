@@ -92,5 +92,7 @@
     <dimen name="info_title">17sp</dimen>
     <dimen name="info_text">15sp</dimen>
     
+    <dimen name="running_man_size">200dp</dimen>
+    
     
 </resources>

@@ -190,6 +190,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:minHeight="@dimen/running_man_size"
+        android:minWidth="@dimen/running_man_size"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/app_name" />
 
     <TextView

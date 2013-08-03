@@ -56,4 +56,6 @@
     
     <dimen name="info_title">20sp</dimen>
     <dimen name="info_text">17sp</dimen>
+    
+    <dimen name="running_man_size">320dp</dimen>
 </resources>

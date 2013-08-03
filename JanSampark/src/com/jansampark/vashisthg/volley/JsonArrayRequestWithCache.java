@@ -15,11 +15,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 public class JsonArrayRequestWithCache extends JsonArrayRequest {
-
 	
-
-	
-
 	public JsonArrayRequestWithCache(String url, Listener<JSONArray> listener,
 			ErrorListener errorListener) {
 		super(url, listener, errorListener);
