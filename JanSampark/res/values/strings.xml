@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name" translatable="false">JanSampark</string>
+    <string name="app_name" translatable="false">Swaraj</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_issue">IssueActivity</string>
     <string name="title_activity_main">Main Activity</string>
