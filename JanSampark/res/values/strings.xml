@@ -34,6 +34,8 @@
     <string name="issue_details_edit_description_button">Edit</string>
     <string name="issue_details_add_description_button">Add Description</string>
     <string name="issue_details_or_label">OR</string>
+    <string name="issue_details_enter_description">Please enter a brief description of the issue</string>
+    
     <string name="issue_summary_success">Complaint Successful</string>
     <string name="issue_summary_message">Thank you for contacting us. Together we deliver governance !</string>
     <string name="issue_summary_address_label">Address</string>
@@ -41,6 +43,7 @@
     <string name="done">Done</string>
     <string name="user_pic_title">Choose Your Picture.</string>
     <string name="how_it_works">How it works</string>
+    
 
     <string-array name="splash_text">
         <item>Select an issue in your locality that\'s bugging you for a while</item>

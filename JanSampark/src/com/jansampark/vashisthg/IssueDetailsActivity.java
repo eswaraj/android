@@ -34,6 +34,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.jansampark.vashisthg.dialog.MessageDialog;
 import com.jansampark.vashisthg.helpers.CameraHelper;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
 import com.jansampark.vashisthg.helpers.BitmapWorkerTask;
@@ -276,9 +277,13 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	}
 	
 	public void onPostClick(View view) {
-		showSendingOverlay();
-		executeRequest();		
-		executeMLAIdRequest();
+		if(issueItem.getTemplateId() % 10 == 0 && descriptionET.getText().toString().trim().isEmpty()) {
+			MessageDialog.create(getString(R.string.issue_details_enter_description)).show(getSupportFragmentManager(), "MESSAGE");
+		} else {
+			showSendingOverlay();
+			executeRequest();		
+			executeMLAIdRequest();
+		}
 	}
 	
 	private void showSendingOverlay() {
