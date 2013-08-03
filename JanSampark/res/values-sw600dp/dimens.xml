@@ -20,7 +20,7 @@
     
     <dimen name="activity_horizontal_margin">40dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="issue_top_banner_height">144dp</dimen>
+    <dimen name="issue_top_banner_height">200dp</dimen>
     <dimen name="issue_top_banner_title_size">30sp</dimen>
 
     <dimen name="title_bar_height">64dp</dimen>

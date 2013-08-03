@@ -4,16 +4,17 @@ import java.util.List;
 
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.helpers.TitleBarHelper;
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
+import com.jansampark.vashisthg.helpers.YouTubeVideoHelper;
 import com.jansampark.vashisthg.models.Constituency;
 
 public class MainActivity extends FragmentActivity  {
@@ -61,6 +63,7 @@ public class MainActivity extends FragmentActivity  {
 	  // LocationRequest locationRequest;
 	    LocationClient locationClient;
 	    boolean isResumed;
+	YouTubeVideoHelper youtubeHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class MainActivity extends FragmentActivity  {
         titleBar = (ViewGroup) findViewById(R.id.main_title_bar);
         seekBar = (SeekBar) findViewById(R.id.tab_anim_seekbar);
                 
+        youtubeHelper = new YouTubeVideoHelper(this);
         if(null == savedInstanceState) {
         	initFragments();
         } else {
@@ -80,7 +84,7 @@ public class MainActivity extends FragmentActivity  {
         setTitleBar();   
         setUpSeekBar();
         
-        
+        youtubeHelper.downloadYouTubeLinks();
     }
     
     @Override
@@ -105,6 +109,7 @@ public class MainActivity extends FragmentActivity  {
     	titleBarHelper.setTitleBar(titleBar);
     	titleBarHelper.setLeftButtonIcon(R.drawable.ic_info);
     	titleBarHelper.setRightButtonIcon(R.drawable.profile_image);   	
+    	titleBarHelper.showVideoButton();
     }
     
     @Override
@@ -319,4 +324,12 @@ public class MainActivity extends FragmentActivity  {
             }
 	    }
 	};
+	
+	public void onVideoClick(View view) {
+		String youtubeLink = youtubeHelper.getLinkForAll();
+		if(!TextUtils.isEmpty(youtubeLink)) {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse(youtubeHelper.getLinkForAll())));
+		}
+	}
 }

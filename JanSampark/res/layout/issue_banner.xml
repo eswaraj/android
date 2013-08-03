@@ -55,4 +55,16 @@
         android:background="@drawable/ic_issue_bullet" >
     </View>
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="24dp"
+        android:layout_toRightOf="@+id/issue_name"
+        android:clickable="true"
+        android:onClick="onVideoClick"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/video_preview_fg" />
+
 </RelativeLayout>

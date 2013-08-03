@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -13,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
+import com.jansampark.vashisthg.helpers.YouTubeVideoHelper;
 import com.jansampark.vashisthg.models.Analytics;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.models.IssueItem;
@@ -34,6 +37,7 @@ public class IssueActivity extends Activity {
     
 
     private ISSUE_CATEGORY issue;
+    int issueId;
     private Location location;
     IssueAdapter adapter;
     
@@ -45,7 +49,7 @@ public class IssueActivity extends Activity {
     public static final String EXTRA_IS_ANALYTICS = "isAnalytics";
     private boolean isAnalytics;
     private ArrayList<Analytics> analyticsList;
-    
+    YouTubeVideoHelper youtubeHelper;
 
     public ArrayList<Analytics> getAnalyticsList() {
     	if(null == analyticsList) {
@@ -63,6 +67,8 @@ public class IssueActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_issue);
         setExtrasAndSavedInstance(savedInstanceState); 
+        youtubeHelper = new YouTubeVideoHelper(this);
+        fetchYouTubeLinks();
         initListView();
         setHeaderView();
         setListView();
@@ -209,4 +215,20 @@ public class IssueActivity extends Activity {
         super.finish();
         WindowAnimationHelper.finish(this);
     }
+	
+	private void fetchYouTubeLinks() {
+    	try {   		
+    		youtubeHelper.downloadYouTubeLinks();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+	
+	public void onVideoClick(View view) {
+		int issueId = IssueFactory.getIssueId(this, issue);
+		String link = youtubeHelper.getLinkForIssueId(issueId);
+		if(!TextUtils.isEmpty(link)) {
+			startActivity(new Intent( Intent.ACTION_VIEW, Uri.parse(youtubeHelper.getLinkForAll())));
+		}
+	}
 }
