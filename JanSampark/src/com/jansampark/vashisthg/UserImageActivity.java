@@ -103,8 +103,12 @@ public class UserImageActivity extends CameraUtilActivity {
 		displayImageIfAvailable();	
 	}
 	
-	public void onDoneClick(View view) {
-		onBackPressed();
+	public void onHowItWorksClick(View view) {
+		
+		Intent intent = new Intent(this, SplashActivity.class);
+		intent.putExtra(SplashActivity.EXTRA_DONT_START_MAIN, true);
+		startActivity(intent);
+		finish();
 	}
 
 	@Override

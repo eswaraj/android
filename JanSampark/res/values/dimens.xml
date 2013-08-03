@@ -5,8 +5,8 @@
     
     <dimen name="splash_text">24sp</dimen>
     <dimen name="splash_pager_bottom_margin">80dp</dimen>
-    <dimen name="splash_radio_bottom_margin">60dp</dimen>
-    <dimen name="splash_pager_height">80dp</dimen>
+    <dimen name="splash_radio_bottom_margin">24dp</dimen>
+    <dimen name="splash_pager_height">120dp</dimen>
     <dimen name="splash_seperator_bottom_margin">160dp</dimen>
     <dimen name="splash_seperator_width">80dp</dimen>
     <dimen name="splash_done_button_margin">16dp</dimen>

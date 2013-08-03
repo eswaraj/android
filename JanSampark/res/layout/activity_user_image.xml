@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/post_button"
-            android:onClick="onDoneClick"
-            android:text="@string/done"
+            android:onClick="onHowItWorksClick"
+            android:text="@string/how_it_works"
             android:textColor="@android:color/white" />
     </LinearLayout>
 

@@ -40,11 +40,12 @@
     <string name="issue_summary_another_complaint">Another complaint</string>
     <string name="done">Done</string>
     <string name="user_pic_title">Choose Your Picture.</string>
+    <string name="how_it_works">How it works</string>
 
     <string-array name="splash_text">
-        <item>Lorem ipsum dolerr</item>
-        <item>Sir amet</item>
-        <item>Adipizing</item>
+        <item>Select an issue in your locality that\'s bugging you for a while</item>
+        <item>Post picture and submit your issue to know about your location MLA</item>
+        <item>View overall and constituency level analytics on the existing civic amenity issues </item>
     </string-array>
 
     <string name="water">Water</string>

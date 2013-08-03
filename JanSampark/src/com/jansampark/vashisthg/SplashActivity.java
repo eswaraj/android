@@ -25,6 +25,9 @@ public class SplashActivity extends FragmentActivity {
 	private TextPagerAdapter adapter;
 	Timer timer;
 	String[] splashStrings;
+	
+	public static final String EXTRA_DONT_START_MAIN = "dont_start_main";
+	private boolean dontStartMain = false;
 
 	private static final int RADIO_BUTTON_STARTING_ID = 0x100;
 
@@ -32,12 +35,23 @@ public class SplashActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		if(null == savedInstanceState) {
+			dontStartMain = getIntent().getBooleanExtra(EXTRA_DONT_START_MAIN, false);
+		} else {
+			dontStartMain = savedInstanceState.getBoolean(EXTRA_DONT_START_MAIN);
+		}
 		startMainActivityIfRequired();
 		initSplashStrings();
 		setView();
 		setUpPager();
 		setUpRadioGroup();
 
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putBoolean(EXTRA_DONT_START_MAIN, dontStartMain);
 	}
 
 	@Override
@@ -131,7 +145,11 @@ public class SplashActivity extends FragmentActivity {
 		if (Utils.isFirstTimeBoot(getApplicationContext())) {
 
 		} else {
-			startMainActivity();
+			if(dontStartMain) {
+				
+			} else {
+				startMainActivity();
+			}
 		}
 
 	}
@@ -141,7 +159,10 @@ public class SplashActivity extends FragmentActivity {
 	}
 
 	private void startMainActivity() {
-		startActivity(new Intent(this, MainActivity.class));
+		Intent intent = new Intent(this, MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		startActivity(intent);
 		finish();
 	}
 
