@@ -687,18 +687,19 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void fetchCityAnalytics() {
-		mRequestQueue.cancelAll(requestTag);
-		int id = getResources().getInteger(getCityResId());
-		String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid="
-				+ id + "&time_frame=1w";
-		Log.d(TAG, "requesting city analytics for url: " + url);
-		JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
-				url, null, createCityDetailsReqSuccessListener(),
-				createMyReqErrorListener());
-		request.setTag(requestTag);
-		mRequestQueue.add(request);
-		showProgressBar();
-
+		if(-1 != getCityResId()) {
+			mRequestQueue.cancelAll(requestTag);
+			int id = getResources().getInteger(getCityResId());
+			String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid="
+					+ id + "&time_frame=1w";
+			Log.d(TAG, "requesting city analytics for url: " + url);
+			JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
+					url, null, createCityDetailsReqSuccessListener(),
+					createMyReqErrorListener());
+			request.setTag(requestTag);
+			mRequestQueue.add(request);
+			showProgressBar();
+		}
 	}
 
 	private Response.Listener<JSONObject> createCityDetailsReqSuccessListener() {
