@@ -1,4 +1,4 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.helpers;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
-import com.jansampark.vashisthg.helpers.BitmapUtil;
 
 public class BitmapWorkerTask extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewReference;

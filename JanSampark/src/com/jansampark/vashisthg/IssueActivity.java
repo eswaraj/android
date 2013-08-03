@@ -14,6 +14,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jansampark.vashisthg.adapters.IssueAdapter;
+import com.jansampark.vashisthg.helpers.IssueFactory;
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.helpers.YouTubeVideoHelper;
 import com.jansampark.vashisthg.models.Analytics;

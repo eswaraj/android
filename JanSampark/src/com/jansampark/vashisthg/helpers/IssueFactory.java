@@ -1,8 +1,13 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jansampark.vashisthg.R;
+import com.jansampark.vashisthg.R.array;
+import com.jansampark.vashisthg.R.color;
+import com.jansampark.vashisthg.R.integer;
+import com.jansampark.vashisthg.R.string;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.models.IssueItem;
 

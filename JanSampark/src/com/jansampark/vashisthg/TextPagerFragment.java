@@ -11,7 +11,7 @@ public class TextPagerFragment extends Fragment {
 	private static final String TEXT = "resId";
 	private TextView mTextView;
 
-	static TextPagerFragment newInstance(String text) {
+	public static TextPagerFragment newInstance(String text) {
 		final TextPagerFragment f = new TextPagerFragment();
 		final Bundle args = new Bundle();
 		args.putString(TEXT, text);

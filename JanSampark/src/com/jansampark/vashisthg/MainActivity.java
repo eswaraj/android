@@ -30,6 +30,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.jansampark.vashisthg.helpers.LocationDataManager;
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.helpers.TitleBarHelper;
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;

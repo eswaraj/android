@@ -36,6 +36,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.jansampark.vashisthg.helpers.CameraHelper;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;
+import com.jansampark.vashisthg.helpers.BitmapWorkerTask;
+import com.jansampark.vashisthg.helpers.IssueFactory;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.models.IssueItem;

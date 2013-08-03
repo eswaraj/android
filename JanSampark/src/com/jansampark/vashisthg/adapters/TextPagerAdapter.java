@@ -1,4 +1,8 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.adapters;
+
+import com.jansampark.vashisthg.R;
+import com.jansampark.vashisthg.TextPagerFragment;
+import com.jansampark.vashisthg.R.array;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

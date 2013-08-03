@@ -1,11 +1,10 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.helpers;
 
 import java.util.List;
 
 import android.app.Activity;
 import android.location.Location;
 
-import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.models.Constituency;
 
 public class LocationDataManager {

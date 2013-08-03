@@ -14,6 +14,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.jansampark.vashisthg.helpers.DialogFactory;
+import com.jansampark.vashisthg.helpers.IssueFactory;
+import com.jansampark.vashisthg.helpers.LocationDataManager;
 import com.jansampark.vashisthg.helpers.LruBitmapCache;
 import com.jansampark.vashisthg.helpers.ReverseGeoCodingTask;
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;

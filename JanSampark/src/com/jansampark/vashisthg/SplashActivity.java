@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
+import com.jansampark.vashisthg.adapters.TextPagerAdapter;
 import com.jansampark.vashisthg.helpers.Utils;
 import com.jansampark.vashisthg.widget.ViewPagerCustomDuration;
 

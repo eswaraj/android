@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.jansampark.vashisthg.helpers.BitmapWorkerTask;
 import com.jansampark.vashisthg.helpers.CameraHelper;
 import com.jansampark.vashisthg.helpers.WindowAnimationHelper;
 import com.jansampark.vashisthg.helpers.CameraHelper.CameraUtilActivity;

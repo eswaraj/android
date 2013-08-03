@@ -1,4 +1,4 @@
-package com.jansampark.vashisthg;
+package com.jansampark.vashisthg.adapters;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.jansampark.vashisthg.R;
+import com.jansampark.vashisthg.helpers.IssueFactory;
 import com.jansampark.vashisthg.models.Analytics;
 import com.jansampark.vashisthg.models.ISSUE_CATEGORY;
 import com.jansampark.vashisthg.models.IssueItem;
