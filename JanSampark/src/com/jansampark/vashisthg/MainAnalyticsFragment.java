@@ -153,12 +153,24 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void setViews(View view) {
-		setButtons();
-		setPieChart(new int[]{});
-		initButtonListeners();
 		autoCompleteTextView = (AutoCompleteTextView) getActivity()
 				.findViewById(R.id.analytics_autocomplete);
+		
+		setTranslucentOverlay();
+		setButtons();
+		setPieChart(new int[]{});
+		initButtonListeners();		
+	}
+	
+	private void setTranslucentOverlay() {
 		overlay = getActivity().findViewById(R.id.analytics_overlay);
+		overlay.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				disableAutoComplete();
+			}
+		});
 	}
 
 	private void initButtonListeners() {
@@ -365,7 +377,7 @@ public class MainAnalyticsFragment extends Fragment {
 		if (autoCompleteTextView.getVisibility() == View.VISIBLE) {
 			disableAutoComplete();
 		} else {
-			overlay.setVisibility(View.VISIBLE);
+			showTranslucentOverlay();
 			if (null != lastSelectedLocation) {
 				autoCompleteTextView.setText(lastSelectedLocation.getName());
 			}
@@ -379,22 +391,33 @@ public class MainAnalyticsFragment extends Fragment {
 		}
 	}
 
-	private void disableAutoComplete() {
-		Utils.hideKeyboard(getActivity(), autoCompleteTextView);
-		autoCompleteTextView.setVisibility(View.GONE);
-		overlay.setVisibility(View.INVISIBLE);
+	public boolean disableAutoComplete() {
+		Log.d(TAG, "in disableAutoComplete");
+		boolean disabledAutoComplete;
+		if (autoCompleteTextView.getVisibility() == View.VISIBLE) {
+			Utils.hideKeyboard(getActivity(), autoCompleteTextView);
+			autoCompleteTextView.setVisibility(View.GONE);
+			hideTranslucentOverlay();
+			disabledAutoComplete = true;
+		} else {
+			disabledAutoComplete = false;
+		}
+		
+		return disabledAutoComplete;
+	}
+	
+	private void hideTranslucentOverlay() {
+		overlay.setVisibility(View.GONE);
+	}
+	
+	private void showTranslucentOverlay() {
+		overlay.setVisibility(View.VISIBLE);
 	}
 
 	public void setAutoComplete() {
 		parseLocations();
 
-		overlay.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				disableAutoComplete();
-			}
-		});
+		
 		LocationAutoCompleteAdapter adapter = new LocationAutoCompleteAdapter(
 				getActivity(), getLocations());
 		autoCompleteTextView.setAdapter(adapter);
@@ -851,5 +874,9 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 		};
 	}
+	
+	
+	
+	
 
 }

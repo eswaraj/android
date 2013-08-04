@@ -20,6 +20,8 @@
     <string name="tab_issues">Issues</string>
     <string name="tab_analytics">Analytics</string>
     <string name="analytics_overall">Overall</string>
+    <string name="analytics_constituency">Constituency</string>
+    
     <string name="issue_issue">Issues</string>
     <string name="issue_complaint">Complaints</string>
     <string name="issue_details_category_label">Issue Category</string>

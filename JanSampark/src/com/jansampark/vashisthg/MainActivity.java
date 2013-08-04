@@ -333,4 +333,15 @@ public class MainActivity extends FragmentActivity  {
 					Uri.parse(youtubeHelper.getLinkForAll())));
 		}
 	}
+	
+	@Override
+	public void onBackPressed() {
+		boolean disabledAutoComplete = false;
+		if(analyticsFragment != null) {
+			disabledAutoComplete = analyticsFragment.disableAutoComplete();
+		}
+		if(!disabledAutoComplete) {
+			super.onBackPressed();
+		}
+	}
 }

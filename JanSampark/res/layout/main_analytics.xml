@@ -59,6 +59,7 @@
                 android:button="@null"
                 android:ellipsize="end"
                 android:gravity="center"
+                android:text="@string/analytics_constituency"
                 android:textColor="@color/analytics_radio_text" />
 
         </RadioGroup>
@@ -190,13 +191,21 @@
             </TableRow>
         </TableLayout>
 
-        <View
+        <FrameLayout
             android:id="@+id/analytics_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.3"
-            android:background="@android:color/black"
-            android:visibility="invisible" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="#77000000"
+            android:clickable="true"
+            android:visibility="gone" >
+
+            
+
+        </FrameLayout>
 
         <AutoCompleteTextView
             android:id="@+id/analytics_autocomplete"
@@ -211,6 +220,7 @@
             android:paddingRight="15dp"
             android:paddingTop="10dp"
             android:visibility="gone" >
+
         </AutoCompleteTextView>
     </RelativeLayout>
 
