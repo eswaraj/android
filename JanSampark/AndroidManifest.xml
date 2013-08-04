@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jansampark.vashisthg"
+    package="com.swaraj.vashisthg"
     android:installLocation="auto"
     android:versionCode="1"
     android:versionName="1.0" >
@@ -10,10 +10,10 @@
         android:targetSdkVersion="17" />
 
     <permission
-            android:name="com.jansampark.vashisthg.permission.MAPS_RECEIVE"
+            android:name="com.swaraj.vashisthg.permission.MAPS_RECEIVE"
             android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.jansampark.vashisthg.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.swaraj.vashisthg.permission.MAPS_RECEIVE" />
 
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
@@ -43,7 +43,7 @@
     <application
         android:allowBackup="true"
         android:largeHeap="true"
-        android:name="com.jansampark.vashisthg.JanSamparkApplication"
+        android:name="com.swaraj.vashisthg.JanSamparkApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -52,7 +52,7 @@
                 android:name="com.google.android.maps.v2.API_KEY"
                 android:value="AIzaSyCoPKr_Sbr0Fliys7fjS3I8jXWt1xrmEo0" />
         <activity
-            android:name="com.jansampark.vashisthg.SplashActivity"
+            android:name="com.swaraj.vashisthg.SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
@@ -63,44 +63,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jansampark.vashisthg.MainActivity"
+            android:name="com.swaraj.vashisthg.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
              >
         </activity>
         <activity
-            android:name="com.jansampark.vashisthg.IssueSummaryActivity"
+            android:name="com.swaraj.vashisthg.IssueSummaryActivity"
             android:label="@string/title_activity_issue_summary"
             android:screenOrientation="portrait"
              >
         </activity>
         <activity
-            android:name="com.jansampark.vashisthg.IssueDetailsActivity"
+            android:name="com.swaraj.vashisthg.IssueDetailsActivity"
             android:label="@string/title_activity_issue_details"
             android:screenOrientation="portrait"
             >
         </activity>
         <activity
-            android:name="com.jansampark.vashisthg.UserImageActivity"
+            android:name="com.swaraj.vashisthg.UserImageActivity"
             android:label="@string/title_activity_issue_details"
             android:screenOrientation="portrait"
             >
         </activity>
         <activity
-            android:name="com.jansampark.vashisthg.OtherIssuesActivity"
+            android:name="com.swaraj.vashisthg.OtherIssuesActivity"
             android:label="@string/title_activity_issue_details"
             android:screenOrientation="portrait"
             >
         </activity>
         <activity
-            android:name="com.jansampark.vashisthg.InfoActivity"
+            android:name="com.swaraj.vashisthg.InfoActivity"
             android:label="@string/title_activity_info"
             android:screenOrientation="portrait"
             >
         </activity>
         
         <activity
-            android:name="com.jansampark.vashisthg.IssueActivity"
+            android:name="com.swaraj.vashisthg.IssueActivity"
             android:label="@string/title_activity_issue"
             android:screenOrientation="portrait"
             android:parentActivityName="MainActivity" >

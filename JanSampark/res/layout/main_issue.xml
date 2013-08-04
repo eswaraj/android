@@ -21,7 +21,7 @@
 
             <fragment
                 android:id="@+id/map"
-                android:name="com.jansampark.vashisthg.widget.CustomSupportMapFragment"
+                android:name="com.swaraj.vashisthg.widget.CustomSupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 map:zOrderOnTop="true"
@@ -69,7 +69,7 @@
                 android:gravity="center"
                 tools:ignore="ObsoleteLayoutParam" >
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_road"
                     android:layout_width="@dimen/issue_button_width"
                     android:layout_height="@dimen/issue_button_height"                 
@@ -77,7 +77,7 @@
                     issueButton:bottomText="@string/main_road" 
                     issueButton:image="@drawable/ic_issue_road"/>
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_water"
                     android:layout_width="@dimen/issue_button_width"
                     android:layout_height="@dimen/issue_button_height"     
@@ -85,7 +85,7 @@
                     issueButton:bottomText="@string/main_water" 
                     issueButton:image="@drawable/ic_issue_water"/>
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_transportation"
                     android:layout_width="@dimen/issue_button_width"
                     android:layout_height="@dimen/issue_button_height"
@@ -100,7 +100,7 @@
                 
                 android:gravity="center" >
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_electricity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                     issueButton:bottomText="@string/main_electricity" 
                     issueButton:image="@drawable/ic_issue_electricity" />
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_law"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
                     issueButton:bottomText="@string/main_law_and_order" 
                     issueButton:image="@drawable/ic_issue_law" />
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_sewage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

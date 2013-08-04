@@ -135,7 +135,7 @@
                 android:layout_height="fill_parent"
                 android:gravity="center" >
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_road"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
                     issueButton:image="@drawable/ic_analytics_road"
                     issueButton:tertiaryText="@null" />
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_water"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                     issueButton:image="@drawable/ic_analytics_water"
                     issueButton:tertiaryText="@null" />
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_transportation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                 android:layout_height="fill_parent"
                 android:gravity="center" >
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_electricity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -173,7 +173,7 @@
                     issueButton:image="@drawable/ic_analytics_electricity"
                     issueButton:tertiaryText="@null" />
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_law"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                     issueButton:image="@drawable/ic_analytics_law"
                     issueButton:tertiaryText="@null" />
 
-                <com.jansampark.vashisthg.widget.IssueButton
+                <com.swaraj.vashisthg.widget.IssueButton
                     android:id="@+id/main_analytics_sewage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
