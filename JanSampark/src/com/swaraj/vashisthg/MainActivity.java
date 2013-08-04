@@ -111,7 +111,6 @@ public class MainActivity extends FragmentActivity  {
     	titleBarHelper.setTitleBar(titleBar);
     	titleBarHelper.setLeftButtonIcon(R.drawable.ic_info);
     	titleBarHelper.setRightButtonIcon(R.drawable.profile_image);   	
-    	titleBarHelper.showVideoButton();
     }
     
     @Override
@@ -327,13 +326,7 @@ public class MainActivity extends FragmentActivity  {
 	    }
 	};
 	
-	public void onVideoClick(View view) {
-		String youtubeLink = youtubeHelper.getLinkForAll();
-		if(!TextUtils.isEmpty(youtubeLink)) {
-			startActivity(new Intent(Intent.ACTION_VIEW,
-					Uri.parse(youtubeHelper.getLinkForAll())));
-		}
-	}
+	
 	
 	@Override
 	public void onBackPressed() {

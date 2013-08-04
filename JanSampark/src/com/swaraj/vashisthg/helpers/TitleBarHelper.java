@@ -18,7 +18,6 @@ public class TitleBarHelper {
 	private ProgressBar progressBar;
 	private TextView titleBarText;
 	private View titleBarImage;
-	private View showVideoButton;
 
 	public ViewGroup getTitleBar() {
 		return titleBar;
@@ -35,7 +34,6 @@ public class TitleBarHelper {
 		this.titleBarText = (TextView) titleBar
 				.findViewById(R.id.title_bar_text);
 		this.titleBarImage = titleBar.findViewById(R.id.title_bar_center_image);
-		this.showVideoButton = titleBar.findViewById(R.id.title_bar_video);
 	}
 
 	public ImageButton getRightButton() {
@@ -77,18 +75,6 @@ public class TitleBarHelper {
 	public void setTitleBarText(int resId) {
 		titleBarText.setText(resId);
 		titleBarImage.setVisibility(View.GONE);
-	}
-
-	public void showVideoButton() {
-		showVideoButton.setVisibility(View.VISIBLE);
-	}
-
-	public void hideVideoButton() {
-		showVideoButton.setVisibility(View.GONE);
-	}
-
-	public void onVideoClick(View view) {
-
 	}
 
 }
