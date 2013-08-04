@@ -1,6 +1,7 @@
 package com.swaraj.vashisthg;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.swaraj.vashisthg.helpers.BitmapWorkerTask;
 import com.swaraj.vashisthg.helpers.CameraHelper;
 import com.swaraj.vashisthg.helpers.Utils;
 import com.swaraj.vashisthg.helpers.WindowAnimationHelper;
+import com.swaraj.vashisthg.helpers.YouTubeVideoHelper;
 import com.swaraj.vashisthg.helpers.CameraHelper.CameraUtilActivity;
 
 public class UserImageActivity extends CameraUtilActivity {
@@ -20,14 +22,21 @@ public class UserImageActivity extends CameraUtilActivity {
 	private ViewGroup takeImageContainer;
 	private ViewGroup imageTakenContainer;
 	private ImageView issueImageView;
+	YouTubeVideoHelper youtubeHelper;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_image);
+		setYouTubeHelper();
 		setCameraHelper();
 		setIssueImageViews();
 	}
+	
+	private void setYouTubeHelper() {
+		youtubeHelper = new YouTubeVideoHelper(this);
+		youtubeHelper.downloadYouTubeLinks();
+	}	
 	
 	private void setCameraHelper() {
 		cameraHelper = new CameraHelper(this);		
@@ -133,6 +142,22 @@ public class UserImageActivity extends CameraUtilActivity {
 	
 	public void onTitleBarRightButtonClick(View view) {
 		
+	}
+	
+	public void onVideoClick(View view) {
+		String youtubeLink = youtubeHelper.getLinkForAll();
+		if(!TextUtils.isEmpty(youtubeLink)) {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse(youtubeHelper.getLinkForAll())));
+		}
+	}
+	
+	public void onSendYourFeedback(View view) {		
+		Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.setType("plain/text");
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.settings_feedback_email_subject));
+        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {getString(R.string.settings_feedback_email_id)});
+        startActivityForResult(Intent.createChooser(emailIntent, "Send Feedback..."), 110);
 	}
 	
 	@Override

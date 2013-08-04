@@ -110,7 +110,7 @@ public class MainActivity extends FragmentActivity  {
     	titleBarHelper = new TitleBarHelper();
     	titleBarHelper.setTitleBar(titleBar);
     	titleBarHelper.setLeftButtonIcon(R.drawable.ic_info);
-    	titleBarHelper.setRightButtonIcon(R.drawable.profile_image);   	
+    	titleBarHelper.setRightButtonIcon(R.drawable.settings_icon);   	
     }
     
     @Override

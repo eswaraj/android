@@ -47,7 +47,7 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/title_bar_right_button"
         android:padding="8dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/title_bar_text"

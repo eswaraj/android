@@ -1,53 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/settings_scroll"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"   
-    android:orientation="vertical"
-     >
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
-        layout="@layout/title_bar" />
+    android:layout_height="match_parent" >
 
     <LinearLayout
-        android:id="@+id/user_pic_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="@dimen/activity_horizontal_margin"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/user_title_size"
-            android:layout_marginBottom="@dimen/user_title_margin"
-           
-            android:text="@string/user_pic_title" />
-
         <include
-            android:id="@+id/take_photo_container_ref"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/take_photo_container" />
+            android:layout_height="@dimen/title_bar_height"
+            layout="@layout/title_bar" />
 
-        <include
-            android:id="@+id/photo_taken_container_ref"
+        <LinearLayout
+            android:id="@+id/user_pic_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/issue_details_retake_container_height"
-            layout="@layout/photo_taken_container" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin" >
 
-        <Button
-            android:id="@+id/done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/post_button"
-            android:onClick="onHowItWorksClick"
-            android:text="@string/how_it_works"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/user_title_margin"
+                android:text="@string/user_pic_title"
+                android:textSize="@dimen/user_title_size" />
+
+            <include
+                android:id="@+id/take_photo_container_ref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/take_photo_container" />
+
+            <include
+                android:id="@+id/photo_taken_container_ref"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/issue_details_retake_container_height"
+                layout="@layout/photo_taken_container" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/post_button"
+                android:onClick="onHowItWorksClick"
+                android:text="@string/settings_how_it_works"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/post_button"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:onClick="onVideoClick"
+                android:text="@string/settings_video"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/post_button"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:onClick="onSendYourFeedback"
+                android:text="@string/settings_feedback"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/post_button"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/settings_boundary_mode"
+                android:alpha="0.4"
+                android:enabled="false"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/post_button"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/settings_party_mode"
+                android:alpha="0.4"
+                android:enabled="false"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/post_button"
+                android:alpha="0.4"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/settings_mla_inbox"
+                android:enabled="false"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

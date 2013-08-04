@@ -44,8 +44,17 @@
     <string name="issue_summary_another_complaint">Another complaint</string>
     <string name="done">Done</string>
     <string name="user_pic_title">Choose Your Picture.</string>
-    <string name="how_it_works">How it works</string>
     
+    <string name="settings_how_it_works">How it works</string>
+    <string name="settings_video">Watch A Video about Swaraj</string>
+    <string name="settings_feedback">Send Your Feedback</string>
+    
+    <string name="settings_boundary_mode">Political Boundary Mode</string>
+    <string name="settings_party_mode">Political Party Mode</string>
+    <string name="settings_mla_inbox">MLA Inbox</string>
+    
+    <string name="settings_feedback_email_id">eswaraj.india@gmail.com</string>
+    <string name="settings_feedback_email_subject">SWARAJ FEEDBACK</string>
 
     <string-array name="splash_text">
         <item>Select an issue in your locality that\'s bugging you for a while</item>
