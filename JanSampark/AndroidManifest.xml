@@ -81,7 +81,7 @@
             >
         </activity>
         <activity
-            android:name="com.swaraj.vashisthg.UserImageActivity"
+            android:name="com.swaraj.vashisthg.SettingsActivity"
             android:label="@string/title_activity_issue_details"
             android:screenOrientation="portrait"
             >

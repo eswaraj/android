@@ -241,7 +241,7 @@ public class MainActivity extends FragmentActivity  {
 	}
 	
 	public void onTitleBarRightButtonClick(View view) {
-		WindowAnimationHelper.startActivityWithSlideFromRight(this, UserImageActivity.class);
+		WindowAnimationHelper.startActivityWithSlideFromRight(this, SettingsActivity.class);
 	}
 	
 	public void showTitleBarProgress() {

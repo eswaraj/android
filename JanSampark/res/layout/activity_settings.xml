@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/settings_scroll"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <include
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="@dimen/title_bar_height"
+        layout="@layout/title_bar" />
 
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/title_bar_height"
-            layout="@layout/title_bar" />
+    <ScrollView
+        android:id="@+id/settings_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:id="@+id/user_pic_wrapper"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin" >
@@ -55,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/post_button"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/post_button"
                 android:onClick="onVideoClick"
                 android:text="@string/settings_video"
                 android:textColor="@android:color/white" />
@@ -65,8 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/post_button"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@drawable/post_button"
                 android:onClick="onSendYourFeedback"
                 android:text="@string/settings_feedback"
                 android:textColor="@android:color/white" />
@@ -75,35 +75,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/post_button"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:alpha="0.4"
+                android:background="@drawable/post_button"
+                android:enabled="false"
                 android:text="@string/settings_boundary_mode"
-                android:alpha="0.4"
-                android:enabled="false"
                 android:textColor="@android:color/white" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/post_button"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:alpha="0.4"
+                android:background="@drawable/post_button"
+                android:enabled="false"
                 android:text="@string/settings_party_mode"
-                android:alpha="0.4"
-                android:enabled="false"
                 android:textColor="@android:color/white" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/post_button"
-                android:alpha="0.4"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/settings_mla_inbox"
+                android:alpha="0.4"
+                android:background="@drawable/post_button"
                 android:enabled="false"
+                android:text="@string/settings_mla_inbox"
                 android:textColor="@android:color/white" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+</LinearLayout>

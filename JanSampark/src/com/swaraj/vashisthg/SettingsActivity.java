@@ -17,7 +17,7 @@ import com.swaraj.vashisthg.helpers.WindowAnimationHelper;
 import com.swaraj.vashisthg.helpers.YouTubeVideoHelper;
 import com.swaraj.vashisthg.helpers.CameraHelper.CameraUtilActivity;
 
-public class UserImageActivity extends CameraUtilActivity {
+public class SettingsActivity extends CameraUtilActivity {
 	CameraHelper cameraHelper;
 	private ViewGroup takeImageContainer;
 	private ViewGroup imageTakenContainer;
@@ -27,7 +27,7 @@ public class UserImageActivity extends CameraUtilActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user_image);
+		setContentView(R.layout.activity_settings);
 		setYouTubeHelper();
 		setCameraHelper();
 		setIssueImageViews();
