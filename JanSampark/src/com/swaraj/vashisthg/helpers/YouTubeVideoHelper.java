@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.net.Uri;
+import android.os.Build;
 
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
@@ -119,8 +121,13 @@ public class YouTubeVideoHelper {
 	}
 	
 	public void startYouTubeVideo(Activity activity, String youtubelink) {
-		Intent intent = new Intent(activity, YouTubeVideoActivity.class);
-		intent.putExtra(YouTubeVideoActivity.EXTRA_YOUTUBE_LINK, youtubelink);
+		Intent intent;
+		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+			intent = new Intent(activity, YouTubeVideoActivity.class);
+			intent.putExtra(YouTubeVideoActivity.EXTRA_YOUTUBE_LINK, youtubelink);			
+		} else {			
+			intent = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubelink));
+		}
 		WindowAnimationHelper.startActivityWithSlideFromRight(activity, intent);
 	}
 
