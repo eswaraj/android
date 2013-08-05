@@ -785,7 +785,8 @@ public class MainAnalyticsFragment extends Fragment {
 		return new Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				Log.d(TAG, "try again");
+				Toast.makeText(getActivity(), R.string.network_error,
+						Toast.LENGTH_LONG).show();
 				hideProgressBar();
 			}
 		};
