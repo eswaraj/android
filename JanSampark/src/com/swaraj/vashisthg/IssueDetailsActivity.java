@@ -65,7 +65,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	private TextView categoryTV;
 	private TextView nameTV;
+	private TextView nameLabelTV;
 	private TextView systemTV;
+	private TextView otherDescription;
 	
 	private Button addDescription;
 	private EditText descriptionET;
@@ -150,6 +152,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	private void setViews() {
 		categoryTV = (TextView) findViewById(R.id.issue_detail_category_text);
+		nameLabelTV = (TextView) findViewById(R.id.issue_detail_name_label);
 		nameTV = (TextView) findViewById(R.id.issue_detail_name_text);
 		systemTV = (TextView) findViewById(R.id.issue_detail_system_text);
 		addDescription = (Button) findViewById(R.id.issue_detail_descption_add_btn);
@@ -160,13 +163,27 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		sendingImage = (ImageView)findViewById(R.id.issue_details_sending_image);
 		postButton = (Button) findViewById(R.id.issue_details_post);
 		sendingText = (TextView) findViewById(R.id.issue_details_sending);
+		otherDescription = (TextView) findViewById(R.id.issue_detail_other_description);
 				
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		nameTV.setText(issueItem.getIssueName());
 		systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
+		setViewForOthers();
 		setDescription();
 		resetDescription();
 		setIssueImageViews();		
+	}
+	
+	private void setViewForOthers() {
+		if(isOthersIssue()) {
+			nameLabelTV.setVisibility(View.GONE);
+			nameTV.setVisibility(View.GONE);
+			otherDescription.setVisibility(View.VISIBLE);
+		} else {
+			nameLabelTV.setVisibility(View.VISIBLE);
+			nameTV.setVisibility(View.VISIBLE);
+			otherDescription.setVisibility(View.GONE);
+		}
 	}
 	
 	@Override
@@ -278,13 +295,17 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	}
 	
 	public void onPostClick(View view) {
-		if(issueItem.getTemplateId() % 10 == 0 && descriptionET.getText().toString().trim().isEmpty()) {
+		if(isOthersIssue() && descriptionET.getText().toString().trim().isEmpty()) {
 			MessageDialog.create(getString(R.string.issue_details_enter_description)).show(getSupportFragmentManager(), "MESSAGE");
 		} else {
 			showSendingOverlay();
 			executeRequest();		
 			executeMLAIdRequest();
 		}
+	}
+	
+	private boolean isOthersIssue() {
+		return issueItem.getTemplateId() % 10 == 0;
 	}
 	
 	private void showSendingOverlay() {
