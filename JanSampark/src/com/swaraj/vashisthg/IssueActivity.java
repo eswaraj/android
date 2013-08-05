@@ -231,7 +231,7 @@ public class IssueActivity extends Activity {
 		int issueId = IssueFactory.getIssueId(this, issue);
 		String link = youtubeHelper.getLinkForIssueId(issueId);
 		if(!TextUtils.isEmpty(link)) {
-			startActivity(new Intent( Intent.ACTION_VIEW, Uri.parse(youtubeHelper.getLinkForAll())));
+			youtubeHelper.startYouTubeVideo(this, link);
 		}
 	}
 }

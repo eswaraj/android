@@ -98,9 +98,11 @@ public class MainActivity extends FragmentActivity  {
     
     @Override
     protected void onPause() {
-    	if(locationClient.isConnected()) {
-    		locationClient.removeLocationUpdates(mLocationListener);
-    		locationClient.disconnect();
+    	if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
+	    	if(locationClient.isConnected()) {
+	    		locationClient.removeLocationUpdates(mLocationListener);
+	    		locationClient.disconnect();
+	    	}
     	}
 		isResumed = false;
     	super.onPause();

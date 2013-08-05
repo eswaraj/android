@@ -3,7 +3,9 @@ package com.swaraj.vashisthg.helpers;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
@@ -15,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.swaraj.vashisthg.R;
+import com.swaraj.vashisthg.YouTubeVideoActivity;
 
 public class YouTubeVideoHelper {
 	RequestQueue requestQueue;
@@ -28,7 +31,7 @@ public class YouTubeVideoHelper {
 	Context context;
 	YouTubeLinkRequestCallback callback;
 
-	private static final String YOUTUBE_LINK_URL = "http://50.57.224.47/html/dev/micronews/get_video_links.php ";
+	private static final String YOUTUBE_LINK_URL = "http://50.57.224.47/html/dev/micronews/get_video_links.php";
 	private static final String PREF = "pref_youtube";
 
 	private static final String ABOUT_ALL = "about";
@@ -113,6 +116,12 @@ public class YouTubeVideoHelper {
 	public String getLinkForAll() {
 		SharedPreferences pref = context.getSharedPreferences(PREF, 0);
 		return pref.getString(ABOUT_ALL, "");
+	}
+	
+	public void startYouTubeVideo(Activity activity, String youtubelink) {
+		Intent intent = new Intent(activity, YouTubeVideoActivity.class);
+		intent.putExtra(YouTubeVideoActivity.EXTRA_YOUTUBE_LINK, youtubelink);
+		WindowAnimationHelper.startActivityWithSlideFromRight(activity, intent);
 	}
 
 }

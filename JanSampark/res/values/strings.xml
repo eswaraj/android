@@ -22,6 +22,8 @@
     <string name="analytics_overall">Overall</string>
     <string name="analytics_constituency">Constituency</string>
     
+    <string name="no_google_map_services">You need to install Google Services on your phone</string>
+    
     <string name="issue_issue">Issues</string>
     <string name="issue_complaint">Complaints</string>
     <string name="issue_details_category_label">Issue Category</string>

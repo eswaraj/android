@@ -145,11 +145,13 @@ public class SettingsActivity extends CameraUtilActivity {
 	}
 	
 	public void onVideoClick(View view) {
-		String youtubeLink = youtubeHelper.getLinkForAll();
-		if(!TextUtils.isEmpty(youtubeLink)) {
-			startActivity(new Intent(Intent.ACTION_VIEW,
-					Uri.parse(youtubeHelper.getLinkForAll())));
-		}
+//		String youtubeLink = youtubeHelper.getLinkForAll();
+//		if(!TextUtils.isEmpty(youtubeLink)) {
+//			startActivity(new Intent(Intent.ACTION_VIEW,
+//					Uri.parse(youtubeHelper.getLinkForAll())));
+//		}
+		
+		youtubeHelper.startYouTubeVideo(this, youtubeHelper.getLinkForAll());
 	}
 	
 	public void onSendYourFeedback(View view) {		

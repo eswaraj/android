@@ -15,6 +15,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.UiSettings;
@@ -22,6 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.swaraj.vashisthg.R;
+import com.swaraj.vashisthg.helpers.DialogFactory;
 import com.swaraj.vashisthg.helpers.WindowAnimationHelper;
 import com.swaraj.vashisthg.models.ISSUE_CATEGORY;
 import com.swaraj.vashisthg.widget.CustomSupportMapFragment;
@@ -81,34 +84,37 @@ public class MainIssueFragment extends Fragment {
 	}
 	
 
-	public void initMap(CustomSupportMapFragment mapFragment) {
-		gMap = mapFragment.getMap();
-
-		gMap.setMyLocationEnabled(false);
-		
-		
-				
-		UiSettings uiSettings = gMap.getUiSettings();
-		uiSettings.setMyLocationButtonEnabled(false);
-		uiSettings.setTiltGesturesEnabled(false);
-		uiSettings.setZoomGesturesEnabled(false);
-		uiSettings.setZoomControlsEnabled(false);
-		uiSettings.setRotateGesturesEnabled(false);
-		uiSettings.setMyLocationButtonEnabled(false);
-		uiSettings.setCompassEnabled(false);
-		
-		
-
-		gMap.setOnMapClickListener(null);
-
-		View mapBlocker = getActivity().findViewById(R.id.map_blocker);
-		mapBlocker.setOnTouchListener(new OnTouchListener() {
-
-			@Override
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				return true;
-			}
-		});
+	public void initMap(CustomSupportMapFragment mapFragment) {				
+		if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
+			gMap = mapFragment.getMap();
+			gMap.setMyLocationEnabled(false);
+			
+			
+					
+			UiSettings uiSettings = gMap.getUiSettings();
+			uiSettings.setMyLocationButtonEnabled(false);
+			uiSettings.setTiltGesturesEnabled(false);
+			uiSettings.setZoomGesturesEnabled(false);
+			uiSettings.setZoomControlsEnabled(false);
+			uiSettings.setRotateGesturesEnabled(false);
+			uiSettings.setMyLocationButtonEnabled(false);
+			uiSettings.setCompassEnabled(false);
+			
+			
+	
+			gMap.setOnMapClickListener(null);
+	
+			View mapBlocker = getActivity().findViewById(R.id.map_blocker);
+			mapBlocker.setOnTouchListener(new OnTouchListener() {
+	
+				@Override
+				public boolean onTouch(View arg0, MotionEvent arg1) {
+					return true;
+				}
+			});
+		} else {
+			DialogFactory.createMessageDialog(getString(R.string.no_google_map_services)).show(getFragmentManager(), "ERROR");
+		}
 	}
 	
 	    
@@ -117,11 +123,14 @@ public class MainIssueFragment extends Fragment {
 		if(null != location) {
 			LatLng lastKnownLatLng = new LatLng(location.getLatitude(),
 					location.getLongitude());
-			gMap.clear();	
-			gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15));
-			gMap.addMarker(new MarkerOptions().position(lastKnownLatLng).icon(
-					BitmapDescriptorFactory
-							.fromResource(R.drawable.ic_main_annotation)));
+			if(null != gMap) {
+				gMap.clear();	
+				gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15));
+				gMap.addMarker(new MarkerOptions().position(lastKnownLatLng).icon(
+						BitmapDescriptorFactory
+								.fromResource(R.drawable.ic_main_annotation)));
+			}
+			
 		}  else {
 			Log.e("ISSUE", "location is null");
 		}

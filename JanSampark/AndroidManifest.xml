@@ -7,7 +7,7 @@
 
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
 
     <permission
             android:name="com.swaraj.vashisthg.permission.MAPS_RECEIVE"
@@ -96,9 +96,12 @@
             android:name="com.swaraj.vashisthg.InfoActivity"
             android:label="@string/title_activity_info"
             android:screenOrientation="portrait"
-            >
-        </activity>
-        
+            />
+        <activity
+            android:name="com.swaraj.vashisthg.YouTubeVideoActivity"
+            android:label="@string/app_name"
+            
+            />                
         <activity
             android:name="com.swaraj.vashisthg.IssueActivity"
             android:label="@string/title_activity_issue"
