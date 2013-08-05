@@ -291,7 +291,8 @@ public class MainActivity extends FragmentActivity  {
             if(isResumed) {
     			lastKnownLocation =  location;
     			Log.d("Issue", "location changed");
-    			JanSamparkApplication.getInstance().setLastKnownLocation(lastKnownLocation);
+    			
+    			JanSamparkApplication.getInstance().setLastKnownLocation(location);
     			if(issueFragment != null) {
     				issueFragment.showLocation();   
     			}

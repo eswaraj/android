@@ -4,8 +4,11 @@ import com.swaraj.vashisthg.models.Constituency;
 
 import android.app.Application;
 import android.location.Location;
+import android.util.Log;
 
 public class JanSamparkApplication extends Application {
+	
+	public static String TAG = "Application";
 	
     private static JanSamparkApplication instance;
     public static JanSamparkApplication getInstance() {
@@ -29,6 +32,8 @@ public class JanSamparkApplication extends Application {
 	public void setLastKnownLocation(Location lastKnownLocation) {
 		if(null != lastKnownLocation) {
 			this.lastKnownLocation = lastKnownLocation;
+		} else {
+			Log.e(TAG, "trying to set null location");
 		}
 	}
 

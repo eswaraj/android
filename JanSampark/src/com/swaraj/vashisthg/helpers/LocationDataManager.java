@@ -4,12 +4,13 @@ import java.util.List;
 
 import android.app.Activity;
 import android.location.Location;
+import android.util.Log;
 
 import com.swaraj.vashisthg.models.Constituency;
 
 public class LocationDataManager {
 	Activity activity;
-	
+	private static final String TAG = "LocationDataManager";
 	
 	public LocationDataManager(Activity activity, ReverseGeoCodingTask.GeoCodingTaskListener geoCodingTaskListener) {
 		this.activity = activity;
@@ -17,8 +18,12 @@ public class LocationDataManager {
 	}	
 	
 	public void fetchAddress(Location location) {
-		ReverseGeoCodingTask geocodingTask = ReverseGeoCodingTask.newInstance(activity, mainGeoCodingListener, location);
-		geocodingTask.execute();
+		if(null != location) {
+			ReverseGeoCodingTask geocodingTask = ReverseGeoCodingTask.newInstance(activity, mainGeoCodingListener, location);
+			geocodingTask.execute();
+		} else {
+			Log.e(TAG, "location is null, so can't fetch address");
+		}
 	}
 	
 	private ReverseGeoCodingTask.GeoCodingTaskListener geoCodingListener ;
