@@ -23,6 +23,7 @@
     <string name="analytics_constituency">Constituency</string>
     
     <string name="no_google_map_services">You need to install Google Services on your phone</string>
+    <string name="no_internet">No internet access detected. App needs internet connection to work properly.</string>
     
     <string name="issue_issue">Issues</string>
     <string name="issue_complaint">Complaints</string>

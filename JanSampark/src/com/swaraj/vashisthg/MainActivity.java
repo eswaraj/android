@@ -2,9 +2,7 @@ package com.swaraj.vashisthg;
 
 import java.util.List;
 
-import android.content.Intent;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,10 +27,11 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.swaraj.vashisthg.R;
+import com.swaraj.vashisthg.helpers.DialogFactory;
 import com.swaraj.vashisthg.helpers.LocationDataManager;
 import com.swaraj.vashisthg.helpers.ReverseGeoCodingTask;
 import com.swaraj.vashisthg.helpers.TitleBarHelper;
+import com.swaraj.vashisthg.helpers.Utils;
 import com.swaraj.vashisthg.helpers.WindowAnimationHelper;
 import com.swaraj.vashisthg.helpers.YouTubeVideoHelper;
 import com.swaraj.vashisthg.models.Constituency;
@@ -93,8 +91,16 @@ public class MainActivity extends FragmentActivity  {
     protected void onResume() {
     	super.onResume();
     	isResumed = true;
+    	checkInternetConnection();
     	startLocationTracking();
     }
+
+	private void checkInternetConnection() {
+		if (!Utils.isOnline(this)) {
+			DialogFactory.createMessageDialog(getString(R.string.no_internet))
+					.show(getSupportFragmentManager(), "INTERNET");
+		}
+	}
     
     @Override
     protected void onPause() {
