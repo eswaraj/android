@@ -3,6 +3,7 @@ package com.swaraj.vashisthg.models;
 import java.util.Locale;
 
 import android.location.Address;
+import android.text.TextUtils;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.swaraj.vashisthg.R;
@@ -63,18 +64,41 @@ public class Constituency {
 		
 		
 		locationFields[0] = subLocality;
-		locationFields[1] = ", " + city;
-		locationFields[2] = ", " + state;
-		locationFields[3] = ", " + country;
+		locationFields[1] = city;
+		locationFields[2] = state;
+		locationFields[3] = country;
 		
 		StringBuffer locationAddress = new StringBuffer();
 		
 		for(int i = 0; i < locationFields.length; i++) {
-			if(null != locationFields[i] && !", ".equals(locationFields[i])) {
-				locationAddress.append(locationFields[i]);
+			if(!isNull(locationFields[i]) && !", ".equals(locationFields[i])) {
+				if(locationAddress.length() != 0) {
+					locationAddress.append(", " + locationFields[i]);
+				} else {
+					locationAddress.append(locationFields[i]);
+				}
 			}
 		}
-	    return locationAddress.toString();		
+		
+		String formattedAddress = locationAddress.toString();
+		
+		if(TextUtils.isEmpty(formattedAddress)) {
+			formattedAddress = "India";
+		}
+		
+	    return formattedAddress;		
+	}
+	
+	private static boolean isNull(String string) {
+		boolean isNull = false;
+		if(null == string) {
+			isNull = true;
+		} else {
+			if("null".equalsIgnoreCase(string)) {
+				isNull = true;
+			}
+		}
+		return isNull;		
 	}
 	
 	public static int getCityRefId(Address address) {
