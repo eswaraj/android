@@ -30,12 +30,14 @@ public class IssueSummaryActivity extends FragmentActivity {
 	public static final String EXTRA_MLA_NAME = "name";
 	public static final String EXTRA_MLA_PIC = "mla_pic";
 	public static final String EXTRA_CONSTITUENCY = "constituency";
+	public static final String EXTRA_DROP_BIT = "drop_bit";
 	
 	private IssueItem issueItem;
 	private Location location;
 	private String mlaName;
 	private String mlaUrl;
 	private String constituency;
+	private int dropBit;
 	
 	
 	private RequestQueue mRequestQueue;
@@ -65,13 +67,14 @@ public class IssueSummaryActivity extends FragmentActivity {
 			mlaName = getIntent().getStringExtra(EXTRA_MLA_NAME);
 			mlaUrl = getIntent().getStringExtra(EXTRA_MLA_PIC);
 			constituency = getIntent().getStringExtra(EXTRA_CONSTITUENCY);
-			
+			dropBit = getIntent().getIntExtra(EXTRA_DROP_BIT, 0);
 		} else {
 			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);
 			location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
 			mlaName = savedInstanceState.getString(EXTRA_MLA_NAME);
 			mlaUrl = savedInstanceState.getString(EXTRA_MLA_PIC);
 			constituency = savedInstanceState.getString(EXTRA_CONSTITUENCY);
+			dropBit = savedInstanceState.getInt(EXTRA_DROP_BIT);
 		}
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		imageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(4 * 1024 * 1024));
@@ -82,7 +85,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	
 	public void showInvalidConstituency(String constituency) {
 		if(!invalidShown) {
-			if("Rest_of_India".equals(constituency)) {
+			if( 1 == dropBit) {
 				DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_post)).show(getSupportFragmentManager(), "FAIL");
 				invalidShown = true;
 			} 
@@ -109,8 +112,8 @@ public class IssueSummaryActivity extends FragmentActivity {
 		outState.putParcelable(EXTRA_ISSUE_ITEM, issueItem);
 		outState.putParcelable(EXTRA_LOCATION, location);
 		outState.putString(EXTRA_MLA_NAME, mlaName);
-		outState.putString(EXTRA_MLA_PIC, EXTRA_MLA_PIC);
-		
+		outState.putString(EXTRA_MLA_PIC, mlaUrl);
+		outState.putInt(EXTRA_DROP_BIT, dropBit);
 	}
 	
 	private void setView() {

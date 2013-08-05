@@ -91,6 +91,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	LocationRequest locationRequest;
     LocationClient locationClient;
+    int dropBit = 0;
 	
 	
 	@Override
@@ -442,7 +443,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		if(null != lastKnownLocation) {
 			double lat = lastKnownLocation.getLatitude();
 			double lon = lastKnownLocation.getLongitude();
-			String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;		
+			String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;	
+			
 			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLAIDReqSuccessListener(), createMLAIdErrorListener());
 			
 			Log.d(TAG, "url: " + request.getUrl());
@@ -466,6 +468,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
             	try {
             		Log.d(TAG, jsonObject.toString(1));
 					String mlaId = jsonObject.getString("consti_id");
+					dropBit = dropBit(jsonObject);
 					Log.d(TAG, "consti_id: " + mlaId);
 					
 					executeMLADetailsRequest(mlaId);
@@ -477,14 +480,27 @@ public class IssueDetailsActivity extends CameraUtilActivity {
         };
     }	
 	
+	private int dropBit(JSONObject jsonObject) {
+		int dropBit = 0;
+		
+		try {
+			dropBit = jsonObject.getInt("ol_drop_bit");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return dropBit;
+	}
+	
+	
+	
 	private void executeMLADetailsRequest(String mlaId) {
 		String url = "http://50.57.224.47/html/dev/micronews/mla-info/" + mlaId;
 		JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLADetailsReqSuccessListener(), createMLADetailsReqErrorListener());
 		mRequestQueue.add(request);
 	}
 	
-	String MLAName;
-	String MLAPic;
+	
 	
 	private Response.Listener<JSONObject> createMLADetailsReqSuccessListener() {
         return new Response.Listener<JSONObject>() {
@@ -505,6 +521,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_CONSTITUENCY, constituency);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_NAME, name);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_PIC, url);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_DROP_BIT, dropBit);
 		            	WindowAnimationHelper.startActivityWithSlideFromRight(IssueDetailsActivity.this, intent);
 		            	hideSendingOverlay();
 		            	finish();
