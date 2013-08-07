@@ -300,7 +300,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			MessageDialog.create(getString(R.string.issue_details_enter_description)).show(getSupportFragmentManager(), "MESSAGE");
 		} else {
 			showSendingOverlay();
-			executeRequest();		
+					
 			executeMLAIdRequest();
 		}
 	}
@@ -392,6 +392,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	};	
 	
 	private void executeRequest()  {			
+		Log.d(TAG, "executing post request");
 		if(null != lastKnownLocation) {
 			postButton.setEnabled(false);
 			String url = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
@@ -470,6 +471,10 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 					String mlaId = jsonObject.getString("consti_id");
 					dropBit = dropBit(jsonObject);
 					Log.d(TAG, "consti_id: " + mlaId);
+					
+					if(dropBit != 1) {
+						executeRequest();
+					}
 					
 					executeMLADetailsRequest(mlaId);
 										
