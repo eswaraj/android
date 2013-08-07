@@ -3,7 +3,9 @@ package com.swaraj.vashisthg;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -16,6 +18,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.swaraj.vashisthg.R;
 import com.swaraj.vashisthg.adapters.TextPagerAdapter;
+import com.swaraj.vashisthg.helpers.DialogFactory;
 import com.swaraj.vashisthg.helpers.Utils;
 import com.swaraj.vashisthg.widget.ViewPagerCustomDuration;
 
@@ -41,7 +44,7 @@ public class SplashActivity extends FragmentActivity {
 		} else {
 			dontStartMain = savedInstanceState.getBoolean(EXTRA_DONT_START_MAIN);
 		}
-		startMainActivityIfRequired();
+		
 		initSplashStrings();
 		setView();
 		setUpPager();
@@ -54,11 +57,17 @@ public class SplashActivity extends FragmentActivity {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean(EXTRA_DONT_START_MAIN, dontStartMain);
 	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		startMainActivityIfRequired();
+	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		startAnimatingGallery();
+		startAnimatingGallery();		
 	}
 
 	@Override
@@ -149,23 +158,56 @@ public class SplashActivity extends FragmentActivity {
 			if(dontStartMain) {
 				
 			} else {
-				startMainActivity();
+				checkLocationAndInternetAndStartMainActivity();
 			}
 		}
 
 	}
 
 	public void onDoneClick(View view) {
-		startMainActivity();
+		checkLocationAndInternetAndStartMainActivity();
+	}
+	
+	private void  checkLocationAndInternetAndStartMainActivity() {
+		if(checkLocationAndInternetAccess()) {
+			startMainActivity();
+		} 
 	}
 
-	private void startMainActivity() {
+	private void startMainActivity() {	
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		startActivity(intent);
 		finish();
 	}
+	
+	private boolean checkLocationAndInternetAccess() {
+		boolean internetAccess = Utils.isOnline(this);
+		boolean locationAccess = Utils.isLocationServicesEnabled(this);
+		
+		if(!(internetAccess || locationAccess)) {						
+			DialogFactory.createMessageDialog("No Internet and Location Services Detected", getString(R.string.no_internet) + " " + getString(R.string.no_location),
+					onOKClickListener).show(getSupportFragmentManager(), "INTERNET_LOCATION");	
+		} else if(!internetAccess) {
+			DialogFactory.createMessageDialog("No Internet connection Detected", getString(R.string.no_internet), onOKClickListener)
+			.show(getSupportFragmentManager(), "INTERNET");
+		} else if(!locationAccess) {
+			DialogFactory.createMessageDialog("No Location Services Detected.", getString(R.string.no_location), onOKClickListener)
+			.show(getSupportFragmentManager(), "LOCATION");
+		}	
+		
+		return internetAccess && locationAccess;
+	}
+	
+	private OnClickListener onOKClickListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			startMainActivity();
+			
+		}
+	};
 
 	private void initSplashStrings() {
 		splashStrings = getResources().getStringArray(R.array.splash_text);

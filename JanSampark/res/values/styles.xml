@@ -17,7 +17,7 @@
        <item name="android:windowBackground">@color/app_bg</item>
     </style>
 
-    <style name="SplashTheme" parent="android:Theme.Black.NoTitleBar">
+    <style name="SplashTheme" parent="android:Theme.Holo.NoActionBar">
     </style>
     
     <style name="other_issue_button" parent="@android:style/Widget.Button">

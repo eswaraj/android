@@ -93,26 +93,10 @@ public class MainActivity extends FragmentActivity  {
     protected void onResume() {
     	super.onResume();
     	isResumed = true;
-    	checkLocationAndInternetAccess();
     	startLocationTracking();
     }
 			
-	private void checkLocationAndInternetAccess() {
-		boolean internetAccess = Utils.isOnline(this);
-		boolean locationAccess = Utils.isLocationServicesEnabled(this);
-		
-		if(!(internetAccess && locationAccess)) {
-			DialogFactory.createMessageDialog(getString(R.string.no_internet) + ", " + getString(R.string.no_location) )
-			.show(getSupportFragmentManager(), "INTERNET_LOCATION");
 	
-		} else if(!internetAccess) {
-			DialogFactory.createMessageDialog(getString(R.string.no_internet))
-			.show(getSupportFragmentManager(), "INTERNET");
-		} else if(!locationAccess) {
-			DialogFactory.createMessageDialog(getString(R.string.no_location))
-			.show(getSupportFragmentManager(), "INTERNET");
-		}						
-	}
     
     @Override
     protected void onPause() {

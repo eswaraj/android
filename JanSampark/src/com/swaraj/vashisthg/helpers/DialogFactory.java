@@ -2,6 +2,7 @@ package com.swaraj.vashisthg.helpers;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface.OnClickListener;
 
 import com.swaraj.vashisthg.R;
 import com.swaraj.vashisthg.dialog.MessageDialog;
@@ -41,5 +42,9 @@ public class DialogFactory {
 	
 	public static MessageDialog createMessageDialog(String title, String message) {
 		return MessageDialog.create(title, message);
+	}
+	
+	public static MessageDialog createMessageDialog(String title, String message, OnClickListener onOKClickListener) {
+		return MessageDialog.create(title, message, "OK", onOKClickListener);
 	}
 }
