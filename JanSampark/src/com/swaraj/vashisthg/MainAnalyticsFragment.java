@@ -72,7 +72,7 @@ public class MainAnalyticsFragment extends Fragment {
 	TextView issueNumTV;
 	TextView complaintsNumTV;
 	RadioButton overallButton;
-	RadioButton autoCompleteButton;
+	RadioButton constituencyButton;
 	RadioGroup analyticsRadioGroup;
 	Spinner overallSpinner;
 	MyCount issueCounter;
@@ -241,12 +241,25 @@ public class MainAnalyticsFragment extends Fragment {
 	boolean autoCompleteCheck;
 
 	private void setButtons() {
-
-		overallButton = (RadioButton) getActivity().findViewById(
-				R.id.analytics_overall);
-		overallSpinner = (Spinner) getActivity().findViewById(
-				R.id.analytics_overall_spinner);
-		autoCompleteButton = (RadioButton) getActivity().findViewById(
+		initOverallRadioButton();
+		initConstituencyRadioButton();
+		
+		electricityButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_electricity);
+		roadButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_road);
+		waterButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_water);
+		transportationButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_transportation);
+		lawButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_law);
+		sewageButton = (IssueButton) getActivity().findViewById(
+				R.id.main_analytics_sewage);
+	}
+	
+	private void initConstituencyRadioButton() {
+		constituencyButton = (RadioButton) getActivity().findViewById(
 				R.id.analytics_spinner);
 		analyticsRadioGroup = (RadioGroup) ((RadioGroup) getActivity()
 				.findViewById(R.id.analytics_chooser_container));
@@ -275,7 +288,7 @@ public class MainAnalyticsFragment extends Fragment {
 
 				});
 
-		autoCompleteButton.setOnClickListener(new OnClickListener() {
+		constituencyButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -294,8 +307,14 @@ public class MainAnalyticsFragment extends Fragment {
 
 			}
 		});
-
-
+	}
+	
+	private void initOverallRadioButton() {
+		overallButton = (RadioButton) getActivity().findViewById(
+				R.id.analytics_overall);
+		overallSpinner = (Spinner) getActivity().findViewById(
+				R.id.analytics_overall_spinner);
+		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				getActivity(), R.array.city,
 				R.layout.analytics_city_selector_bg);
@@ -358,19 +377,6 @@ public class MainAnalyticsFragment extends Fragment {
 				}
 			}
 		});
-
-		electricityButton = (IssueButton) getActivity().findViewById(
-				R.id.main_analytics_electricity);
-		roadButton = (IssueButton) getActivity().findViewById(
-				R.id.main_analytics_road);
-		waterButton = (IssueButton) getActivity().findViewById(
-				R.id.main_analytics_water);
-		transportationButton = (IssueButton) getActivity().findViewById(
-				R.id.main_analytics_transportation);
-		lawButton = (IssueButton) getActivity().findViewById(
-				R.id.main_analytics_law);
-		sewageButton = (IssueButton) getActivity().findViewById(
-				R.id.main_analytics_sewage);
 	}
 
 	private void onAutoCompleteRadioClick() {
@@ -448,7 +454,7 @@ public class MainAnalyticsFragment extends Fragment {
 
 	private void setLocation(Constituency loc) {
 		lastSelectedLocation = loc;
-		autoCompleteButton.setText(loc.getName());
+		constituencyButton.setText(loc.getName());
 	}
 
 	public void onSewageClick(View view) {
@@ -855,7 +861,7 @@ public class MainAnalyticsFragment extends Fragment {
 					JSONObject node = jsonObject.getJSONArray("nodes")
 							.getJSONObject(0).getJSONObject("node");
 					String constituency = node.getString("constituency");
-					autoCompleteButton.setText(constituency);
+					constituencyButton.setText(constituency);
 					hideProgressBar();
 				} catch (JSONException e) {
 					e.printStackTrace();
