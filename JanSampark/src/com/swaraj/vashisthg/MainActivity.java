@@ -2,7 +2,9 @@ package com.swaraj.vashisthg;
 
 import java.util.List;
 
+import android.content.Context;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -91,15 +93,25 @@ public class MainActivity extends FragmentActivity  {
     protected void onResume() {
     	super.onResume();
     	isResumed = true;
-    	checkInternetConnection();
+    	checkLocationAndInternetAccess();
     	startLocationTracking();
     }
-
-	private void checkInternetConnection() {
-		if (!Utils.isOnline(this)) {
+			
+	private void checkLocationAndInternetAccess() {
+		boolean internetAccess = Utils.isOnline(this);
+		boolean locationAccess = Utils.isLocationServicesEnabled(this);
+		
+		if(!(internetAccess && locationAccess)) {
+			DialogFactory.createMessageDialog(getString(R.string.no_internet) + ", " + getString(R.string.no_location) )
+			.show(getSupportFragmentManager(), "INTERNET_LOCATION");
+	
+		} else if(!internetAccess) {
 			DialogFactory.createMessageDialog(getString(R.string.no_internet))
-					.show(getSupportFragmentManager(), "INTERNET");
-		}
+			.show(getSupportFragmentManager(), "INTERNET");
+		} else if(!locationAccess) {
+			DialogFactory.createMessageDialog(getString(R.string.no_location))
+			.show(getSupportFragmentManager(), "INTERNET");
+		}						
 	}
     
     @Override
@@ -261,10 +273,18 @@ public class MainActivity extends FragmentActivity  {
 	}
 	
 	protected void startLocationTracking() {	
+		setQuickLastKnownLocation();
 	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
 	        locationClient = new LocationClient(this, mConnectionCallbacks, mConnectionFailedListener);
 	        locationClient.connect();
 	    }
+	}
+	
+	private void setQuickLastKnownLocation() {
+		String locationProvider = LocationManager.NETWORK_PROVIDER;
+		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+		JanSamparkApplication.getInstance().setLastKnownLocation(lastKnownLocation);
 	}
 
 	private ConnectionCallbacks mConnectionCallbacks = new ConnectionCallbacks() {

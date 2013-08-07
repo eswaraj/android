@@ -9,6 +9,7 @@ import java.util.Calendar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -34,6 +35,19 @@ public class Utils {
 		}
 		return false;
 	}
+	
+	public static boolean isLocationServicesEnabled(Context context) {
+		boolean isEnabled = false;
+		
+		LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		String networkProvider = LocationManager.NETWORK_PROVIDER;
+		String gpsProvider = LocationManager.GPS_PROVIDER;
+
+		isEnabled = locationManager.isProviderEnabled(networkProvider) || locationManager.isProviderEnabled(gpsProvider);
+		
+		return isEnabled;
+	}
+	
 
 	public static void hideKeyboard(Context context, TextView textView) {
 		InputMethodManager imm = (InputMethodManager)context.getSystemService( Context.INPUT_METHOD_SERVICE);
