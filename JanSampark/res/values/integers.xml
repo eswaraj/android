@@ -10,7 +10,7 @@
         <item>31</item>
         <item>32</item>
         <item>41</item>
-        <item>0</item>
+        <item>-1</item>
     </integer-array>
     
     <integer-array name="electricity_index">
@@ -24,7 +24,7 @@
         <item>31</item>
         <item>41</item>
         <item>42</item>
-        <item>0</item>
+        <item>-1</item>
     </integer-array>
     
     <integer-array name="transportation_index">
@@ -42,7 +42,7 @@
         <item>31</item>
         <item>32</item>
         <item>41</item>
-        <item>0</item>
+        <item>-1</item>
     </integer-array>
    <integer-array name="road_index">
         <item>1</item>
@@ -53,7 +53,7 @@
         <item>31</item>
         <item>41</item>
         <item>42</item>
-        <item>0</item>
+        <item>-1</item>
     </integer-array>
     
     <integer-array name="sewage_index">
@@ -69,7 +69,7 @@
         <item>22</item>
         <item>31</item>
         <item>41</item>
-        <item>0</item>
+        <item>-1</item>
     </integer-array>
     <integer-array name="lawandorder_index">
         <item>1</item>
@@ -87,7 +87,7 @@
         <item>43</item>
         <item>44</item>
         <item>45</item>
-        <item>0</item>
+        <item>-1</item>
     </integer-array>
     
     <integer-array name="other_template_id">

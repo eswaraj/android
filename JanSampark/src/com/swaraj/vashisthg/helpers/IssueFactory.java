@@ -97,7 +97,7 @@ public class IssueFactory {
 	
 	private static int getIssueTypeInt(int templateId) {
 		int type;
-		if(templateId == 0) {
+		if(templateId == -1) {
 			type = 5;
 		} else {
 		    type = templateId/10;
