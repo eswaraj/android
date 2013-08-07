@@ -96,6 +96,7 @@ public class MainAnalyticsFragment extends Fragment {
 
 	private int cityResId = -1;
 	private int constituencyId = -1;
+	private int currentCityResId = -1;
 
 	private void setCityResId(int cityResId) {
 		this.cityResId = cityResId;
@@ -120,6 +121,7 @@ public class MainAnalyticsFragment extends Fragment {
 	private IssueButton electricityButton;
 	private IssueButton lawButton;
 	private IssueButton sewageButton;
+	boolean autoCompleteCheck;
 
 	public int getConstituencyId() {
 		return constituencyId;
@@ -131,6 +133,14 @@ public class MainAnalyticsFragment extends Fragment {
 
 	public static MainAnalyticsFragment newInstance(Bundle args) {
 		return new MainAnalyticsFragment();
+	}
+	
+	public int getCurrentCityResId() {
+		return currentCityResId;
+	}
+
+	public void setCurrentCityResId(int currentCityResId) {
+		this.currentCityResId = currentCityResId;
 	}
 
 	@Override
@@ -236,13 +246,18 @@ public class MainAnalyticsFragment extends Fragment {
 
 	public void onFragmentShown() {
 		setCounts(complaintCount);
-	}
-
-	boolean autoCompleteCheck;
+	}	
 
 	private void setButtons() {
-		initOverallRadioButton();
-		initConstituencyRadioButton();
+		overallButton = (RadioButton) getActivity().findViewById(
+				R.id.analytics_overall);
+		overallSpinner = (Spinner) getActivity().findViewById(
+				R.id.analytics_overall_spinner);
+		constituencyButton = (RadioButton) getActivity().findViewById(
+				R.id.analytics_spinner);
+		analyticsRadioGroup = (RadioGroup) ((RadioGroup) getActivity()
+				.findViewById(R.id.analytics_chooser_container));
+		
 		
 		electricityButton = (IssueButton) getActivity().findViewById(
 				R.id.main_analytics_electricity);
@@ -256,13 +271,13 @@ public class MainAnalyticsFragment extends Fragment {
 				R.id.main_analytics_law);
 		sewageButton = (IssueButton) getActivity().findViewById(
 				R.id.main_analytics_sewage);
+		
+		initOverallRadioButton();
+		initConstituencyRadioButton();
 	}
 	
 	private void initConstituencyRadioButton() {
-		constituencyButton = (RadioButton) getActivity().findViewById(
-				R.id.analytics_spinner);
-		analyticsRadioGroup = (RadioGroup) ((RadioGroup) getActivity()
-				.findViewById(R.id.analytics_chooser_container));
+		
 		analyticsRadioGroup
 				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -294,11 +309,7 @@ public class MainAnalyticsFragment extends Fragment {
 			public void onClick(View arg0) {
 				if (autoCompleteCheck) {
 					autoCompleteCheck = false;
-					if (-1 == getConstituencyId()) {
-						executeCurrentMLAIdRequest();
-					} else {					
-						executeAnalyticsRequest();
-					}
+					executeCurrentMLAIdRequest();
 					Log.d(TAG, "clicked on not already checked autocomplete: "
 							+ autoCompleteCheck);
 				} else {
@@ -309,11 +320,10 @@ public class MainAnalyticsFragment extends Fragment {
 		});
 	}
 	
+	
+	
 	private void initOverallRadioButton() {
-		overallButton = (RadioButton) getActivity().findViewById(
-				R.id.analytics_overall);
-		overallSpinner = (Spinner) getActivity().findViewById(
-				R.id.analytics_overall_spinner);
+		
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				getActivity(), R.array.city,
@@ -326,21 +336,16 @@ public class MainAnalyticsFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Log.d(TAG, "in onitemselectedListener");
-				analyticsRadioGroup.check(R.id.analytics_overall);
 				switch (position) {
 				case 0:
-					setCityResId(R.integer.id_city_delhi);
+					onCitySpinnerItemSelected(R.integer.id_city_delhi);										
 					break;
-				case 1:
-					setCityResId(R.integer.id_city_bangalore);
+				case 1:					
+					onCitySpinnerItemSelected(R.integer.id_city_bangalore);			
 					break;
-
 				default:
 					break;
-				}
-				Log.d(TAG, "call setCurrentCity from onitemselectedListener");
-				setCurrentCity();
+				}		
 			}
 
 			@Override
@@ -377,6 +382,19 @@ public class MainAnalyticsFragment extends Fragment {
 				}
 			}
 		});
+	}
+	
+	private void onCitySpinnerItemSelected(int cityResId) { 
+		changeConstituencyButtonText(cityResId);
+		setCityResId(cityResId);
+		Log.d(TAG, "call setCity from onitemselectedListener");		
+		setCity();
+	}
+	
+	private void changeConstituencyButtonText(int resId) {
+		if(getCityResId() != resId) {
+			constituencyButton.setText(R.string.analytics_constituency);
+		}
 	}
 
 	private void onAutoCompleteRadioClick() {
@@ -422,9 +440,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	public void setAutoComplete() {
-		parseLocations();
-
-		
+		parseLocations();		
 		LocationAutoCompleteAdapter adapter = new LocationAutoCompleteAdapter(
 				getActivity(), getLocations());
 		autoCompleteTextView.setAdapter(adapter);
@@ -440,7 +456,6 @@ public class MainAnalyticsFragment extends Fragment {
 				fetchAnalytics(loc);
 			}
 		});
-
 	}
 
 	public void parseLocations() {
@@ -702,15 +717,16 @@ public class MainAnalyticsFragment extends Fragment {
 
 		return count;
 	}
+	
+	private void setCity() {
+		setAutoComplete();
+		fetchCityAnalytics();
+	}
 
 	public void setCurrentCity() {
 		if (null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
-			if (getCityResId() == -1) {
-				setCityResId(Constituency.getCityRefId(JanSamparkApplication
-						.getInstance().getLastKnownConstituency().getAddress()));
-			}
-			setAutoComplete();
-			fetchCityAnalytics();
+			setCurrentCityResId(Constituency.getCityRefId(JanSamparkApplication
+					.getInstance().getLastKnownConstituency().getAddress()));				
 		} else {
 			Log.e(TAG, "last known constituency is null");
 		}
@@ -769,6 +785,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void executeCurrentMLAIdRequest() {
+		Log.d(TAG, "in executeCurrentMLAIdRequest");
 		Location lastKnownLocation = JanSamparkApplication.getInstance()
 				.getLastKnownLocation();
 		if (null != lastKnownLocation) {
@@ -817,7 +834,7 @@ public class MainAnalyticsFragment extends Fragment {
 				try {
 					Log.d(TAG, jsonObject.toString(2));
 					String mlaId = jsonObject.getString("consti_id");
-					if(getResources().getInteger(R.integer.invalid_constituency) == Integer.parseInt(mlaId)) {
+					if(getResources().getInteger(R.integer.invalid_constituency) == Integer.parseInt(mlaId) || getCityResId() != getCurrentCityResId() ) {
 						handleInvalidLocation();
 					} else {
 						setConstituencyId(Integer.parseInt(mlaId));
@@ -831,8 +848,13 @@ public class MainAnalyticsFragment extends Fragment {
 		};
 	}
 	
+	private boolean isInvalidDialogShown = false;
+	
 	private void handleInvalidLocation() {
-		DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_analytics)).show(getFragmentManager(), "FAIL");
+		if(isInvalidDialogShown == false) {
+			DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_analytics)).show(getFragmentManager(), "FAIL");
+			isInvalidDialogShown = true;
+		}
 		if(!getLocations().isEmpty()) {
 			Constituency firstConstituency = getLocations().get(0);
 			executeMLAIdRequest(firstConstituency.getLatLong());
@@ -882,9 +904,6 @@ public class MainAnalyticsFragment extends Fragment {
 			}
 		};
 	}
-	
-	
-	
-	
+
 
 }
