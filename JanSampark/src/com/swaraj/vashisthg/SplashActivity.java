@@ -74,7 +74,7 @@ public class SplashActivity extends FragmentActivity {
 
 	private void setUpPager() {
 		pager = (ViewPagerCustomDuration) findViewById(R.id.gallery_view_pager);
-		pager.setScrollDurationFactor(4);
+		pager.setScrollDurationFactor(10);
 		adapter = new TextPagerAdapter(getSupportFragmentManager(), this, 3);
 		pager.setAdapter(adapter);
 		pager.setOffscreenPageLimit(2);
@@ -122,7 +122,7 @@ public class SplashActivity extends FragmentActivity {
 					}
 				});
 			}
-		}, 2000, 2000);
+		}, 4000, 4000);
 	}
 
 	private OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
