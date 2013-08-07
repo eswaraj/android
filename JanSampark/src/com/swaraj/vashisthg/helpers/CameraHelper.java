@@ -16,6 +16,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -139,7 +140,7 @@ public class CameraHelper {
     public  void setOutputImageUri() {
         // Determine Uri of camera image to save.
         File root;
-        root = new File(Environment.getExternalStorageDirectory() + File.separator + "JanSampark" + File.separator);
+        root = new File(Environment.getExternalStorageDirectory() + File.separator + "Swaraj" + File.separator);
         root.mkdirs();
         final String name = Utils.getUniqueImageFilename();
         final String fname = name + ".png";
@@ -187,8 +188,8 @@ public class CameraHelper {
     	OutputStream stream = null;
     	try {
     		stream = new FileOutputStream(imagePath);
-    		Bitmap bmp = BitmapFactory.decodeFile(selectedImage);        	
-        	bmp.compress(CompressFormat.JPEG, 10, stream);
+    		Bitmap bmp = resizeBitMapImage1(selectedImage, 800, 600);      	
+        	bmp.compress(CompressFormat.JPEG, 30, stream);
     	} catch (FileNotFoundException e) {
     	    e.printStackTrace();
     	}   	
@@ -199,6 +200,41 @@ public class CameraHelper {
     	    e.printStackTrace();
     	}
     }
+    
+    public static Bitmap resizeBitMapImage1(String filePath, int targetWidth, int targetHeight) {
+        Bitmap bitMapImage = null;
+        try {
+            Options options = new Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(filePath, options);
+            double sampleSize = 0;
+            Boolean scaleByHeight = Math.abs(options.outHeight - targetHeight) >= Math.abs(options.outWidth
+                    - targetWidth);
+            if (options.outHeight * options.outWidth * 2 >= 1638) {
+                sampleSize = scaleByHeight ? options.outHeight / targetHeight : options.outWidth / targetWidth;
+                sampleSize = (int) Math.pow(2d, Math.floor(Math.log(sampleSize) / Math.log(2d)));
+            }
+            options.inJustDecodeBounds = false;
+            options.inTempStorage = new byte[128];
+            while (true) {
+                try {
+                    options.inSampleSize = (int) sampleSize;
+                    bitMapImage = BitmapFactory.decodeFile(filePath, options);
+                    break;
+                } catch (Exception ex) {
+                    try {
+                        sampleSize = sampleSize * 2;
+                    } catch (Exception ex1) {
+
+                    }
+                }
+            }
+        } catch (Exception ex) {
+
+        }
+        return bitMapImage;
+    }
+    
     
     public void onCameraPicTaken() {
     	((CameraHelperCallback)activity).onCameraPicTaken();
