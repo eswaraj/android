@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.swaraj.vashisthg"
+    package="com.next.eswaraj"
     android:installLocation="auto"
-    android:versionCode="1"
-    android:versionName="1.0.1" >
+    android:versionCode="2"
+    android:versionName="1.0.2" >
 
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="18" />
 
     <permission
-            android:name="com.swaraj.vashisthg.permission.MAPS_RECEIVE"
+            android:name="com.next.eswaraj.permission.MAPS_RECEIVE"
             android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.swaraj.vashisthg.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.next.eswaraj.permission.MAPS_RECEIVE" />
 
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
@@ -43,7 +43,7 @@
     <application
         android:allowBackup="true"
         android:largeHeap="true"
-        android:name="com.swaraj.vashisthg.JanSamparkApplication"
+        android:name="com.next.eswaraj.JanSamparkApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -52,7 +52,7 @@
                 android:name="com.google.android.maps.v2.API_KEY"
                 android:value="AIzaSyCoPKr_Sbr0Fliys7fjS3I8jXWt1xrmEo0" />
         <activity
-            android:name="com.swaraj.vashisthg.SplashActivity"
+            android:name="com.next.eswaraj.SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait"
             android:label="@string/app_name" >
@@ -63,47 +63,47 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.swaraj.vashisthg.MainActivity"
+            android:name="com.next.eswaraj.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
              >
         </activity>
         <activity
-            android:name="com.swaraj.vashisthg.IssueSummaryActivity"
+            android:name="com.next.eswaraj.IssueSummaryActivity"
             android:label="@string/title_activity_issue_summary"
             android:screenOrientation="portrait"
              >
         </activity>
         <activity
-            android:name="com.swaraj.vashisthg.IssueDetailsActivity"
+            android:name="com.next.eswaraj.IssueDetailsActivity"
             android:label="@string/title_activity_issue_details"
             android:screenOrientation="portrait"
             >
         </activity>
         <activity
-            android:name="com.swaraj.vashisthg.SettingsActivity"
+            android:name="com.next.eswaraj.SettingsActivity"
             android:label="@string/title_activity_issue_details"
             android:screenOrientation="portrait"
             >
         </activity>
         <activity
-            android:name="com.swaraj.vashisthg.OtherIssuesActivity"
+            android:name="com.next.eswaraj.OtherIssuesActivity"
             android:label="@string/title_activity_issue_details"
             android:screenOrientation="portrait"
             >
         </activity>
         <activity
-            android:name="com.swaraj.vashisthg.InfoActivity"
+            android:name="com.next.eswaraj.InfoActivity"
             android:label="@string/title_activity_info"
             android:screenOrientation="portrait"
             />
         <activity
-            android:name="com.swaraj.vashisthg.YouTubeVideoActivity"
+            android:name="com.next.eswaraj.YouTubeVideoActivity"
             android:label="@string/app_name"
             
             />                
         <activity
-            android:name="com.swaraj.vashisthg.IssueActivity"
+            android:name="com.next.eswaraj.IssueActivity"
             android:label="@string/title_activity_issue"
             android:screenOrientation="portrait"
             android:parentActivityName="MainActivity" >

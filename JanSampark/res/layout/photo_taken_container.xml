@@ -16,7 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true" >
 
-        <com.swaraj.vashisthg.widget.RoundedImageView
+        <com.next.eswaraj.widget.RoundedImageView
             android:id="@+id/chosen_pic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

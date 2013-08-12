@@ -91,7 +91,7 @@
 
                 </LinearLayout>
 
-                <com.swaraj.vashisthg.widget.RoundImageView
+                <com.next.eswaraj.widget.RoundImageView
                     android:id="@+id/issue_summary_mla_image"
                     android:layout_width="@dimen/issue_summary_mla_pic_size"
                     android:layout_height="@dimen/issue_summary_mla_pic_size"

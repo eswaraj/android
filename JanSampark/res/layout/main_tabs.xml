@@ -5,7 +5,7 @@
     android:orientation="horizontal"     
     android:checkedButton="@+id/tab_issue">
     
-    <com.swaraj.vashisthg.widget.RadioButtonCenter
+    <com.next.eswaraj.widget.RadioButtonCenter
         android:id="@+id/tab_issue"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_tabs_height"
@@ -20,7 +20,7 @@
         android:textColor="@color/tab_text"
         android:textSize="@dimen/bottom_tabs_text" />
     
-    <com.swaraj.vashisthg.widget.RadioButtonCenter
+    <com.next.eswaraj.widget.RadioButtonCenter
         android:id="@+id/tab_analytics"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_tabs_height"
