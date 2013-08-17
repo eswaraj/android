@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.next.eswaraj"
     android:installLocation="auto"
-    android:versionCode="2"
-    android:versionName="1.0.2" >
+    android:versionCode="3"
+    android:versionName="1.0.3" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -50,7 +50,7 @@
 
         <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyCoPKr_Sbr0Fliys7fjS3I8jXWt1xrmEo0" />
+                android:value="AIzaSyA-BViIFzeADzqvUX0Cg0XsKytvPSzEFTs" />
         <activity
             android:name="com.next.eswaraj.SplashActivity"
             android:theme="@style/SplashTheme"
