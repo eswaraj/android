@@ -38,6 +38,7 @@ import com.next.eswaraj.dialog.MessageDialog;
 import com.next.eswaraj.helpers.BitmapWorkerTask;
 import com.next.eswaraj.helpers.CameraHelper;
 import com.next.eswaraj.helpers.CameraHelper.CameraUtilActivity;
+import com.next.eswaraj.helpers.DialogFactory;
 import com.next.eswaraj.helpers.IssueFactory;
 import com.next.eswaraj.helpers.Utils;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
@@ -295,12 +296,15 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	}
 	
 	public void onPostClick(View view) {
-		if(isOthersIssue() && descriptionET.getText().toString().trim().isEmpty()) {
-			MessageDialog.create(getString(R.string.issue_details_enter_description)).show(getSupportFragmentManager(), "MESSAGE");
+		if(Utils.isLocationServicesEnabled(this)) {
+			if(isOthersIssue() && descriptionET.getText().toString().trim().isEmpty()) {
+				MessageDialog.create(getString(R.string.issue_details_enter_description)).show(getSupportFragmentManager(), "MESSAGE");
+			} else {
+				showSendingOverlay();						
+				executeMLAIdRequest();
+			}
 		} else {
-			showSendingOverlay();
-					
-			executeMLAIdRequest();
+			DialogFactory.createMessageDialog("No Location Services Detected.", getString(R.string.no_location)).show(getSupportFragmentManager(), "NO_LOCATION");
 		}
 	}
 	
@@ -449,6 +453,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			
 			Log.d(TAG, "url: " + request.getUrl());
 			mRequestQueue.add(request);
+		} else {
+			hideSendingOverlay();
+			Toast.makeText(IssueDetailsActivity.this, "Could not fetch your location.", Toast.LENGTH_LONG).show();
 		}
 	}
 		
