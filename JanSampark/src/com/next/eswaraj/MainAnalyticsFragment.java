@@ -67,15 +67,13 @@ public class MainAnalyticsFragment extends Fragment {
 	private static final String TAG = "Analytics";
 	private final String requestTag = "tag";
 	
-	FrameLayout pieChartHolder;
-	TextView issueNumTV;
-	TextView complaintsNumTV;
-	RadioButton overallButton;
-	RadioButton constituencyButton;
-	RadioGroup analyticsRadioGroup;
-	Spinner overallSpinner;
-	MyCount issueCounter;
-	MyCount complaintCounter;
+	private FrameLayout pieChartHolder;
+	private TextView complaintsNumTV;
+	private RadioButton overallButton;
+	private RadioButton constituencyButton;
+	private RadioGroup analyticsRadioGroup;
+	private Spinner overallSpinner;
+	
 
 	private AutoCompleteTextView autoCompleteTextView;
 	private View overlay;
@@ -208,7 +206,6 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void setCounts( int complaintCount) {
-		issueNumTV = (TextView) getActivity().findViewById(R.id.issue_num);
 		complaintsNumTV = (TextView) getActivity().findViewById(
 				R.id.complaint_num);
 		complaintsNumTV.setText(complaintCount + "");

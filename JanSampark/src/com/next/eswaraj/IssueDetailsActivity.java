@@ -383,7 +383,6 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 
 	    @Override
 	    public void onConnectionFailed(ConnectionResult arg0) {
-	        //Log.e(TAG, "ConnectionFailed");
 	    }
 	};
 
@@ -533,6 +532,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_NAME, name);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_PIC, url);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_DROP_BIT, dropBit);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_DESCRIPTION, descriptionET.getText().toString());
 		            	WindowAnimationHelper.startActivityWithSlideFromRight(IssueDetailsActivity.this, intent);
 		            	hideSendingOverlay();
 		            	finish();

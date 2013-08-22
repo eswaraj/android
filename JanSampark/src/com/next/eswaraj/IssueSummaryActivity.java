@@ -30,12 +30,14 @@ public class IssueSummaryActivity extends FragmentActivity {
 	public static final String EXTRA_MLA_PIC = "mla_pic";
 	public static final String EXTRA_CONSTITUENCY = "constituency";
 	public static final String EXTRA_DROP_BIT = "drop_bit";
+	public static final String EXTRA_DESCRIPTION = "description";
 	
 	private IssueItem issueItem;
 	private Location location;
 	private String mlaName;
 	private String mlaUrl;
 	private String constituency;
+	private String description;
 	private int dropBit;
 	
 	
@@ -67,6 +69,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 			mlaUrl = getIntent().getStringExtra(EXTRA_MLA_PIC);
 			constituency = getIntent().getStringExtra(EXTRA_CONSTITUENCY);
 			dropBit = getIntent().getIntExtra(EXTRA_DROP_BIT, 0);
+			description = getIntent().getStringExtra(EXTRA_DESCRIPTION);
 		} else {
 			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);
 			location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
@@ -74,6 +77,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 			mlaUrl = savedInstanceState.getString(EXTRA_MLA_PIC);
 			constituency = savedInstanceState.getString(EXTRA_CONSTITUENCY);
 			dropBit = savedInstanceState.getInt(EXTRA_DROP_BIT);
+			description = savedInstanceState.getString(EXTRA_DESCRIPTION);
 		}
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		imageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(4 * 1024 * 1024));
@@ -113,6 +117,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 		outState.putString(EXTRA_MLA_NAME, mlaName);
 		outState.putString(EXTRA_MLA_PIC, mlaUrl);
 		outState.putInt(EXTRA_DROP_BIT, dropBit);
+		outState.putString(EXTRA_DESCRIPTION, description);
 	}
 	
 	private void setView() {
@@ -128,7 +133,12 @@ public class IssueSummaryActivity extends FragmentActivity {
 	private void setIssueDetails() {
 		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
-		issueNameTV.setText(issueItem.getIssueName());
+		String issueName = issueItem.getIssueName();
+		if("others".equalsIgnoreCase(issueName) && null != description) {
+			issueNameTV.setText(description);
+		} else {
+			issueNameTV.setText(issueName);
+		}
 	}	
 	
 	private void setMLA() {
