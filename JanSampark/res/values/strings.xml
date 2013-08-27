@@ -124,14 +124,14 @@
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
     <string-array name="water">
-        <item>No municipality water in this area.</item>
+        <item>No municipality water in the area.</item>
         <item>We have to heavily rely on tankers for water supply, please look into it.</item>
         <item>Water pipes leaking all over the place, water contamination dangers.</item>
         <item>Municipality water tastes  bad/oily.</item>
         <item>Water department staff very rude.</item>
         <item>Water department staff totally outdated&#8230; Stoneage.</item>
         <item>Water bills are too high.</item>
-        <item>Water becoming totally inaffordable.</item>
+        <item>Water becoming totally unaffordable.</item>
         <item>Don\'t know how water comes to the city, please launch a water awareness day.</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
