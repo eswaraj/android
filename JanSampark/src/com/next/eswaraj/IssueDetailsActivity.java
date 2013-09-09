@@ -36,6 +36,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.next.eswaraj.config.Constants;
 import com.next.eswaraj.dialog.MessageDialog;
 import com.next.eswaraj.helpers.BitmapWorkerTask;
 import com.next.eswaraj.helpers.CameraHelper;
@@ -481,7 +482,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 					String mlaId = jsonObject.getString("consti_id");
 					dropBit = dropBit(jsonObject);
 					
-					if(dropBit != 1) {
+					if(dropBit != Constants.DROPBIT_INVALID_CONSTITUENCY) {
 						executeRequest();
 					}
 					
