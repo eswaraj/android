@@ -109,7 +109,7 @@
         <item>No police station in this area</item>
         <item>Rowdiness is increasing in this area</item>
         <item>Insecure area</item>
-        <item>Judgements are dragging for long, improve the judiciary.</item>
+        <item>Judgments pending for long in this court</item>
         <item>Poorly maintained police stations in this area</item>
         <item>Poorly maintained compounds in this court</item>
         <item>Uncooperative Police staff in this area</item>
@@ -124,71 +124,71 @@
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
     <string-array name="water">
-        <item>No municipality water in the area.</item>
-        <item>We have to heavily rely on tankers for water supply, please look into it.</item>
-        <item>Water pipes leaking all over the place, water contamination dangers.</item>
-        <item>Municipality water tastes  bad/oily.</item>
-        <item>Water department staff very rude.</item>
-        <item>Water department staff totally outdated&#8230; Stoneage.</item>
-        <item>Water bills are too high.</item>
-        <item>Water becoming totally unaffordable.</item>
-        <item>Don\'t know how water comes to the city, please launch a water awareness day.</item>
+        <item>No municipality water at homes in this area</item>
+        <item>No municipality water in public places of this area</item>
+        <item>Leaking  water pipes in this area</item>
+        <item>Municipality water tastes bad/oily</item>
+        <item>This area water department staff is rude</item>
+        <item>This area water department staff is not knowledgeable</item>
+        <item>Water meters poorly calibrated</item>
+        <item>Unaffordable water supply in this area</item>
+        <item>Water saving awareness campaign required in this area</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
     <string-array name="electricity">
-        <item>Enough these power cuts, increase power generation capacity.</item>
-        <item>No 24x7 power in my area.</item>
-        <item>Power stations and transformers not well maintained,making my area look dirty.</item>
-        <item>Transformers unprotected. Blast every now and then.</item>
-        <item>Powerlines are hanging too low in my neighbourhood.</item>
-        <item>Electricity department staffs are rude.</item>
-        <item>Electricity department staff totally outdated&#8230; Stoneage.</item>
-        <item>Power too costly , totally not affordable, reduce prices.</item>
-        <item>No initative from power department on educating customer.</item>
-        <item>Why we do not have electricity awareness day,  I want to know what I pay for.</item>
+        <item>Frequent power cuts in this area</item>
+        <item>No power 24x7 in this area</item>
+        <item>Untidy cables around transformers/Power Station</item>
+        <item>Transformers in this area blasts frequently</item>
+        <item>Untidy/low hanging cables on electric poles in this area</item>
+        <item>This area Electricity Department staff is rude</item>
+        <item>This area Electricity Department staff not knowledgeable</item>
+        <item>Unaffordable electricity in this area</item>
+        <item>Electricity supply awareness campaign required in this area</item>
+        <item>Electricity saving awareness campaign required in this area</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
     <string-array name="transportation">
-        <item>No public buses on this route.</item>
-        <item>No public buses in my area.</item>
-        <item>Traffic  Congestion too much we need metro tracks.</item>
-        <item>Public buses not sufficient.</item>
-        <item>This point has become congestion hotspot do something.</item>
-        <item>public buses not clean.</item>
-        <item>Upgrade public buses  with wifi</item>
-        <item>Autorickshaw refusal menance here.</item>
-        <item>Public buses conductor being rude.</item>
-        <item>autorickshaw misbehavior menance here.</item>
-        <item>Please have a training programme before giving auto licenses.</item>
-        <item>Autorickshaw not following meters&#8230; overcharging.</item>
-        <item>Reduce public bus fare.</item>
-        <item>As citizen want to how bus system work please launch a awareness campaign.</item>
+        <item>No public busses in this area</item>
+        <item>No mode of public transport in this area.</item>
+        <item>Traffic congested area</item>
+        <item>Insufficient Public transport</item>
+        <item>This junction/Road is always jammed</item>
+        <item>Dirty/Broken Public Buses on this route</item>
+        <item>Wi-Fi required in public transport on this route</item>
+        <item>Auto-Rickshaw drivers refuse to go to this area</item>
+        <item>Rude public bus conductors on this route</item>
+        <item>Rude Auto-Rickshaw drivers in this area</item>
+        <item>Rash driving by Auto-Rickshaw drivers in this area</item>
+        <item>Auto-Rickshaw drivers don't follow meter in this area</item>
+        <item>Public transport fares are high on this route</item>
+        <item>This area requires Public Transport awareness</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
     <string-array name="road">
-        <item>What will we do without roads, no roads here city sucks.</item>
-        <item>No roads in my area.</item>
-        <item>There are potholes everywhere on this road.</item>
-        <item>Road is  in bad shape.</item>
-        <item>These Roads are dirty all the time do somethings.</item>
-        <item>Road tax too much.</item>
-        <item>How these road tender get allocate, as citizen we need to know, please launch a awareness programme.</item>
-        <item>No cleanliness, launch an awareness programme on how citizens can help.</item>
+        <item>No roads at all in this area</item>
+        <item>No tar/pukka roads in this area</item>
+        <item>Potholes on this road</item>
+        <item>Bad roads in this area</item>
+        <item>Dirty/Water clogged roads in this area</item>
+        <item>Unaffordable road taxes</item>
+        <item>Road tender allocation awareness campaign required in this area</item>
+        <item>Cleanliness awareness campaign required in this area</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
     <string-array name="sewage">
-        <item>No Sewage pipe in my area.</item>
-        <item>No close by municipality Garbage truck in my area.</item>
-        <item>Please  increase the garbage truck capacity.</item>
-        <item>Sewage is over flowing everywhere.</item>
-        <item>Lot of manholes left open.</item>
-        <item>Lot of garbage is left unaddressed.</item>
-        <item>My surrounding has become a garbage yard, please take care of it.</item>
-        <item>Garbage has made environment like hell, is this the city we dreamt of.</item>
-        <item>Sewage / Sanitation department staff is very rude.</item>
-        <item>Sewage/Sanitation department staff is totally outdated&#8230; Stoneage.</item>
-        <item>Sewage charges are too much.</item>
-        <item>Streets are dirty all the time, please launch awareness programme. Explain how citizens can help.</item>
+        <item>No Sewage system in this area</item>
+        <item>No Community Garbage Bins in this area</item>
+        <item>Poor quality garbage trucks in this area</item>
+        <item>Overflowing/Poor Sewage system in this area</item>
+        <item>Uncovered manholes in this area</item>
+        <item>Community Garbage Bins are in very bad shape</item>
+        <item>Unaddressed Garbage on streets in this area</item>
+        <item>Overflowing Community Garbage Bins</item>
+        <item>Rude Sewage/Sanitation department staff</item>
+        <item>Sewage/Sanitation department staff not knowledgeable</item>
+        <item>Expensive Sewage services in this area</item>
+        <item>Cleanliness awareness campaign required in this area</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
 
