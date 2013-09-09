@@ -48,9 +48,7 @@ import com.next.eswaraj.models.IssueItem;
 import com.next.eswaraj.volley.IssuePostRequest;
 
 public class IssueDetailsActivity extends CameraUtilActivity {
-	
-	private static final String TAG = "IssueDetailsActivity";
-	
+		
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
 	public static final String EXTRA_LOCATION = "location";
 	private IssueItem issueItem;
@@ -397,7 +395,6 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	};	
 	
 	private void executeRequest()  {			
-		Log.d(TAG, "executing post request");
 		if(null != lastKnownLocation) {
 			postButton.setEnabled(false);
 			IssuePostRequest.IssueDetail issueDetail = new IssuePostRequest.IssueDetail();
@@ -461,8 +458,6 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;	
 			
 			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url, null, createMLAIDReqSuccessListener(), createMLAIdErrorListener());
-			
-			Log.d(TAG, "url: " + request.getUrl());
 			mRequestQueue.add(request);
 		} else {
 			hideSendingOverlay();
@@ -474,7 +469,6 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	        return new Response.ErrorListener() {
 	            @Override
 	            public void onErrorResponse(VolleyError error) {
-	            	Log.d(TAG, "try again");
 	            }
 	        };
 	  }
@@ -484,10 +478,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
             	try {
-            		Log.d(TAG, jsonObject.toString(1));
 					String mlaId = jsonObject.getString("consti_id");
 					dropBit = dropBit(jsonObject);
-					Log.d(TAG, "consti_id: " + mlaId);
 					
 					if(dropBit != 1) {
 						executeRequest();

@@ -20,7 +20,6 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -64,7 +63,6 @@ import com.next.eswaraj.widget.PieChartView;
 @SuppressLint("UseSparseArrays")
 public class MainAnalyticsFragment extends Fragment {
 
-	private static final String TAG = "Analytics";
 	private final String requestTag = "tag";
 	
 	private FrameLayout pieChartHolder;
@@ -281,14 +279,12 @@ public class MainAnalyticsFragment extends Fragment {
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						switch (checkedId) {
 						case R.id.analytics_overall:
-							Log.d(TAG, "clicked on overall");
 							overallSpinner.setSelected(true);
 							fetchCityAnalytics();
 							break;
 
 						case R.id.analytics_spinner:
 							autoCompleteCheck = true;
-							Log.d(TAG, "clicked on autocomplete: ");
 							overallSpinner.setSelected(false);
 							break;
 
@@ -306,8 +302,6 @@ public class MainAnalyticsFragment extends Fragment {
 				if (autoCompleteCheck) {
 					autoCompleteCheck = false;
 					executeCurrentMLAIdRequest();
-					Log.d(TAG, "clicked on not already checked autocomplete: "
-							+ autoCompleteCheck);
 				} else {
 					onAutoCompleteRadioClick();
 				}
@@ -382,8 +376,7 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	private void onCitySpinnerItemSelected(int cityResId) { 
 		changeConstituencyButtonText(cityResId);
-		setCityResId(cityResId);
-		Log.d(TAG, "call setCity from onitemselectedListener");		
+		setCityResId(cityResId);	
 		setCity();
 	}
 	
@@ -413,7 +406,6 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	public boolean disableAutoComplete() {
-		Log.d(TAG, "in disableAutoComplete");
 		boolean disabledAutoComplete;
 		if (autoCompleteTextView.getVisibility() == View.VISIBLE) {
 			Utils.hideKeyboard(getActivity(), autoCompleteTextView);
@@ -583,7 +575,6 @@ public class MainAnalyticsFragment extends Fragment {
 			@Override
 			public void onResponse(JSONObject jsonObject) {
 				try {
-					Log.d(TAG, jsonObject.toString(2));
 					String mlaId = jsonObject.getString("consti_id");
 					if(getResources().getInteger(R.integer.invalid_constituency) == Integer.parseInt(mlaId)) {
 						handleInvalidLocation();
@@ -616,7 +607,6 @@ public class MainAnalyticsFragment extends Fragment {
 			public void onResponse(JSONObject jsonObject) {
 				try {
 					if (isResumed) {
-						Log.d(TAG, jsonObject.toString(2));
 						parseJsonToAnalyticsMap(jsonObject);
 					}
 					hideProgressBar();
@@ -723,9 +713,7 @@ public class MainAnalyticsFragment extends Fragment {
 		if (null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
 			setCurrentCityResId(Constituency.getCityRefId(JanSamparkApplication
 					.getInstance().getLastKnownConstituency().getAddress()));				
-		} else {
-			Log.e(TAG, "last known constituency is null");
-		}
+		} 
 	}
 
 	private void fetchCityAnalytics() {
@@ -734,7 +722,6 @@ public class MainAnalyticsFragment extends Fragment {
 			int id = getResources().getInteger(getCityResId());
 			String url = "http://50.57.224.47/html/dev/micronews/get_summary.php?cid="
 					+ id + "&time_frame=1w";
-			Log.d(TAG, "requesting city analytics for url: " + url);
 			JsonRequestWithCache request = new JsonRequestWithCache(Method.GET,
 					url, null, createCityDetailsReqSuccessListener(),
 					createMyReqErrorListener());
@@ -781,7 +768,6 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void executeCurrentMLAIdRequest() {
-		Log.d(TAG, "in executeCurrentMLAIdRequest");
 		Location lastKnownLocation = JanSamparkApplication.getInstance()
 				.getLastKnownLocation();
 		if (null != lastKnownLocation) {
@@ -792,8 +778,6 @@ public class MainAnalyticsFragment extends Fragment {
 			JsonObjectRequest request = new JsonObjectRequest(Method.GET, url,
 					null, createCurrentMLAIDReqSuccessListener(),
 					createMLAIdErrorListener());
-
-			Log.d(TAG, "url: " + request.getUrl());
 			request.setTag(requestTag);
 			mRequestQueue.add(request);
 			showProgressBar();
@@ -828,7 +812,6 @@ public class MainAnalyticsFragment extends Fragment {
 			@Override
 			public void onResponse(JSONObject jsonObject) {
 				try {
-					Log.d(TAG, jsonObject.toString(2));
 					String mlaId = jsonObject.getString("consti_id");
 					if(getResources().getInteger(R.integer.invalid_constituency) == Integer.parseInt(mlaId) || getCityResId() != getCurrentCityResId() ) {
 						handleInvalidLocation();

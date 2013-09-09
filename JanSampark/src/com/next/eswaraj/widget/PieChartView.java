@@ -44,8 +44,6 @@ public class PieChartView extends GraphicalView {
 		}
 		defaultRenderer.setShowLabels(false);
 		defaultRenderer.setShowLegend(false);
-		Log.d(VIEW_LOG_TAG, "scale: " + defaultRenderer.getScale() + "");
-		Log.d(VIEW_LOG_TAG, "original_scale: " + defaultRenderer.getOriginalScale() +"");
 		defaultRenderer.setScale(1.33f);
 		defaultRenderer.setSelectableBuffer(0);
 		
