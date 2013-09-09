@@ -13,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.next.eswaraj.config.Constants;
 import com.next.eswaraj.helpers.DialogFactory;
 import com.next.eswaraj.helpers.IssueFactory;
 import com.next.eswaraj.helpers.LocationDataManager;
@@ -86,12 +87,21 @@ public class IssueSummaryActivity extends FragmentActivity {
 		fetchAddress();
 	}
 	
-	public void showInvalidConstituency(String constituency) {
+	public void showAppropriateMessage(String constituency) {
 		if(!invalidShown) {
-			if( 1 == dropBit) {
+			switch (dropBit) {
+			case Constants.DROPBIT_INVALID_CONSTITUENCY:
 				DialogFactory.createMessageDialog(getResources().getString(R.string.invalid_constituency_title), getResources().getString(R.string.invalid_constituency_post)).show(getSupportFragmentManager(), "FAIL");
 				invalidShown = true;
-			} 
+				break;
+			case Constants.DROPBIT_OK:
+				DialogFactory.createMessageDialog(getResources().getString(R.string.issue_summary_check_web_title), getResources().getString(R.string.issue_summary_check_web)).show(getSupportFragmentManager(), "FAIL");
+				break;
+
+			default:
+				break;
+			}
+			
 		}
 	}
 	
@@ -100,7 +110,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	protected void onResume() {
 		super.onResume();
 		isResumed = true;
-		showInvalidConstituency(constituency);
+		showAppropriateMessage(constituency);
 	}
 	
 	@Override

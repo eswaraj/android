@@ -422,7 +422,11 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	}
 	
 	private String getAddress() {
-		return JanSamparkApplication.getInstance().getLastKnownConstituency().getName();
+		String address = null;
+		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
+			address = JanSamparkApplication.getInstance().getLastKnownConstituency().getName();
+		}
+		return address;
 	}
 	
 	 private Response.ErrorListener createMyReqErrorListener() {
