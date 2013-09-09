@@ -17,9 +17,21 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.next.eswaraj.IssueDetailsActivity.IssueDetail;
+import com.next.eswaraj.config.Constants;
+import com.next.eswaraj.models.IssueItem;
 
-public class MultipartRequest extends Request<String> {
+public class IssuePostRequest extends Request<String> {
+
+	public static class IssueDetail {
+		public String lat;
+		public String lon;
+		public IssueItem issueItem;
+		public String image;
+		public String userImage;
+		public String reporterId = "123";
+		public String description;
+		public String address;
+	}
 
 	private MultipartEntity entity = new MultipartEntity();
 
@@ -33,6 +45,8 @@ public class MultipartRequest extends Request<String> {
 	private static final String IMG = "img";
 	private static final String USER_IMG = "profile_img";
 	private static final String REPORTER_ID = "reporter_id";
+	private static final String ADDRESS = "addr";
+	
 	
 	
 
@@ -45,9 +59,10 @@ public class MultipartRequest extends Request<String> {
 	private String template;
 	private String reporterId;
 	private String description;
+	private String address;
 
-	public MultipartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, IssueDetail issueDetail) {
-		super(Method.POST, url, errorListener);
+	public IssuePostRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, IssuePostRequest.IssueDetail issueDetail) {
+		super(Method.POST, Constants.URL_POST_COMPLAINT, errorListener);
 
 		mListener = listener;
 		
@@ -56,6 +71,12 @@ public class MultipartRequest extends Request<String> {
 		issueType = issueDetail.issueItem.getIssueCategory() + "";
 		template = issueDetail.issueItem.getTemplateId() + "";
 		reporterId = issueDetail.reporterId;
+		
+		if(TextUtils.isEmpty(issueDetail.address)) {
+			address = "India";
+		} else {
+			address = issueDetail.address;
+		}
 		addIssueDetailImage(issueDetail.image);
 		addUserImage(issueDetail.userImage);
 		
@@ -98,6 +119,7 @@ public class MultipartRequest extends Request<String> {
 			entity.addPart(ISSUE_TYPE, new StringBody(issueType));
 			entity.addPart(TEMPLATE, new StringBody(template));
 			entity.addPart(REPORTER_ID, new StringBody(reporterId));
+			entity.addPart(ADDRESS, new StringBody(address));
 		} catch (UnsupportedEncodingException e) {
 			VolleyLog.e("UnsupportedEncodingException");
 		}

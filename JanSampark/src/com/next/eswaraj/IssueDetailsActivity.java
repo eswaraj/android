@@ -3,9 +3,11 @@ package com.next.eswaraj;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -43,22 +45,12 @@ import com.next.eswaraj.helpers.IssueFactory;
 import com.next.eswaraj.helpers.Utils;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
 import com.next.eswaraj.models.IssueItem;
-import com.next.eswaraj.volley.MultipartRequest;
+import com.next.eswaraj.volley.IssuePostRequest;
 
 public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	private static final String TAG = "IssueDetailsActivity";
 	
-	public static class IssueDetail {
-		public String lat;
-		public String lon;
-		public IssueItem issueItem;
-		public String image;
-		public String userImage;
-		public String reporterId = "123";
-		public String description;
-	}	
-
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
 	public static final String EXTRA_LOCATION = "location";
 	private IssueItem issueItem;
@@ -297,15 +289,26 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	public void onPostClick(View view) {
 		if(Utils.isLocationServicesEnabled(this)) {
-			if(isOthersIssue() && descriptionET.getText().toString().trim().isEmpty()) {
+			if(isOthersIssue() && isDescriptionEmpty() ) {
 				MessageDialog.create(getString(R.string.issue_details_enter_description)).show(getSupportFragmentManager(), "MESSAGE");
 			} else {
-				showSendingOverlay();						
+										
 				executeMLAIdRequest();
 			}
 		} else {
 			DialogFactory.createMessageDialog("No Location Services Detected.", getString(R.string.no_location)).show(getSupportFragmentManager(), "NO_LOCATION");
 		}
+	}
+	
+	@SuppressLint("NewApi")
+	private boolean isDescriptionEmpty() {
+		boolean isEmpty;
+		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
+			isEmpty = descriptionET.getText().toString().trim().isEmpty();
+		} else {
+			isEmpty = descriptionET.getText().toString().trim().length() == 0;
+		}		
+		return isEmpty;
 	}
 	
 	private boolean isOthersIssue() {
@@ -397,8 +400,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		Log.d(TAG, "executing post request");
 		if(null != lastKnownLocation) {
 			postButton.setEnabled(false);
-			String url = "http://50.57.224.47/html/dev/micronews/?q=phonegap/post";
-			IssueDetail issueDetail = new IssueDetail();
+			IssuePostRequest.IssueDetail issueDetail = new IssuePostRequest.IssueDetail();
 			issueDetail.lat = lastKnownLocation.getLatitude() + "";
 			issueDetail.lon = lastKnownLocation.getLongitude() + "";
 			issueDetail.image = cameraHelper.getImageName();
@@ -406,8 +408,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			issueDetail.reporterId  = "123";
 			issueDetail.description = descriptionET.getText().toString();
 			issueDetail.issueItem = issueItem;
+			issueDetail.address = getAddress();
 			
-			MultipartRequest request = new MultipartRequest(url, createMyReqErrorListener(), createMyReqSuccessListener(),  issueDetail);
+			IssuePostRequest request = new IssuePostRequest( createMyReqErrorListener(), createMyReqSuccessListener(),  issueDetail);
 			request.setRetryPolicy(new DefaultRetryPolicy(
 			        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
 			        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -416,6 +419,10 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		} else {
 			Toast.makeText(this, "Fetching location", Toast.LENGTH_LONG).show();
 		}
+	}
+	
+	private String getAddress() {
+		return JanSamparkApplication.getInstance().getLastKnownConstituency().getName();
 	}
 	
 	 private Response.ErrorListener createMyReqErrorListener() {
@@ -444,6 +451,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	private void executeMLAIdRequest()  {	
 		if(null != lastKnownLocation) {
+			showSendingOverlay();
 			double lat = lastKnownLocation.getLatitude();
 			double lon = lastKnownLocation.getLongitude();
 			String url = "http://50.57.224.47/html/dev/micronews/getmlaid.php?lat=" +lat + "&long=" + lon;	
