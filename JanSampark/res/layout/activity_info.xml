@@ -40,6 +40,16 @@
                 android:layout_marginTop="16dp"
                 android:textSize="@dimen/info_text"
                 android:text="@string/info" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:text="@string/grappus"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
+
         </LinearLayout>
     </ScrollView>
 
