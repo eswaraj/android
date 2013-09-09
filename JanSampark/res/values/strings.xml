@@ -106,21 +106,21 @@
         <item>@string/others</item>
     </string-array>
     <string-array name="lawandorder">
-        <item>No close by police station in my area.</item>
-        <item>Rowdiness in on the rise in the neighbourhood.</item>
-        <item>My area feels very insecure.</item>
+        <item>No police station in this area</item>
+        <item>Rowdiness is increasing in this area</item>
+        <item>Insecure area</item>
         <item>Judgements are dragging for long, improve the judiciary.</item>
-        <item>Police station not well maintained, gives gloomy feeling.</item>
-        <item>Court compounds not well maintained.</item>
-        <item>Police station staff not co-operative.</item>
-        <item>Quality of lawyers detriorating.</item>
-        <item>Courts are becoming totally unaffordable do something.</item>
-        <item>Increase constable/Inspector salary, bribes on rise.</item>
-        <item>police is not working to hard to reach to people.</item>
-        <item>High level of distrust on police.</item>
-        <item>should not be there a police awareness day, once in 3 months, where citizen should be encouraged to review there police stations, if they are happy with service of staff.</item>
-        <item>court system sucks, i want to bow out of contract of signing the constitution.</item>
-        <item>should not there be a court awareness day, once in 3 months, where citizens should be encouraged to review there courts, to check that they are happy with service of the staff.</item>
+        <item>Poorly maintained police stations in this area</item>
+        <item>Poorly maintained compounds in this court</item>
+        <item>Uncooperative Police staff in this area</item>
+        <item>Low quality lawyers in this area</item>
+        <item>Unaffordable courts in this area</item>
+        <item>Bribes on rise in this area</item>
+        <item>Unsatisfactory police service in this area</item>
+        <item>This area Police is untrustworthy</item>
+        <item>Require this area Police system to be reviewed by officials</item>
+        <item>Unsatisfactory court system</item>
+        <item>Require this area courts to be reviewed by officials</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
     <string-array name="water">
