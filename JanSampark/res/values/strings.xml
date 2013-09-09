@@ -108,19 +108,19 @@
     <string-array name="lawandorder">
         <item>No police station in this area</item>
         <item>Rowdiness is increasing in this area</item>
-        <item>Insecure area</item>
+        <item>Highly-insecure area. Crime prone. Urgent action required</item>
         <item>Judgments pending for long in this court</item>
         <item>Poorly maintained police stations in this area</item>
         <item>Poorly maintained compounds in this court</item>
         <item>Uncooperative Police staff in this area</item>
-        <item>Low quality lawyers in this area</item>
+        <item>Low quality lawyers in this court</item>
         <item>Unaffordable courts in this area</item>
         <item>Bribes on rise in this area</item>
         <item>Unsatisfactory police service in this area</item>
         <item>This area Police is untrustworthy</item>
-        <item>Require this area Police system to be reviewed by officials</item>
+        <item>Required Police system awareness day to improve citizens-Police relationship</item>
         <item>Unsatisfactory court system</item>
-        <item>Require this area courts to be reviewed by officials</item>
+        <item>Required Court awareness day to make citizens comfortable with court system</item>
         <item>@string/otherTypeOfComplaint</item>
     </string-array>
     <string-array name="water">
@@ -143,7 +143,7 @@
         <item>Untidy/low hanging cables on electric poles in this area</item>
         <item>This area Electricity Department staff is rude</item>
         <item>This area Electricity Department staff not knowledgeable</item>
-        <item>Unaffordable electricity in this area</item>
+        <item>Unaffordable electricity in this area. Reduce the prices</item>
         <item>Electricity supply awareness campaign required in this area</item>
         <item>Electricity saving awareness campaign required in this area</item>
         <item>@string/otherTypeOfComplaint</item>
@@ -156,7 +156,7 @@
         <item>This junction/Road is always jammed</item>
         <item>Dirty/Broken Public Buses on this route</item>
         <item>Wi-Fi required in public transport on this route</item>
-        <item>Auto-Rickshaw drivers refuse to go to this area</item>
+        <item>Auto-Rickshaw refusal menace in this area</item>
         <item>Rude public bus conductors on this route</item>
         <item>Rude Auto-Rickshaw drivers in this area</item>
         <item>Rash driving by Auto-Rickshaw drivers in this area</item>
@@ -171,7 +171,7 @@
         <item>Potholes on this road</item>
         <item>Bad roads in this area</item>
         <item>Dirty/Water clogged roads in this area</item>
-        <item>Unaffordable road taxes</item>
+        <item>Unaffordable road taxes. Reduce the taxes</item>
         <item>Road tender allocation awareness campaign required in this area</item>
         <item>Cleanliness awareness campaign required in this area</item>
         <item>@string/otherTypeOfComplaint</item>
