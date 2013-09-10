@@ -48,6 +48,16 @@ public class Utils {
 		return isEnabled;
 	}
 	
+	public static boolean isLocationNetworkProviderEnabled(Context context) {
+		boolean isEnabled = false;
+		
+		LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		String networkProvider = LocationManager.NETWORK_PROVIDER;
+		isEnabled = locationManager.isProviderEnabled(networkProvider);
+		
+		return isEnabled;
+	}
+	
 
 	public static void hideKeyboard(Context context, TextView textView) {
 		InputMethodManager imm = (InputMethodManager)context.getSystemService( Context.INPUT_METHOD_SERVICE);

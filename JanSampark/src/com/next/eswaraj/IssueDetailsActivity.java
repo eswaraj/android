@@ -463,6 +463,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		} else {
 			hideSendingOverlay();
 			Toast.makeText(IssueDetailsActivity.this, "Could not fetch your location.", Toast.LENGTH_LONG).show();
+			if(!Utils.isLocationNetworkProviderEnabled(this)) {
+				DialogFactory.createMessageDialog(getString(R.string.enable_location_network_provider)).show(getSupportFragmentManager(), "ENABLE_NETWORK_LOCATION");
+			}
 		}
 	}
 		
