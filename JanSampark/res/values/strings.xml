@@ -2,13 +2,13 @@
 <resources>
 
     <string name="app_name" translatable="false">eSwaraj</string>
-    <string name="grappus">Developed by Grappus.</string>
+    <string name="grappus">Lovingly developed by Grappus.</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_issue">IssueActivity</string>
     <string name="title_activity_main">Main Activity</string>
     <string name="title_activity_issue_summary">Issue Summary</string>
     <string name="title_activity_issue_details">Issue Details</string>
-    <string name="title_activity_info">Info</string>
+    <string name="title_activity_info">About Us</string>
     <string name="main_select">Select Category</string>
     <string name="main_transportation">Transportation</string>
     <string name="main_water">Water</string>

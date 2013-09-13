@@ -31,6 +31,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	public static final String EXTRA_MLA_PIC = "mla_pic";
 	public static final String EXTRA_CONSTITUENCY = "constituency";
 	public static final String EXTRA_DROP_BIT = "drop_bit";
+	public static final String EXTRA_BANNER = "banner";
 	public static final String EXTRA_DESCRIPTION = "description";
 	
 	private IssueItem issueItem;
@@ -40,6 +41,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	private String constituency;
 	private String description;
 	private int dropBit;
+	private int banner;
 	
 	
 	private RequestQueue mRequestQueue;
@@ -57,6 +59,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	boolean invalidShown;
 	
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,6 +74,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 			constituency = getIntent().getStringExtra(EXTRA_CONSTITUENCY);
 			dropBit = getIntent().getIntExtra(EXTRA_DROP_BIT, 0);
 			description = getIntent().getStringExtra(EXTRA_DESCRIPTION);
+			banner = getIntent().getIntExtra(EXTRA_BANNER, 0);
 		} else {
 			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);
 			location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
@@ -79,6 +83,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 			constituency = savedInstanceState.getString(EXTRA_CONSTITUENCY);
 			dropBit = savedInstanceState.getInt(EXTRA_DROP_BIT);
 			description = savedInstanceState.getString(EXTRA_DESCRIPTION);
+			banner = savedInstanceState.getInt(EXTRA_BANNER);
 		}
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		imageLoader = new ImageLoader(mRequestQueue, new LruBitmapCache(4 * 1024 * 1024));
@@ -95,7 +100,9 @@ public class IssueSummaryActivity extends FragmentActivity {
 				invalidShown = true;
 				break;
 			case Constants.DROPBIT_OK:
-				DialogFactory.createMessageDialog(getResources().getString(R.string.issue_summary_check_web_title), getResources().getString(R.string.issue_summary_check_web)).show(getSupportFragmentManager(), "FAIL");
+				if(banner == Constants.BANNER_SHOW) {
+					DialogFactory.createMessageDialog(getResources().getString(R.string.issue_summary_check_web_title), getResources().getString(R.string.issue_summary_check_web)).show(getSupportFragmentManager(), "FAIL");
+				}
 				break;
 
 			default:

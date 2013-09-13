@@ -7,4 +7,7 @@ public class Constants {
 
 	public static final int DROPBIT_OK = 0;
 	public static final int DROPBIT_INVALID_CONSTITUENCY = 1;
+	
+	public static final int BANNER_SHOW = 1;
+	public static final int BANNER_HIDE = 0;
 }

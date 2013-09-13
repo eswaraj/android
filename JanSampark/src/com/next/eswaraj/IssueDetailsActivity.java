@@ -83,6 +83,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	LocationRequest locationRequest;
     LocationClient locationClient;
     int dropBit = 0;
+    int banner = 0;
 	
 	
 	@Override
@@ -482,8 +483,10 @@ public class IssueDetailsActivity extends CameraUtilActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
             	try {
+            		Log.d("TAG_DETAILS", "response: " + jsonObject.toString());
 					String mlaId = jsonObject.getString("consti_id");
 					dropBit = dropBit(jsonObject);
+					banner = banner(jsonObject);
 					
 					if(dropBit != Constants.DROPBIT_INVALID_CONSTITUENCY) {
 						executeRequest();
@@ -508,6 +511,18 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		}
 		
 		return dropBit;
+	}
+	
+	private int banner(JSONObject jsonObject) {
+		int banner = 0;
+		
+		try {
+			banner = jsonObject.getInt("banner");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return banner;
 	}
 	
 	
@@ -540,6 +555,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_NAME, name);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_PIC, url);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_DROP_BIT, dropBit);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_BANNER, banner);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_DESCRIPTION, descriptionET.getText().toString());
 		            	WindowAnimationHelper.startActivityWithSlideFromRight(IssueDetailsActivity.this, intent);
 		            	hideSendingOverlay();

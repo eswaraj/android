@@ -94,5 +94,6 @@
     
     <dimen name="running_man_size">200dp</dimen>
     
+    <dimen name="info_title_height">56dp</dimen>
     
 </resources>
