@@ -180,12 +180,14 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void initButtonListeners() {
+		/*
 		electricityButton.setOnClickListener(buttonListener);
 		lawButton.setOnClickListener(buttonListener);
 		roadButton.setOnClickListener(buttonListener);
 		sewageButton.setOnClickListener(buttonListener);
 		transportationButton.setOnClickListener(buttonListener);
 		waterButton.setOnClickListener(buttonListener);
+		*/
 	}
 
 	boolean isResumed;
@@ -252,7 +254,7 @@ public class MainAnalyticsFragment extends Fragment {
 		analyticsRadioGroup = (RadioGroup) ((RadioGroup) getActivity()
 				.findViewById(R.id.analytics_chooser_container));
 		
-		
+		/*
 		electricityButton = (IssueButton) getActivity().findViewById(
 				R.id.main_analytics_electricity);
 		roadButton = (IssueButton) getActivity().findViewById(
@@ -265,7 +267,7 @@ public class MainAnalyticsFragment extends Fragment {
 				R.id.main_analytics_law);
 		sewageButton = (IssueButton) getActivity().findViewById(
 				R.id.main_analytics_sewage);
-		
+		*/
 		initOverallRadioButton();
 		initConstituencyRadioButton();
 	}
@@ -513,7 +515,7 @@ public class MainAnalyticsFragment extends Fragment {
 		@Override
 		public void onClick(View view) {
 			int id = view.getId();
-
+			/*
 			switch (id) {
 			case R.id.main_analytics_road:
 				onRoadClick(view);
@@ -537,6 +539,7 @@ public class MainAnalyticsFragment extends Fragment {
 			default:
 				break;
 			}
+			*/
 		}
 	};
 
@@ -686,9 +689,9 @@ public class MainAnalyticsFragment extends Fragment {
 			if (complaintCount != 0) {
 				issuePercentage = (issueCount * 100) / complaintCount;
 			}
-			issueButton.setPercentage(issuePercentage);
+			//issueButton.setPercentage(issuePercentage);
 		} catch (Exception e) {
-			issueButton.setPercentage(issuePercentage);
+			//issueButton.setPercentage(issuePercentage);
 			e.printStackTrace();
 		}
 		return issuePercentage;

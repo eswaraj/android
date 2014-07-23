@@ -1,6 +1,7 @@
 package com.next.eswaraj;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,13 +14,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.next.eswaraj.adapters.IssueAdapter;
-import com.next.eswaraj.helpers.IssueFactory;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
 import com.next.eswaraj.helpers.YouTubeVideoHelper;
 import com.next.eswaraj.models.Analytics;
 import com.next.eswaraj.models.ISSUE_CATEGORY;
-import com.next.eswaraj.models.IssueItem;
 
 /**
  * Created by gaurav vashisth on 1/7/13.
@@ -29,6 +29,7 @@ public class IssueActivity extends Activity {
     public static final String EXTRA_ISSUE = "issue";
     public static final String EXTRA_LOCATION = "location";
     public static final String EXTRA_ANALYTICS_LIST = "analytics";
+    public static final String EXTRA_CATEGORY = "EC";
     
     private View issueBanner;
     private TextView issueNameTV;
@@ -50,6 +51,8 @@ public class IssueActivity extends Activity {
     public static final String EXTRA_IS_ANALYTICS = "isAnalytics";
     private boolean isAnalytics;
     private ArrayList<Analytics> analyticsList;
+    private List<CategoryWithChildCategoryDto> subCategories;
+    private CategoryWithChildCategoryDto selectedCategory;
     YouTubeVideoHelper youtubeHelper;
 
     public ArrayList<Analytics> getAnalyticsList() {
@@ -69,7 +72,6 @@ public class IssueActivity extends Activity {
         setContentView(R.layout.activity_issue);
         setExtrasAndSavedInstance(savedInstanceState); 
         youtubeHelper = new YouTubeVideoHelper(this);
-        fetchYouTubeLinks();
         initListView();
         setHeaderView();
         setListView();
@@ -87,11 +89,15 @@ public class IssueActivity extends Activity {
             issue = (ISSUE_CATEGORY) getIntent().getSerializableExtra(EXTRA_ISSUE);
             location = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
             analyticsList =  getIntent().getParcelableArrayListExtra(EXTRA_ANALYTICS_LIST);
+            selectedCategory = (CategoryWithChildCategoryDto)getIntent().getSerializableExtra(EXTRA_CATEGORY);
+            subCategories = selectedCategory.getChildCategories();
         } else {
         	isAnalytics = savedInstanceState.getBoolean(EXTRA_IS_ANALYTICS);
         	issue = (ISSUE_CATEGORY) savedInstanceState.getSerializable(EXTRA_ISSUE);
         	location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
         	analyticsList = savedInstanceState.getParcelableArrayList(EXTRA_ANALYTICS_LIST);
+        	selectedCategory = (CategoryWithChildCategoryDto)savedInstanceState.getSerializable(EXTRA_CATEGORY);
+        	subCategories = selectedCategory.getChildCategories();
         }
     }
     
@@ -104,10 +110,11 @@ public class IssueActivity extends Activity {
     	numIssuesTV = (TextView) headerView.findViewById(R.id.issue_issues);
     	numComplaintsTV = (TextView) headerView.findViewById(R.id.issue_complaints);
     }
-
+    
     private void setIssueBannerAndText() {
     	int bannerResource = 0;
     	int nameResource = 0;
+    	issue = ISSUE_CATEGORY.WATER;
         switch (issue) {
             case WATER:
             	bannerResource = R.drawable.banner_water;
@@ -138,15 +145,15 @@ public class IssueActivity extends Activity {
             	
         }
         issueBanner.setBackgroundResource(bannerResource);
-        issueNameTV.setText(nameResource);
+        issueNameTV.setText(selectedCategory.getName());
     }
     
     private void setListView() {
     	
     	if(isAnalytics) {
-    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_analytics_row, getAnalyticsList());
+    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_analytics_row, getAnalyticsList(), subCategories);
     	} else {
-    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_row, null);
+    		adapter = IssueAdapter.newInstance(this.getApplicationContext(), issue, R.layout.issue_row, null, subCategories);
     	}
     	issueList.addHeaderView(headerView, null, false);
     	issueList.setAdapter(adapter);
@@ -191,12 +198,8 @@ public class IssueActivity extends Activity {
 			if(!isAnalytics) {
 				if(position != adapterView.getCount() - 1) {
 					Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
-					intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (IssueItem) adapter.getItem(position - 1));
+					intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (CategoryWithChildCategoryDto) adapter.getItem(position - 1));
 					intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
-					WindowAnimationHelper.startActivityWithSlideFromRight(IssueActivity.this, intent);
-				} else {
-					Intent intent = new Intent(IssueActivity.this, OtherIssuesActivity.class);
-					intent.putExtra(OtherIssuesActivity.EXTRA_ISSUE_CATEGORY_ID, IssueFactory.getIssueId(IssueActivity.this, issue));
 					WindowAnimationHelper.startActivityWithSlideFromRight(IssueActivity.this, intent);
 				}
 			}
@@ -217,17 +220,8 @@ public class IssueActivity extends Activity {
         WindowAnimationHelper.finish(this);
     }
 	
-	private void fetchYouTubeLinks() {
-    	try {   		
-    		youtubeHelper.downloadYouTubeLinks();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    }
-	
 	public void onVideoClick(View view) {
-		int issueId = IssueFactory.getIssueId(this, issue);
-		String link = youtubeHelper.getLinkForIssueId(issueId);
+		String link = selectedCategory.getVideoUrl();
 		if(!TextUtils.isEmpty(link)) {
 			youtubeHelper.startYouTubeVideo(this, link);
 		}

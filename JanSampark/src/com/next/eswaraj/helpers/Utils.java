@@ -42,7 +42,6 @@ public class Utils {
 		LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		String networkProvider = LocationManager.NETWORK_PROVIDER;
 		String gpsProvider = LocationManager.GPS_PROVIDER;
-
 		isEnabled = locationManager.isProviderEnabled(networkProvider) || locationManager.isProviderEnabled(gpsProvider);
 		
 		return isEnabled;
@@ -53,8 +52,9 @@ public class Utils {
 		
 		LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		String networkProvider = LocationManager.NETWORK_PROVIDER;
-		isEnabled = locationManager.isProviderEnabled(networkProvider);
-		
+		String gpsProvider = LocationManager.GPS_PROVIDER;
+		//isEnabled = locationManager.isProviderEnabled(networkProvider);
+		isEnabled = locationManager.isProviderEnabled(networkProvider) || locationManager.isProviderEnabled(gpsProvider);
 		return isEnabled;
 	}
 	

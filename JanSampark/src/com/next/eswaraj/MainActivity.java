@@ -2,6 +2,7 @@ package com.next.eswaraj;
 
 import java.util.List;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
@@ -21,6 +22,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
@@ -84,7 +86,6 @@ public class MainActivity extends FragmentActivity  {
         setTitleBar();   
         setUpSeekBar();
         
-        youtubeHelper.downloadYouTubeLinks();
     }
     
     @Override
@@ -100,6 +101,7 @@ public class MainActivity extends FragmentActivity  {
     protected void onPause() {
     	if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
 	    	if(locationClient.isConnected()) {
+	    		Log.d("eswaraj", "Disconencting");
 	    		locationClient.removeLocationUpdates(mLocationListener);
 	    		locationClient.disconnect();
 	    	}
@@ -254,34 +256,45 @@ public class MainActivity extends FragmentActivity  {
 		titleBarHelper.hideProgressBar();
 	}
 	
-	protected void startLocationTracking() {	
+	protected void startLocationTracking() {
+		Log.i("eswaraj", "startLocationTracking");
 		setQuickLastKnownLocation();
+		
 	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
 	        locationClient = new LocationClient(this, mConnectionCallbacks, mConnectionFailedListener);
 	        locationClient.connect();
+	        Log.i("eswaraj", "locationClient.connect()");
 	    }
+	    Log.i("eswaraj", "startLocationTracking Done");
 	}
 	
 	private void setQuickLastKnownLocation() {
 		String locationProvider = LocationManager.NETWORK_PROVIDER;
 		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+		Log.i("eswaraj",  "lastKnownLocation= " + lastKnownLocation);
 		JanSamparkApplication.getInstance().setLastKnownLocation(lastKnownLocation);
+		
 	}
 
 	private ConnectionCallbacks mConnectionCallbacks = new ConnectionCallbacks() {
 
 	    @Override
 	    public void onDisconnected() {
+	    	Log.i("eswaraj", "Disconnected");
 	    }
+	    
 
 	    @Override
 	    public void onConnected(Bundle arg0) {	
+	    	Log.i("eswaraj", "onConnected " + locationClient.isConnected());
 	    	if(locationClient.isConnected()) {
 		    	lastKnownLocation = locationClient.getLastLocation();
 		        LocationRequest locationRequest = LocationRequest.create();
 		        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 		        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
+		        Log.i("eswaraj", "onConnected requestLocationUpdates, lastKnownLocation="+lastKnownLocation +", "+locationClient.isConnecting() +" , "+locationClient.isConnected() +", " );
+		        	
 	    	}
 	    }
 	};
@@ -290,15 +303,17 @@ public class MainActivity extends FragmentActivity  {
 
 	    @Override
 	    public void onConnectionFailed(ConnectionResult arg0) {
+	    	Log.i("eswaraj", "Failed to connect to Network");
 	    }
 	};
 
 	private LocationListener mLocationListener = new LocationListener() {
 	    @Override
-        public void onLocationChanged(Location location) {	         
+        public void onLocationChanged(Location location) {	
+	    	Log.i("eswaraj", "location changed "+ location);
             if(isResumed) {
     			lastKnownLocation =  location;
-    			Log.d("Issue", "location changed");
+    			Log.i("Issue", "location changed");
     			
     			JanSamparkApplication.getInstance().setLastKnownLocation(location);
     			if(issueFragment != null) {

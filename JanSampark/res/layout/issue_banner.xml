@@ -59,13 +59,13 @@
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:scaleType="fitEnd"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:clickable="true"
-        android:onClick="onVideoClick"
         android:contentDescription="@string/app_name"
+        android:onClick="onVideoClick"
+        android:scaleType="fitEnd"
         android:src="@drawable/video_preview_fg" />
 
 </RelativeLayout>

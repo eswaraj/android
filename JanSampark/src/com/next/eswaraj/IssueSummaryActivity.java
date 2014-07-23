@@ -15,7 +15,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.next.eswaraj.config.Constants;
 import com.next.eswaraj.helpers.DialogFactory;
-import com.next.eswaraj.helpers.IssueFactory;
 import com.next.eswaraj.helpers.LocationDataManager;
 import com.next.eswaraj.helpers.LruBitmapCache;
 import com.next.eswaraj.helpers.ReverseGeoCodingTask;
@@ -51,7 +50,6 @@ public class IssueSummaryActivity extends FragmentActivity {
 	TextView nameTV;
 	TextView constituencyTV;
 	TextView categoryTV;
-	TextView systemTV;
 	TextView addressTV;
 	TextView issueNameTV;
 	
@@ -142,14 +140,13 @@ public class IssueSummaryActivity extends FragmentActivity {
 		nameTV = (TextView) findViewById(R.id.issue_summary_mla);
 		constituencyTV = (TextView) findViewById(R.id.issue_summary_mla_constituency);
 		categoryTV = (TextView) findViewById(R.id.issue_summary_category);
-		systemTV = (TextView) findViewById(R.id.issue_summary_system);
 		addressTV = (TextView) findViewById(R.id.issue_summary_address);
 		issueNameTV = (TextView) findViewById(R.id.issue_summary_name);
 	}
 	
 	private void setIssueDetails() {
-		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
-		systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
+		//categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
+		//systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
 		String issueName = issueItem.getIssueName();
 		if("others".equalsIgnoreCase(issueName) && null != description) {
 			issueNameTV.setText(description);

@@ -48,15 +48,6 @@ public class YouTubeVideoHelper {
 		this.callback = callback;
 	}
 
-	public void downloadYouTubeLinks() {
-		requestQueue = Volley.newRequestQueue(context.getApplicationContext());
-		JsonObjectRequest request = new JsonObjectRequest(Method.GET,
-				YOUTUBE_LINK_URL, null, createYoutubeLinkSuccessListener(),
-				createYoutubeLinkErrorListener());
-		requestQueue.add(request);
-
-	}
-
 	private Response.Listener<JSONObject> createYoutubeLinkSuccessListener() {
 		return new Response.Listener<JSONObject>() {
 			@Override

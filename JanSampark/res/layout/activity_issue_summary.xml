@@ -140,21 +140,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/issue_summary_horizontal_padding"
-                    android:text="@string/issue_details_system_label"
-                    android:textColor="@color/issue_details_dark"
-                    android:textSize="@dimen/issue_summary_normal_text" />
-
-                <TextView
-                    android:id="@+id/issue_summary_system"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/issue_summary_normal_text"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/issue_summary_horizontal_padding"
                     android:text="@string/issue_summary_address_label"
                     android:textColor="@color/issue_details_dark"
                     android:textSize="@dimen/issue_summary_normal_text" />

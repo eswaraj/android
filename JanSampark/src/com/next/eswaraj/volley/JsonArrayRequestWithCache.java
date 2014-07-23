@@ -5,6 +5,8 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.util.Log;
+
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -24,9 +26,11 @@ public class JsonArrayRequestWithCache extends JsonArrayRequest {
 	@Override
 	protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {				
 		try {
+			//Log.e("eswaraj", "response = " + response.data);
 			String jsonString = new String(response.data);
 			return Response.success(new JSONArray(jsonString), parseIgnoreCacheHeaders(response));
 		} catch (JSONException e) {
+			//Log.e("eswaraj", "Error " , e);
 			return Response.error(new ParseError(e));
 		}
 	}

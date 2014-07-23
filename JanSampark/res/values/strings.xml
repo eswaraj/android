@@ -32,7 +32,6 @@
     <string name="issue_complaint">Complaints</string>
     <string name="issue_details_category_label">Issue Category</string>
     <string name="issue_details_name_label">Issue Name</string>
-    <string name="issue_details_system_label">System Level</string>
     <string name="issue_details_description_label">Description</string>
     <string name="issue_details_attach_label">Attach Photo</string>
     <string name="issue_details_take_label">Take Photo</string>

@@ -33,7 +33,6 @@ public class SettingsActivity extends CameraUtilActivity {
 	
 	private void setYouTubeHelper() {
 		youtubeHelper = new YouTubeVideoHelper(this);
-		youtubeHelper.downloadYouTubeLinks();
 	}	
 	
 	private void setCameraHelper() {

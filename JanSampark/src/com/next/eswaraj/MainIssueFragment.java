@@ -2,6 +2,11 @@ package com.next.eswaraj;
 
 
 
+import java.lang.reflect.Type;
+import java.util.List;
+
+import org.json.JSONArray;
+
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -10,11 +15,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,15 +38,20 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.next.eswaraj.helpers.DialogFactory;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
-import com.next.eswaraj.models.ISSUE_CATEGORY;
+import com.next.eswaraj.volley.JsonArrayRequestWithCache;
 import com.next.eswaraj.widget.CustomSupportMapFragment;
 
 public class MainIssueFragment extends Fragment {
    
     private GoogleMap gMap = null;
     boolean isResumed;
+    private RequestQueue mRequestQueue;
+    private String requestTag = "Category";
+    private GridView gridView;
     
     
     public static MainIssueFragment newInstance() {
@@ -41,12 +61,38 @@ public class MainIssueFragment extends Fragment {
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.main_issue, container, false);		
+		View view = inflater.inflate(R.layout.main_issue, container, false);
+		try{
+			Log.i("eswaraj","Creating extra issue type");
+			gridView = (GridView)view.findViewById(R.id.main_layout_for_issue_type_buttons);
+			OnItemClickListener onItemClickListener =  new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					CategoryWithChildCategoryDto categoryDto = (CategoryWithChildCategoryDto)parent.getItemAtPosition(position);
+					Toast toast = Toast.makeText(getActivity(), "Clicked on "+categoryDto.getName(), Toast.LENGTH_SHORT);
+					toast.show();
+					openIssueActivity(categoryDto);
+				}
+				
+			};
+			gridView.setOnItemClickListener(onItemClickListener);
+
+			Log.i("eswaraj","Done Creating extra issue type");
+			
+		}catch(Exception ex){
+			Log.e("eswaraj", "Unable to create Issue type automatically", ex);
+		}
+
+		return view;
 	}
 		
 	@Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);       
+        super.onCreate(savedInstanceState);  
+        mRequestQueue = Volley.newRequestQueue(getActivity()
+				.getApplicationContext());
+        executeGetCategoriesRequest();
     }
 			
 	@Override
@@ -59,7 +105,6 @@ public class MainIssueFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     		
 		showLocation();
-		initButtonListeners();
 	}	
 	
 	@Override
@@ -73,15 +118,52 @@ public class MainIssueFragment extends Fragment {
 		isResumed = false;
 		super.onPause();
 	}
-	private void initButtonListeners() {
-		getActivity().findViewById(R.id.main_electricity).setOnClickListener(buttonListener);		
-		getActivity().findViewById(R.id.main_law).setOnClickListener(buttonListener);
-		getActivity().findViewById(R.id.main_road).setOnClickListener(buttonListener);
-		getActivity().findViewById(R.id.main_sewage).setOnClickListener(buttonListener);
-		getActivity().findViewById(R.id.main_transportation).setOnClickListener(buttonListener);
-		getActivity().findViewById(R.id.main_water).setOnClickListener(buttonListener);
+	private void executeGetCategoriesRequest() {
+		mRequestQueue.cancelAll(requestTag);
+		String url = "http://dev.admin.eswaraj.com/eswaraj-web/mobile/categories";
+		JsonArrayRequest request = new JsonArrayRequest(url, createCategoryReqSuccessListener(), createMyReqErrorListener());
+		//JsonArrayRequestWithCache request = new JsonArrayRequestWithCache(url, createAnalyticsReqSuccessListener(), createMyReqErrorListener());
+		mRequestQueue.add(request);
+		request.setTag(requestTag);
+		//showProgressBar();
 	}
-	
+	private Response.ErrorListener createMyReqErrorListener() {
+		return new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				if (isResumed) {
+					Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
+					Log.e("eswaraj", "Unable to connect to service", error);
+				}
+			}
+		};
+	}
+	private Response.Listener<JSONArray> createCategoryReqSuccessListener() {
+		return new Response.Listener<JSONArray>() {
+			@Override
+			public void onResponse(JSONArray jsonObject) {
+				try {
+					if (isResumed) 
+					{
+						Gson gson = new Gson();
+						Type listType = new TypeToken<List<CategoryWithChildCategoryDto>>() {}.getType();
+						List<CategoryWithChildCategoryDto> list = gson.fromJson(jsonObject.toString(), listType);
+						createAllButtons(list);
+					}
+					//hideProgressBar();
+				} catch (Exception e) {
+					Log.e("Error", "Error occured" , e);
+				}
+			}
+
+		};
+	}
+	private void createAllButtons(List<CategoryWithChildCategoryDto> list){
+		BitmapLruCache bitmapLruCache = new BitmapLruCache();
+		RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+		ImageLoader imageLoader = new ImageLoader(requestQueue, bitmapLruCache);
+		gridView.setAdapter(new IssueButtonAdapter(getActivity(), list, imageLoader));
+	}
 
 	public void initMap(CustomSupportMapFragment mapFragment) {				
 		if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
@@ -143,66 +225,11 @@ public class MainIssueFragment extends Fragment {
 		}
 	}
 
-	public void onSewageClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.SEWAGE);
-	}
 
-	public void onTransportationClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.TRANSPORT);
-	}
-
-	public void onWaterClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.WATER);
-	}
-
-	public void onRoadClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.ROAD);
-	}
-
-	public void onElectricityClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.ELECTRICITY);
-	}
-
-	public void onLawAndOrderClick(View view) {
-		openIssueActivity(ISSUE_CATEGORY.LAW);
-	}
-
-	private void openIssueActivity(ISSUE_CATEGORY issue) {
+	private void openIssueActivity(CategoryWithChildCategoryDto selectedCategory) {
 		Intent intent = new Intent(getActivity(), IssueActivity.class);
-		intent.putExtra(IssueActivity.EXTRA_ISSUE, issue);
-		intent.putExtra(IssueActivity.EXTRA_LOCATION, JanSamparkApplication.getInstance().getLastKnownLocation());		
+		intent.putExtra(IssueActivity.EXTRA_CATEGORY, selectedCategory);
 		WindowAnimationHelper.startActivityWithSlideFromRight(getActivity(), intent);
 	}
-	android.view.View.OnClickListener buttonListener = new OnClickListener() {
-		
-		@Override
-		public void onClick(View view) {						
-			int id = view.getId();
-			
-			switch (id) {
-			case R.id.main_road:
-				onRoadClick(view);
-				break;
-			case R.id.main_law:
-				onLawAndOrderClick(view);
-				break;
-			case R.id.main_electricity:
-				onElectricityClick(view);
-				break;
-			case R.id.main_sewage:
-				onSewageClick(view);
-				break;
-			case R.id.main_transportation:
-				onTransportationClick(view);
-				break;
-			case R.id.main_water:
-				onWaterClick(view);
-				break;
-
-			default:
-				break;
-			}
-		}
-	};
 	
 }

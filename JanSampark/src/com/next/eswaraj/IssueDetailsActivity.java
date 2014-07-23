@@ -9,6 +9,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings.Secure;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -29,6 +30,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
+import com.eswaraj.web.dto.SaveComplaintRequestDto;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
@@ -42,22 +45,18 @@ import com.next.eswaraj.helpers.BitmapWorkerTask;
 import com.next.eswaraj.helpers.CameraHelper;
 import com.next.eswaraj.helpers.CameraHelper.CameraUtilActivity;
 import com.next.eswaraj.helpers.DialogFactory;
-import com.next.eswaraj.helpers.IssueFactory;
 import com.next.eswaraj.helpers.Utils;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
-import com.next.eswaraj.models.IssueItem;
 import com.next.eswaraj.volley.IssuePostRequest;
 
 public class IssueDetailsActivity extends CameraUtilActivity {
 		
 	public static final String EXTRA_ISSUE_ITEM = "issueItem";
 	public static final String EXTRA_LOCATION = "location";
-	private IssueItem issueItem;
 	
 	private TextView categoryTV;
 	private TextView nameTV;
 	private TextView nameLabelTV;
-	private TextView systemTV;
 	private TextView otherDescription;
 	
 	private Button addDescription;
@@ -84,20 +83,23 @@ public class IssueDetailsActivity extends CameraUtilActivity {
     LocationClient locationClient;
     int dropBit = 0;
     int banner = 0;
+    
+    private CategoryWithChildCategoryDto selectedSubCategory;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_issue_details);
-
+		
 		if (null == savedInstanceState) {
-			issueItem = (IssueItem) getIntent().getParcelableExtra(EXTRA_ISSUE_ITEM);
+			selectedSubCategory = (CategoryWithChildCategoryDto) getIntent().getSerializableExtra(EXTRA_ISSUE_ITEM);
 			lastKnownLocation = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
 		} else {
-			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);		
+			selectedSubCategory = (CategoryWithChildCategoryDto) savedInstanceState.getSerializable(EXTRA_ISSUE_ITEM);		
 			lastKnownLocation = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
 		}
+		Log.i("eswaraj", "issueItem = "+selectedSubCategory.getName() + " : " +selectedSubCategory.getId());
 		mRequestQueue = Volley.newRequestQueue(getApplicationContext());
 		setCameraHelper();		
 		setViews();		
@@ -126,7 +128,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putParcelable(EXTRA_ISSUE_ITEM, issueItem);
+		outState.putSerializable(EXTRA_ISSUE_ITEM, selectedSubCategory);
 		outState.putParcelable(EXTRA_LOCATION, lastKnownLocation);
 		cameraHelper.onSaveInstanceState(outState);
 	}	
@@ -147,7 +149,6 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		categoryTV = (TextView) findViewById(R.id.issue_detail_category_text);
 		nameLabelTV = (TextView) findViewById(R.id.issue_detail_name_label);
 		nameTV = (TextView) findViewById(R.id.issue_detail_name_text);
-		systemTV = (TextView) findViewById(R.id.issue_detail_system_text);
 		addDescription = (Button) findViewById(R.id.issue_detail_descption_add_btn);
 		editDesctiption = (Button) findViewById(R.id.issue_detail_descption_edit_btn);
 		descriptionET = (EditText) findViewById(R.id.issue_detail_description_edit_text);
@@ -158,9 +159,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		sendingText = (TextView) findViewById(R.id.issue_details_sending);
 		otherDescription = (TextView) findViewById(R.id.issue_detail_other_description);
 				
-		categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
-		nameTV.setText(issueItem.getIssueName());
-		systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
+		categoryTV.setText(selectedSubCategory.getName());
+		nameTV.setText(selectedSubCategory.getName());
+		//systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
 		setViewForOthers();
 		setDescription();
 		resetDescription();
@@ -168,15 +169,9 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	}
 	
 	private void setViewForOthers() {
-		if(isOthersIssue()) {
-			nameLabelTV.setVisibility(View.GONE);
-			nameTV.setVisibility(View.GONE);
-			otherDescription.setVisibility(View.VISIBLE);
-		} else {
-			nameLabelTV.setVisibility(View.VISIBLE);
-			nameTV.setVisibility(View.VISIBLE);
-			otherDescription.setVisibility(View.GONE);
-		}
+		nameLabelTV.setVisibility(View.GONE);
+		nameTV.setVisibility(View.GONE);
+		otherDescription.setVisibility(View.VISIBLE);
 	}
 	
 	@Override
@@ -289,14 +284,16 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	public void onPostClick(View view) {
 		if(Utils.isLocationServicesEnabled(this)) {
-			if(isOthersIssue() && isDescriptionEmpty() ) {
+			if(isDescriptionEmpty() ) {
 				MessageDialog.create(getString(R.string.issue_details_enter_description)).show(getSupportFragmentManager(), "MESSAGE");
 			} else {
-										
-				executeMLAIdRequest();
+				Log.i("eswaraj","Saving Complaint");
+				executeRequest();
+				
+				//executeMLAIdRequest();
 			}
 		} else {
-			DialogFactory.createMessageDialog("No Location Services Detected.", getString(R.string.no_location)).show(getSupportFragmentManager(), "NO_LOCATION");
+			DialogFactory.createMessageDialog("2. No Location Services Detected.", getString(R.string.no_location)).show(getSupportFragmentManager(), "NO_LOCATION");
 		}
 	}
 	
@@ -309,10 +306,6 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			isEmpty = descriptionET.getText().toString().trim().length() == 0;
 		}		
 		return isEmpty;
-	}
-	
-	private boolean isOthersIssue() {
-		return issueItem.getTemplateId() % 10 == 0;
 	}
 	
 	private void showSendingOverlay() {
@@ -399,33 +392,32 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	private void executeRequest()  {			
 		if(null != lastKnownLocation) {
 			postButton.setEnabled(false);
-			IssuePostRequest.IssueDetail issueDetail = new IssuePostRequest.IssueDetail();
-			issueDetail.lat = lastKnownLocation.getLatitude() + "";
-			issueDetail.lon = lastKnownLocation.getLongitude() + "";
-			issueDetail.image = cameraHelper.getImageName();
-			issueDetail.userImage = Utils.getUserImage(this);
-			issueDetail.reporterId  = "123";
-			issueDetail.description = descriptionET.getText().toString();
-			issueDetail.issueItem = issueItem;
-			issueDetail.address = getAddress();
+			String imagePath = cameraHelper.getImageName();
 			
-			IssuePostRequest request = new IssuePostRequest( createMyReqErrorListener(), createMyReqSuccessListener(),  issueDetail);
-			request.setRetryPolicy(new DefaultRetryPolicy(
-			        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
-			        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-			        3));
-			mRequestQueue.add(request);
+			SaveComplaintRequestDto complaintDto = new SaveComplaintRequestDto();
+			complaintDto.setCategoryId(selectedSubCategory.getId());
+			complaintDto.setDescription(descriptionET.getText().toString());
+			complaintDto.setTitle(descriptionET.getText().toString());
+			String android_id = Secure.getString(getContentResolver(),Secure.ANDROID_ID);
+			complaintDto.setDeviceId(android_id);
+			complaintDto.setDeviceTypeRef("Android");
+			complaintDto.setLattitude(lastKnownLocation.getLatitude());
+			complaintDto.setLongitude(lastKnownLocation.getLongitude());
+			Log.i("eswaraj", "imagePath="+imagePath);
+			try{
+				IssuePostRequest request = new IssuePostRequest( createMyReqErrorListener(), null,  complaintDto, imagePath);
+				request.setRetryPolicy(new DefaultRetryPolicy(
+				        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+				        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+				        3));
+				mRequestQueue.add(request);
+				
+			}catch(Exception ex){
+				Log.e("eswaraj","Error while saving", ex);
+			}
 		} else {
 			Toast.makeText(this, "Fetching location", Toast.LENGTH_LONG).show();
 		}
-	}
-	
-	private String getAddress() {
-		String address = null;
-		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
-			address = JanSamparkApplication.getInstance().getLastKnownConstituency().getName();
-		}
-		return address;
 	}
 	
 	 private Response.ErrorListener createMyReqErrorListener() {
@@ -435,17 +427,17 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	            	hideSendingOverlay();
 	            	Toast.makeText(IssueDetailsActivity.this, R.string.network_error, Toast.LENGTH_LONG).show();
 	            	if(null != error) {
-	            		Log.e("Details", "" + error.getMessage());
+	            		Log.e("eswaraj", "" + error.getMessage(), error);
 	            	}
 	            	postButton.setEnabled(true);
 	            }
 	        };
 	  }
 	 
-	private Response.Listener<String> createMyReqSuccessListener() {
-        return new Response.Listener<String>() {
+	private Response.Listener<JSONObject> createMyReqSuccessListener() {
+        return new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response) {            	
+            public void onResponse(JSONObject response) {            	
             	Log.d("details", "response: " + response);            	
             	
             }
@@ -545,11 +537,10 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 						String name = node.getString("mla_name");
 						String constituency = node.getString("constituency");
 						
-						
 						nameTV.setText(name);
 						
 						Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
-		            	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, issueItem);
+		            	intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, selectedSubCategory);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_LOCATION, lastKnownLocation);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_CONSTITUENCY, constituency);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_NAME, name);

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import android.text.TextUtils;
+import android.util.Log;
 import ch.boye.httpclientandroidlib.entity.mime.MultipartEntity;
 import ch.boye.httpclientandroidlib.entity.mime.content.FileBody;
 import ch.boye.httpclientandroidlib.entity.mime.content.StringBody;
@@ -17,114 +18,53 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.eswaraj.web.dto.SaveComplaintRequestDto;
+import com.google.gson.Gson;
 import com.next.eswaraj.config.Constants;
-import com.next.eswaraj.models.IssueItem;
 
 public class IssuePostRequest extends Request<String> {
 
-	public static class IssueDetail {
-		public String lat;
-		public String lon;
-		public IssueItem issueItem;
-		public String image;
-		public String userImage;
-		public String reporterId = "123";
-		public String description;
-		public String address;
-	}
-
 	private MultipartEntity entity = new MultipartEntity();
 
-
 	
-	private static final String LAT = "lat";
-	private static final String LON = "long";
-	private static final String ISSUE_TYPE = "issue_type";
-	private static final String TEMPLATE = "issue_tmpl_id";
-	private static final String DESCIPTION = "txt";
-	private static final String IMG = "img";
-	private static final String USER_IMG = "profile_img";
-	private static final String REPORTER_ID = "reporter_id";
-	private static final String ADDRESS = "addr";
-	
-	
-	
-
 	private final Response.Listener<String> mListener;
 	private  File issueImage;
-	private  File userImage;
-	private  String lat;
-	private  String lon;
-	private String issueType;
-	private String template;
-	private String reporterId;
-	private String description;
-	private String address;
 
-	public IssuePostRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, IssuePostRequest.IssueDetail issueDetail) {
+	/*
+	@Override
+    public Map<String, String> getHeaders() throws AuthFailureError {
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Content-Type","application/json");
+        return params;
+    }
+    */
+	
+	public IssuePostRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, 
+			SaveComplaintRequestDto saveComplaintRequestDto, String imageName) throws UnsupportedEncodingException {
 		super(Method.POST, Constants.URL_POST_COMPLAINT, errorListener);
-
+		
 		mListener = listener;
-		
-		lat = issueDetail.lat ;
-		lon = issueDetail.lon;
-		issueType = issueDetail.issueItem.getIssueCategory() + "";
-		template = issueDetail.issueItem.getTemplateId() + "";
-		reporterId = issueDetail.reporterId;
-		
-		if(TextUtils.isEmpty(issueDetail.address)) {
-			address = "India";
-		} else {
-			address = issueDetail.address;
-		}
-		addIssueDetailImage(issueDetail.image);
-		addUserImage(issueDetail.userImage);
-		
-		description = issueDetail.description;
-		buildMultipartEntity();
+		addIssueDetail("SaveComplaintRequest", saveComplaintRequestDto);
+		addIssueDetailImage("img", imageName);
 
 	}
 	
-	private void addIssueDetailImage(String issueDetailImage) {
+	private void addIssueDetail(String partName, SaveComplaintRequestDto saveComplaintRequestDto) throws UnsupportedEncodingException {
+		String requestBody = new Gson().toJson(saveComplaintRequestDto);
+		entity.addPart(partName, new StringBody(requestBody));
+	}
+	private void addIssueDetailImage(String partName, String issueDetailImage) {
 		if(!TextUtils.isEmpty(issueDetailImage) ) {
 			issueImage = new File(issueDetailImage);
 			if(!issueImage.exists()) {
 				issueImage = null;
-			}
-		}
-	}
-	
-	private void addUserImage(String userImage) {
-		if (!TextUtils.isEmpty(userImage)) {
-			this.userImage = new File(userImage);
-			if(!this.userImage.exists()){
-				userImage = null;
+			}else{
+				entity.addPart(partName, new FileBody(issueImage));
 			}
 		}
 	}
 	
 	
-
-	private void buildMultipartEntity() {
-		if( null != issueImage) {
-			entity.addPart(IMG, new FileBody(issueImage));
-		}
-		if (null != userImage) {
-			entity.addPart(USER_IMG, new FileBody(userImage));
-		}
-		try {
-			entity.addPart(LAT, new StringBody(lat));
-			entity.addPart(LON, new StringBody(lon));
-			entity.addPart(DESCIPTION, new StringBody(description));
-			entity.addPart(ISSUE_TYPE, new StringBody(issueType));
-			entity.addPart(TEMPLATE, new StringBody(template));
-			entity.addPart(REPORTER_ID, new StringBody(reporterId));
-			entity.addPart(ADDRESS, new StringBody(address));
-		} catch (UnsupportedEncodingException e) {
-			VolleyLog.e("UnsupportedEncodingException");
-		}
-
-	}
 
 	@Override
 	public String getBodyContentType() {
@@ -145,7 +85,9 @@ public class IssuePostRequest extends Request<String> {
 	 @Override
 	    protected Response<String> parseNetworkResponse(NetworkResponse response) {
 	        try {
+	        	Log.i("eswaraj", "Status Code = "+response.statusCode);
 	            String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+	            Log.i("eswaraj", "json response = "+json);
 	            return Response.success(
 	                    json, HttpHeaderParser.parseCacheHeaders(response));
 	        } catch (UnsupportedEncodingException e) {
@@ -155,6 +97,10 @@ public class IssuePostRequest extends Request<String> {
 
 	@Override
 	protected void deliverResponse(String response) {
-		mListener.onResponse(response);
+		Log.i("eswaraj", " response = "+response);
+		if(mListener != null){
+			mListener.onResponse(response);	
+		}
+		
 	}
 }

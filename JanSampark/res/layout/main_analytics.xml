@@ -121,7 +121,7 @@
                     android:textSize="@dimen/countdown_label_text" />
             </LinearLayout>
         </RelativeLayout>
-
+<!-- 
         <TableLayout
             android:id="@+id/TableLayout1"
             android:layout_width="fill_parent"
@@ -190,7 +190,7 @@
                     issueButton:tertiaryText="@null" />
             </TableRow>
         </TableLayout>
-
+ -->
         <FrameLayout
             android:id="@+id/analytics_overlay"
             android:layout_width="match_parent"

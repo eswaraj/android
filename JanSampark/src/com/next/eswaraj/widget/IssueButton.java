@@ -1,35 +1,19 @@
 package com.next.eswaraj.widget;
 
-import com.next.eswaraj.R;
-
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 
 
-public class IssueButton extends LinearLayout {
-	String tertiaryText;
-	String bottomText;
-	Drawable image;
-	
+public class IssueButton {
+	/*
 	TextView tertiaryTextView;
 	TextView bottomTextView;
+	ImageView imageView;
 	
-	public IssueButton(Context context) {
-		this(context, null);
+	public IssueButton(Activity activity) {
+		super(context);
+		tertiaryTextView = (TextView)activity.findViewById(id)
 	}	
 		
-	public IssueButton(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		initView(context, attrs);
-	}
 
 	
 	private void initView(Context context, AttributeSet attrs) {
@@ -42,11 +26,22 @@ public class IssueButton extends LinearLayout {
 			bottomText = a.getString(R.styleable.IssueButton_bottomText);
 			    
 		     image = a.getDrawable(R.styleable.IssueButton_image);
+			//image = a.getDrawable(imageId);
 			a.recycle();
 			
 			
 		}
 		
+	}
+	public void setImage(int imageId){
+		this.imageId = imageId;
+		image = getContext().getResources().getDrawable(imageId);
+	}
+	public void setBottomText(String bottomText){
+		this.bottomText = bottomText;
+		if(bottomTextView != null){
+			bottomTextView.setText(bottomText != null ? bottomText : "");	
+		}
 		
 	}
 	
@@ -77,5 +72,6 @@ public class IssueButton extends LinearLayout {
 	public void setPercentage(int number) {
 		tertiaryTextView.setText(number + "%");
 	}
+	*/
 
 }

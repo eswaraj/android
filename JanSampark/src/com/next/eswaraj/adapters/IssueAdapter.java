@@ -1,5 +1,6 @@
 package com.next.eswaraj.adapters;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -7,14 +8,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.next.eswaraj.R;
-import com.next.eswaraj.helpers.IssueFactory;
 import com.next.eswaraj.models.Analytics;
 import com.next.eswaraj.models.ISSUE_CATEGORY;
 import com.next.eswaraj.models.IssueItem;
@@ -39,17 +41,25 @@ public class IssueAdapter extends BaseAdapter {
 	private Map<Integer, Integer> templateCount;
 	private int totalComplaints;
 	
+	private List<CategoryWithChildCategoryDto> categories;
 	
 	
-	public static IssueAdapter newInstance(Context context, ISSUE_CATEGORY issue, int layoutId, List<Analytics> analyticsList) {
+	
+	public static IssueAdapter newInstance(Context context, ISSUE_CATEGORY issue, int layoutId, List<Analytics> analyticsList, List<CategoryWithChildCategoryDto> categories) {
 		IssueAdapter adapter = new IssueAdapter();
+		/*
 		adapter.issueItems = IssueFactory.getIssuesFor(context, issue);
-		adapter.context = context;
+		*/
 		adapter.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		adapter.context = context;
 		adapter.layoutId = layoutId;
+		if(categories == null){
+			categories = new ArrayList<CategoryWithChildCategoryDto>();
+		}
+		adapter.categories = categories;
 		
 		adapter.templateCount = new HashMap<Integer, Integer>();
-		
+		/*
 		if(null != analyticsList) {
 			for (Analytics analytics : analyticsList) {
 				if(analytics.getTemplateId() % 10 == 0) {
@@ -66,6 +76,7 @@ public class IssueAdapter extends BaseAdapter {
 			}
 			adapter.totalComplaints = adapter.getTotalComplaints();
 		}
+		*/
 		
 		return adapter;		
 	}
@@ -84,17 +95,17 @@ public class IssueAdapter extends BaseAdapter {
 	
 	@Override
 	public int getCount() {
-		return issueItems.size();
+		return categories.size();
 	}
 
 	@Override
 	public Object getItem(int position) {		
-		return issueItems.get(position);
+		return categories.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return issueItems.get(position).getTemplateId();
+		return categories.get(position).getId();
 	}
 
 	@Override
@@ -114,15 +125,15 @@ public class IssueAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		IssueItem item = (IssueItem)getItem(position);
+		CategoryWithChildCategoryDto item = (CategoryWithChildCategoryDto)getItem(position);
 		
-		holder.title.setText(item.getIssueName());
-		holder.type.setText(IssueFactory.getIssueTypeString(context, item.getTemplateId()));
-		int color = IssueFactory.getIssueTypeColor(context, item.getTemplateId());
+		holder.title.setText(item.getName());
+		holder.type.setText("");
+		int color =  Color.RED;// IssueFactory.getIssueTypeColor(context, 1);
 		
 		holder.type.setTextColor(color);
 		holder.colorView.setBackgroundColor(color);
-		setComplaint(holder, item, position);
+		//setComplaint(holder, item, position);
 		
 		
 		return convertView;
