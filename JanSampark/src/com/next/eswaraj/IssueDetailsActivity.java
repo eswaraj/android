@@ -284,6 +284,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	
 	public void onPostClick(View view) {
 		if(Utils.isLocationServicesEnabled(this)) {
+		    executeRequest();
+		    /*
 			if(isDescriptionEmpty() ) {
 				MessageDialog.create(getString(R.string.issue_details_enter_description)).show(getSupportFragmentManager(), "MESSAGE");
 			} else {
@@ -292,6 +294,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 				
 				//executeMLAIdRequest();
 			}
+			*/
 		} else {
 			DialogFactory.createMessageDialog("2. No Location Services Detected.", getString(R.string.no_location)).show(getSupportFragmentManager(), "NO_LOCATION");
 		}
@@ -443,6 +446,17 @@ public class IssueDetailsActivity extends CameraUtilActivity {
                 hideSendingOverlay();
                 Log.i("eswaraj", "Activity returning " + RESULT_OK + ", " + getParent());
 
+
+                Intent intent = new Intent(IssueDetailsActivity.this, IssueSummaryActivity.class);
+                intent.putExtra(IssueSummaryActivity.EXTRA_ISSUE_ITEM, selectedSubCategory);
+                intent.putExtra(IssueSummaryActivity.EXTRA_LOCATION, lastKnownLocation);
+                intent.putExtra(IssueSummaryActivity.EXTRA_CONSTITUENCY, "Bangalore");
+                intent.putExtra(IssueSummaryActivity.EXTRA_MLA_NAME, "Ravi Sharma");
+                intent.putExtra(IssueSummaryActivity.EXTRA_MLA_PIC, "https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xfa1/t1.0-9/23780_381794843626_6042094_n.jpg");
+                intent.putExtra(IssueSummaryActivity.EXTRA_DROP_BIT, dropBit);
+                intent.putExtra(IssueSummaryActivity.EXTRA_BANNER, banner);
+                intent.putExtra(IssueSummaryActivity.EXTRA_DESCRIPTION, descriptionET.getText().toString());
+                WindowAnimationHelper.startActivityWithSlideFromRight(IssueDetailsActivity.this, intent);
                 setResult(RESULT_OK);
                 finish();
 
@@ -552,7 +566,7 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_NAME, name);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_MLA_PIC, url);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_DROP_BIT, dropBit);
-		            	intent.putExtra(IssueSummaryActivity.EXTRA_BANNER, banner);
+                    intent.putExtra(IssueSummaryActivity.EXTRA_BANNER, banner);
 		            	intent.putExtra(IssueSummaryActivity.EXTRA_DESCRIPTION, descriptionET.getText().toString());
 		            	WindowAnimationHelper.startActivityWithSlideFromRight(IssueDetailsActivity.this, intent);
 		            	hideSendingOverlay();

@@ -1,11 +1,7 @@
 package com.next.eswaraj;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
-
-import org.json.JSONArray;
 
 import android.app.Application;
 import android.content.Context;
@@ -13,14 +9,10 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.eswaraj.web.dto.LocationDto;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
@@ -28,9 +20,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.next.eswaraj.models.Constituency;
+import com.next.eswaraj.volley.ServerDataUtil;
 
 import de.greenrobot.event.EventBus;
 
@@ -41,7 +32,7 @@ public class JanSamparkApplication extends Application {
     private BigDecimal longitude;
     private BigDecimal latittude;
 
-    RequestQueue requestQueue;
+    private RequestQueue requestQueue;
 
     private Location lastKnownLocation;
     private Constituency lastKnownConstituency;
@@ -51,8 +42,13 @@ public class JanSamparkApplication extends Application {
         super.onCreate();
         startLocationTracking();
         requestQueue = Volley.newRequestQueue(getApplicationContext());
+        ServerDataUtil.getInstance().initData(this);
     }
 
+    @Override
+    public void onTerminate() {
+        locationClient.removeLocationUpdates(mLocationListener);
+    }
     public Location getLastKnownLocation() {
         return lastKnownLocation;
     }
@@ -137,7 +133,6 @@ public class JanSamparkApplication extends Application {
         public void onLocationChanged(Location location) {
             setLastKnownLocation(location);
             Log.i("eswaraj", "location changed " + location + isLocationActuallyChanged(location));
-            executeGetCategoriesRequest();
             EventBus.getDefault().postSticky(location);
             // Send Event on EventBus to update all listeners that Location has
             // changed
@@ -167,47 +162,6 @@ public class JanSamparkApplication extends Application {
         }
     };
 
-    private void executeGetCategoriesRequest() {
-        String requestTag = "GetLocationsAtPoint";
-        requestQueue.cancelAll(requestTag);
-        String url = "http://dev.admin.eswaraj.com/eswaraj-web/ajax/location/getpointlocations?long=" + lastKnownLocation.getLongitude() + "&lat=" + lastKnownLocation.getLatitude();
-        JsonArrayRequest request = new JsonArrayRequest(url, createCategoryReqSuccessListener(), createMyReqErrorListener());
-        // JsonArrayRequestWithCache request = new
-        // JsonArrayRequestWithCache(url, createAnalyticsReqSuccessListener(),
-        // createMyReqErrorListener());
-        requestQueue.add(request);
-        request.setTag(requestTag);
-        // showProgressBar();
-    }
-
-    private Response.ErrorListener createMyReqErrorListener() {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), R.string.network_error, Toast.LENGTH_LONG).show();
-                Log.e("eswaraj", "Unable to connect to service", error);
-            }
-        };
-    }
-
-    private Response.Listener<JSONArray> createCategoryReqSuccessListener() {
-        return new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray jsonObject) {
-                try {
-                    Gson gson = new Gson();
-                    Type listType = new TypeToken<List<LocationDto>>() {
-                    }.getType();
-                    List<LocationDto> list = gson.fromJson(jsonObject.toString(), listType);
-                    Log.i("eswaraj", "list = " + list);
-                } catch (Exception e) {
-                    Log.e("Error", "Error occured", e);
-                }
-            }
-
-        };
-    }
-
     private OnConnectionFailedListener mConnectionFailedListener = new OnConnectionFailedListener() {
 
         @Override
@@ -215,5 +169,11 @@ public class JanSamparkApplication extends Application {
             Log.i("eswaraj", "Failed to connect to Network");
         }
     };
+
+    public void submitServerRequest(String requestTag, Request request) {
+        requestQueue.cancelAll(requestTag);
+        requestQueue.add(request);
+        request.setTag(requestTag);
+    }
 
 }

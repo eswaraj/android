@@ -2,10 +2,7 @@ package com.next.eswaraj;
 
 
 
-import java.lang.reflect.Type;
 import java.util.List;
-
-import org.json.JSONArray;
 
 import android.content.Intent;
 import android.location.Location;
@@ -25,10 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.android.gms.common.ConnectionResult;
@@ -39,10 +33,9 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.next.eswaraj.helpers.DialogFactory;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
+import com.next.eswaraj.volley.ServerDataUtil;
 import com.next.eswaraj.widget.CustomSupportMapFragment;
 
 import de.greenrobot.event.EventBus;
@@ -82,6 +75,13 @@ public class MainIssueFragment extends Fragment {
 			};
 			gridView.setOnItemClickListener(onItemClickListener);
 
+            // In case we have already found the location
+            Location location = EventBus.getDefault().getStickyEvent(Location.class);
+            if (location != null) {
+                showLocation(location);
+            }
+            locadCategorisIfAlreadyLoaded();
+
 			Log.i("eswaraj","Done Creating extra issue type");
 			
 		}catch(Exception ex){
@@ -94,14 +94,7 @@ public class MainIssueFragment extends Fragment {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);  
-        mRequestQueue = Volley.newRequestQueue(getActivity()
-				.getApplicationContext());
-        executeGetCategoriesRequest();
-        // In case we have already found the location
-        Location location = EventBus.getDefault().getStickyEvent(Location.class);
-        if (location != null) {
-            showLocation(location);
-        }
+        mRequestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
     }
 			
 	@Override
@@ -131,51 +124,23 @@ public class MainIssueFragment extends Fragment {
 		isResumed = false;
 		super.onPause();
 	}
-	private void executeGetCategoriesRequest() {
-		mRequestQueue.cancelAll(requestTag);
-		String url = "http://dev.admin.eswaraj.com/eswaraj-web/mobile/categories";
-		JsonArrayRequest request = new JsonArrayRequest(url, createCategoryReqSuccessListener(), createMyReqErrorListener());
-		//JsonArrayRequestWithCache request = new JsonArrayRequestWithCache(url, createAnalyticsReqSuccessListener(), createMyReqErrorListener());
-		mRequestQueue.add(request);
-		request.setTag(requestTag);
-		//showProgressBar();
-	}
-	private Response.ErrorListener createMyReqErrorListener() {
-		return new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError error) {
-				if (isResumed) {
-					Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
-					Log.e("eswaraj", "Unable to connect to service", error);
-				}
-			}
-		};
-	}
-	private Response.Listener<JSONArray> createCategoryReqSuccessListener() {
-		return new Response.Listener<JSONArray>() {
-			@Override
-			public void onResponse(JSONArray jsonObject) {
-				try {
-					if (isResumed) 
-					{
-						Gson gson = new Gson();
-						Type listType = new TypeToken<List<CategoryWithChildCategoryDto>>() {}.getType();
-						List<CategoryWithChildCategoryDto> list = gson.fromJson(jsonObject.toString(), listType);
-						createAllButtons(list);
-					}
-					//hideProgressBar();
-				} catch (Exception e) {
-					Log.e("Error", "Error occured" , e);
-				}
-			}
 
-		};
+    private void locadCategorisIfAlreadyLoaded() {
+        List<CategoryWithChildCategoryDto> list = ServerDataUtil.getInstance().getCategoryList();
+        createAllButtons(list);
+
 	}
+
 	private void createAllButtons(List<CategoryWithChildCategoryDto> list){
-		BitmapLruCache bitmapLruCache = new BitmapLruCache();
-		RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-		ImageLoader imageLoader = new ImageLoader(requestQueue, bitmapLruCache);
-		gridView.setAdapter(new IssueButtonAdapter(getActivity(), list, imageLoader));
+        if (list != null) {
+            BitmapLruCache bitmapLruCache = new BitmapLruCache();
+            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+            ImageLoader imageLoader = new ImageLoader(requestQueue, bitmapLruCache);
+            Log.i("eswaraj", "getActivity()=" + getActivity());
+            Log.i("eswaraj", "list=" + list);
+            Log.i("eswaraj", "imageLoader=" + imageLoader);
+            gridView.setAdapter(new IssueButtonAdapter(getActivity(), list, imageLoader));
+        }
 	}
 
 	public void initMap(CustomSupportMapFragment mapFragment) {				
@@ -218,6 +183,10 @@ public class MainIssueFragment extends Fragment {
         Log.i("eswaraj", "Location hcanged in Main Issue Framegment");
         showLocation(location);
 
+    }
+
+    public void onEvent(List<CategoryWithChildCategoryDto> list) {
+        createAllButtons(list);
     }
 
     public void showLocation(Location location) {

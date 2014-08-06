@@ -13,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.next.eswaraj.config.Constants;
 import com.next.eswaraj.helpers.DialogFactory;
 import com.next.eswaraj.helpers.LocationDataManager;
@@ -20,7 +21,6 @@ import com.next.eswaraj.helpers.LruBitmapCache;
 import com.next.eswaraj.helpers.ReverseGeoCodingTask;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
 import com.next.eswaraj.models.Constituency;
-import com.next.eswaraj.models.IssueItem;
 
 public class IssueSummaryActivity extends FragmentActivity {
 	
@@ -33,7 +33,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	public static final String EXTRA_BANNER = "banner";
 	public static final String EXTRA_DESCRIPTION = "description";
 	
-	private IssueItem issueItem;
+    private CategoryWithChildCategoryDto issueItem;
 	private Location location;
 	private String mlaName;
 	private String mlaUrl;
@@ -65,7 +65,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 		setView();
 
 		if (null == savedInstanceState) {
-			issueItem = (IssueItem) getIntent().getParcelableExtra(EXTRA_ISSUE_ITEM);
+            issueItem = (CategoryWithChildCategoryDto) getIntent().getSerializableExtra(EXTRA_ISSUE_ITEM);
 			location = (Location) getIntent().getParcelableExtra(EXTRA_LOCATION);
 			mlaName = getIntent().getStringExtra(EXTRA_MLA_NAME);
 			mlaUrl = getIntent().getStringExtra(EXTRA_MLA_PIC);
@@ -74,7 +74,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 			description = getIntent().getStringExtra(EXTRA_DESCRIPTION);
 			banner = getIntent().getIntExtra(EXTRA_BANNER, 0);
 		} else {
-			issueItem = (IssueItem) savedInstanceState.getParcelable(EXTRA_ISSUE_ITEM);
+            issueItem = (CategoryWithChildCategoryDto) savedInstanceState.getSerializable(EXTRA_ISSUE_ITEM);
 			location = (Location) savedInstanceState.getParcelable(EXTRA_LOCATION);
 			mlaName = savedInstanceState.getString(EXTRA_MLA_NAME);
 			mlaUrl = savedInstanceState.getString(EXTRA_MLA_PIC);
@@ -127,7 +127,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putParcelable(EXTRA_ISSUE_ITEM, issueItem);
+        outState.putSerializable(EXTRA_ISSUE_ITEM, issueItem);
 		outState.putParcelable(EXTRA_LOCATION, location);
 		outState.putString(EXTRA_MLA_NAME, mlaName);
 		outState.putString(EXTRA_MLA_PIC, mlaUrl);
@@ -147,7 +147,7 @@ public class IssueSummaryActivity extends FragmentActivity {
 	private void setIssueDetails() {
 		//categoryTV.setText(IssueFactory.getIssueCategoryName(this, issueItem.getIssueCategory()));
 		//systemTV.setText(IssueFactory.getIssueTypeString(this, issueItem.getTemplateId()));
-		String issueName = issueItem.getIssueName();
+        String issueName = issueItem.getName();
 		if("others".equalsIgnoreCase(issueName) && null != description) {
 			issueNameTV.setText(description);
 		} else {
