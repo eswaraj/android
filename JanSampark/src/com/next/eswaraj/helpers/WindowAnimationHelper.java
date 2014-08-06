@@ -1,13 +1,13 @@
 package com.next.eswaraj.helpers;
 
-import com.next.eswaraj.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
+
+import com.next.eswaraj.R;
 
 public class WindowAnimationHelper {
 	
@@ -21,7 +21,8 @@ public class WindowAnimationHelper {
 	public static void startActivityWithSlideFromRight(Activity activity, Intent subActivity) {					
         Bundle translateBundle =ActivityOptionsCompat.makeCustomAnimation(activity,
                 R.anim.slide_in_left, R.anim.slide_out_left).toBundle();
-        ActivityCompat.startActivity(activity, subActivity, translateBundle);
+        // ActivityCompat.startActivity(activity, subActivity, translateBundle);
+        ActivityCompat.startActivityForResult(activity, subActivity, Activity.RESULT_OK, translateBundle);
 	}
 	
 	public static void startActivityWithScaleAnimation(Activity activity, Intent subActivity, View v) {		

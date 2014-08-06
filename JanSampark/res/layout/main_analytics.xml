@@ -121,6 +121,18 @@
                     android:textSize="@dimen/countdown_label_text" />
             </LinearLayout>
         </RelativeLayout>
+        <GridView
+            android:id="@+id/main_layout_for_analytics_issue_type_buttons"
+            android:layout_below="@+id/pie_chart_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:columnWidth="90dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp" >
+        </GridView>
 <!-- 
         <TableLayout
             android:id="@+id/TableLayout1"

@@ -157,7 +157,7 @@ public class SplashActivity extends FragmentActivity {
 			if(dontStartMain) {
 				
 			} else {
-				checkLocationAndInternetAndStartMainActivity();
+                // checkLocationAndInternetAndStartMainActivity();
 			}
 		}
 

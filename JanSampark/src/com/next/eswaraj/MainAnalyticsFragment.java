@@ -1,6 +1,7 @@
 package com.next.eswaraj;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +21,7 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,6 +35,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -45,9 +48,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.next.eswaraj.adapters.LocationAutoCompleteAdapter;
 import com.next.eswaraj.helpers.ConstuencyParserHelper;
 import com.next.eswaraj.helpers.DialogFactory;
@@ -71,7 +79,7 @@ public class MainAnalyticsFragment extends Fragment {
 	private RadioButton constituencyButton;
 	private RadioGroup analyticsRadioGroup;
 	private Spinner overallSpinner;
-	
+    private GridView gridView;
 
 	private AutoCompleteTextView autoCompleteTextView;
 	private View overlay;
@@ -149,13 +157,24 @@ public class MainAnalyticsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.main_analytics, container, false);
+        View view = inflater.inflate(R.layout.main_analytics, container, false);
+        gridView = (GridView) view.findViewById(R.id.main_layout_for_analytics_issue_type_buttons);
+        executeGetCategoriesRequest();
+
+        return view;
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setViews(view);
+		view.findViewById(R.id.analytics_chooser_container).setVisibility(View.INVISIBLE);
+		/*
+        overallButton.setVisibility(View.VISIBLE);
+        constituencyButton.setVisibility(View.INVISIBLE);
+        analyticsRadioGroup.setVisibility(View.VISIBLE);
+        overallSpinner.setVisibility(View.VISIBLE);
+        */
 	}
 
 	private void setViews(View view) {
@@ -251,9 +270,8 @@ public class MainAnalyticsFragment extends Fragment {
 				R.id.analytics_overall_spinner);
 		constituencyButton = (RadioButton) getActivity().findViewById(
 				R.id.analytics_spinner);
-		analyticsRadioGroup = (RadioGroup) ((RadioGroup) getActivity()
+		analyticsRadioGroup = ((RadioGroup) getActivity()
 				.findViewById(R.id.analytics_chooser_container));
-		
 		/*
 		electricityButton = (IssueButton) getActivity().findViewById(
 				R.id.main_analytics_electricity);
@@ -282,7 +300,7 @@ public class MainAnalyticsFragment extends Fragment {
 						switch (checkedId) {
 						case R.id.analytics_overall:
 							overallSpinner.setSelected(true);
-							fetchCityAnalytics();
+                    // fetchCityAnalytics();
 							break;
 
 						case R.id.analytics_spinner:
@@ -303,7 +321,7 @@ public class MainAnalyticsFragment extends Fragment {
 			public void onClick(View arg0) {
 				if (autoCompleteCheck) {
 					autoCompleteCheck = false;
-					executeCurrentMLAIdRequest();
+                    // executeCurrentMLAIdRequest();
 				} else {
 					onAutoCompleteRadioClick();
 				}
@@ -544,7 +562,7 @@ public class MainAnalyticsFragment extends Fragment {
 	};
 
 	private void fetchAnalytics(Constituency constituency) {
-		executeMLAIdRequest(constituency.getLatLong());
+        // executeMLAIdRequest(constituency.getLatLong());
 	}
 
 	private void executeMLAIdRequest(LatLng latlng) {
@@ -583,7 +601,7 @@ public class MainAnalyticsFragment extends Fragment {
 						handleInvalidLocation();
 					} else {
 						setConstituencyId(Integer.parseInt(mlaId));
-						executeAnalyticsRequest();
+                        // executeAnalyticsRequest();
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -623,7 +641,7 @@ public class MainAnalyticsFragment extends Fragment {
 
 	private void parseJsonToAnalyticsMap(JSONObject jsonObject)
 			throws JSONException {
-		Iterator<String> iter = (Iterator<String>) jsonObject.keys();
+		Iterator<String> iter = jsonObject.keys();
 		while (iter.hasNext()) {
 			String key = iter.next().toString();
 			int keyInt = Integer.parseInt(key);
@@ -666,7 +684,7 @@ public class MainAnalyticsFragment extends Fragment {
 		Iterator<Entry<Integer, List<Analytics>>> it = analyticsMap.entrySet()
 				.iterator();
 		while (it.hasNext()) {
-			Map.Entry<Integer, List<Analytics>> pairs = (Map.Entry<Integer, List<Analytics>>) it
+			Map.Entry<Integer, List<Analytics>> pairs = it
 					.next();
 			for (Analytics analytics : pairs.getValue()) {
 				totalCount += analytics.getCount();
@@ -709,7 +727,7 @@ public class MainAnalyticsFragment extends Fragment {
 	
 	private void setCity() {
 		setAutoComplete();
-		fetchCityAnalytics();
+        // fetchCityAnalytics();
 	}
 
 	public void setCurrentCity() {
@@ -820,8 +838,8 @@ public class MainAnalyticsFragment extends Fragment {
 						handleInvalidLocation();
 					} else {
 						setConstituencyId(Integer.parseInt(mlaId));
-						executeAnalyticsRequest();
-						executeMLADetailsRequest(mlaId);
+                        // executeAnalyticsRequest();
+                        // executeMLADetailsRequest(mlaId);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -839,7 +857,7 @@ public class MainAnalyticsFragment extends Fragment {
 		}
 		if(!getLocations().isEmpty()) {
 			Constituency firstConstituency = getLocations().get(0);
-			executeMLAIdRequest(firstConstituency.getLatLong());
+            // executeMLAIdRequest(firstConstituency.getLatLong());
 			setLocation(firstConstituency);
 		} else {
 			analyticsRadioGroup.check(R.id.analytics_overall);
@@ -887,5 +905,56 @@ public class MainAnalyticsFragment extends Fragment {
 		};
 	}
 
+    private void executeGetCategoriesRequest() {
+        mRequestQueue.cancelAll(requestTag);
+        String url = "http://dev.admin.eswaraj.com/eswaraj-web/mobile/categories";
+        JsonArrayRequest request = new JsonArrayRequest(url, createCategoryReqSuccessListener(), createMyCategoryReqErrorListener());
+        // JsonArrayRequestWithCache request = new
+        // JsonArrayRequestWithCache(url, createAnalyticsReqSuccessListener(),
+        // createMyReqErrorListener());
+        mRequestQueue.add(request);
+        request.setTag(requestTag);
+        // showProgressBar();
+    }
+
+    private Response.ErrorListener createMyCategoryReqErrorListener() {
+        return new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (isResumed) {
+                    Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_LONG).show();
+                    Log.e("eswaraj", "Unable to connect to service", error);
+                }
+            }
+        };
+    }
+
+    private Response.Listener<JSONArray> createCategoryReqSuccessListener() {
+        return new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonObject) {
+                try {
+                    if (isResumed) {
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<CategoryWithChildCategoryDto>>() {
+                        }.getType();
+                        List<CategoryWithChildCategoryDto> list = gson.fromJson(jsonObject.toString(), listType);
+                        createAllButtons(list);
+                    }
+                    // hideProgressBar();
+                } catch (Exception e) {
+                    Log.e("Error", "Error occured", e);
+                }
+            }
+
+        };
+    }
+
+    private void createAllButtons(List<CategoryWithChildCategoryDto> list) {
+        BitmapLruCache bitmapLruCache = new BitmapLruCache();
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        ImageLoader imageLoader = new ImageLoader(requestQueue, bitmapLruCache);
+        gridView.setAdapter(new IssueButtonAdapter(getActivity(), list, imageLoader));
+    }
 
 }

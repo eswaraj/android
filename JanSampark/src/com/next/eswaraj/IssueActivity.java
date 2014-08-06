@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eswaraj.web.dto.CategoryWithChildCategoryDto;
 import com.next.eswaraj.adapters.IssueAdapter;
@@ -196,16 +198,22 @@ public class IssueActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 			if(!isAnalytics) {
-				if(position != adapterView.getCount() - 1) {
-					Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
-					intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (CategoryWithChildCategoryDto) adapter.getItem(position - 1));
-					intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
-					WindowAnimationHelper.startActivityWithSlideFromRight(IssueActivity.this, intent);
-				}
+                Toast.makeText(IssueActivity.this, "Clicked on " + ((CategoryWithChildCategoryDto) adapter.getItem(position - 1)).getName(), Toast.LENGTH_SHORT);
+                Intent intent = new Intent(IssueActivity.this, IssueDetailsActivity.class);
+                intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, (CategoryWithChildCategoryDto) adapter.getItem(position - 1));
+                intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, location);
+                WindowAnimationHelper.startActivityWithSlideFromRight(IssueActivity.this, intent);
 			}
 		}
 	};
 	
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("eswaraj", "Activity returned " + requestCode + ", " + resultCode);
+        finish();
+    }
+
 	public void onTitleBarLeftButtonClick(View view) {
 		onBackPressed();		
 	}
@@ -223,7 +231,7 @@ public class IssueActivity extends Activity {
 	public void onVideoClick(View view) {
 		String link = selectedCategory.getVideoUrl();
 		if(!TextUtils.isEmpty(link)) {
-			youtubeHelper.startYouTubeVideo(this, link);
+            youtubeHelper.startYouTubeVideo(this, link);
 		}
 	}
 }

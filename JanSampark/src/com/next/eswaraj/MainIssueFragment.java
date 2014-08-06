@@ -42,7 +42,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.next.eswaraj.helpers.DialogFactory;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
-import com.next.eswaraj.volley.JsonArrayRequestWithCache;
 import com.next.eswaraj.widget.CustomSupportMapFragment;
 
 public class MainIssueFragment extends Fragment {
@@ -167,6 +166,8 @@ public class MainIssueFragment extends Fragment {
 
 	public void initMap(CustomSupportMapFragment mapFragment) {				
 		if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
+            // DialogFactory.createMessageDialog("Map is available").show(getFragmentManager(),
+            // "Success");
 			gMap = mapFragment.getMap();
 			gMap.setMyLocationEnabled(false);
 			

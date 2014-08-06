@@ -405,7 +405,8 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 			complaintDto.setLongitude(lastKnownLocation.getLongitude());
 			Log.i("eswaraj", "imagePath="+imagePath);
 			try{
-				IssuePostRequest request = new IssuePostRequest( createMyReqErrorListener(), null,  complaintDto, imagePath);
+                showSendingOverlay();
+                IssuePostRequest request = new IssuePostRequest(createMyReqErrorListener(), createMyReqSuccessListener(), complaintDto, imagePath);
 				request.setRetryPolicy(new DefaultRetryPolicy(
 				        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
 				        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -434,12 +435,17 @@ public class IssueDetailsActivity extends CameraUtilActivity {
 	        };
 	  }
 	 
-	private Response.Listener<JSONObject> createMyReqSuccessListener() {
-        return new Response.Listener<JSONObject>() {
+    private Response.Listener<String> createMyReqSuccessListener() {
+        return new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONObject response) {            	
-            	Log.d("details", "response: " + response);            	
-            	
+            public void onResponse(String response) {
+                Log.d("details", "response: " + response);
+                hideSendingOverlay();
+                Log.i("eswaraj", "Activity returning " + RESULT_OK + ", " + getParent());
+
+                setResult(RESULT_OK);
+                finish();
+
             }
         };
     }	
