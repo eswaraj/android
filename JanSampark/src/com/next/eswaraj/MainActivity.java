@@ -1,11 +1,6 @@
 package com.next.eswaraj;
 
-import java.util.List;
-
-import android.app.PendingIntent;
-import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,21 +17,10 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.next.eswaraj.helpers.LocationDataManager;
-import com.next.eswaraj.helpers.ReverseGeoCodingTask;
 import com.next.eswaraj.helpers.TitleBarHelper;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
 import com.next.eswaraj.helpers.YouTubeVideoHelper;
-import com.next.eswaraj.models.Constituency;
 
 public class MainActivity extends FragmentActivity  {
 	public static final String TAG = "Main";
@@ -63,7 +47,6 @@ public class MainActivity extends FragmentActivity  {
 	
 	
 	  // LocationRequest locationRequest;
-	    LocationClient locationClient;
 	    boolean isResumed;
 	YouTubeVideoHelper youtubeHelper;
 
@@ -92,20 +75,19 @@ public class MainActivity extends FragmentActivity  {
     protected void onResume() {
     	super.onResume();
     	isResumed = true;
-    	startLocationTracking();
     }
 			
 	
     
     @Override
     protected void onPause() {
-    	if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
-	    	if(locationClient.isConnected()) {
-	    		Log.d("eswaraj", "Disconencting");
-	    		locationClient.removeLocationUpdates(mLocationListener);
-	    		locationClient.disconnect();
-	    	}
-    	}
+        /*
+         * if (ConnectionResult.SUCCESS ==
+         * GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
+         * if(locationClient.isConnected()) { Log.d("eswaraj", "Disconencting");
+         * locationClient.removeLocationUpdates(mLocationListener);
+         * locationClient.disconnect(); } }
+         */
 		isResumed = false;
     	super.onPause();
     }
@@ -179,9 +161,12 @@ public class MainActivity extends FragmentActivity  {
 	};
 	
 	private OnPageChangeListener mOnPageChangeListener = new OnPageChangeListener() {
-		public void onPageScrollStateChanged(int arg0) {	 }
-		public void onPageScrolled(int arg0, float arg1, int arg2) {	}
-		public void onPageSelected(int position) {						
+		@Override
+        public void onPageScrollStateChanged(int arg0) {	 }
+		@Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) {	}
+		@Override
+        public void onPageSelected(int position) {						
 			if (0 == position) {
 				footerTab.check(R.id.tab_issue);
 				if(issueFragment != null) {
@@ -256,104 +241,9 @@ public class MainActivity extends FragmentActivity  {
 		titleBarHelper.hideProgressBar();
 	}
 	
-	protected void startLocationTracking() {
-		Log.i("eswaraj", "startLocationTracking");
-		setQuickLastKnownLocation();
-		
-	    if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)) {
-	        locationClient = new LocationClient(this, mConnectionCallbacks, mConnectionFailedListener);
-	        locationClient.connect();
-	        Log.i("eswaraj", "locationClient.connect()");
-	    }
-	    Log.i("eswaraj", "startLocationTracking Done");
-	}
 	
-	private void setQuickLastKnownLocation() {
-		String locationProvider = LocationManager.NETWORK_PROVIDER;
-		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-		Log.i("eswaraj",  "lastKnownLocation= " + lastKnownLocation);
-		JanSamparkApplication.getInstance().setLastKnownLocation(lastKnownLocation);
-		
-	}
 
-	private ConnectionCallbacks mConnectionCallbacks = new ConnectionCallbacks() {
 
-	    @Override
-	    public void onDisconnected() {
-	    	Log.i("eswaraj", "Disconnected");
-	    }
-	    
-
-	    @Override
-	    public void onConnected(Bundle arg0) {	
-	    	Log.i("eswaraj", "onConnected " + locationClient.isConnected());
-	    	if(locationClient.isConnected()) {
-		    	lastKnownLocation = locationClient.getLastLocation();
-		        LocationRequest locationRequest = LocationRequest.create();
-		        locationRequest.setInterval(getResources().getInteger(R.integer.location_update_millis)).setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-		        locationClient.requestLocationUpdates(locationRequest, mLocationListener);
-		        Log.i("eswaraj", "onConnected requestLocationUpdates, lastKnownLocation="+lastKnownLocation +", "+locationClient.isConnecting() +" , "+locationClient.isConnected() +", " );
-		        	
-	    	}
-	    }
-	};
-
-	private OnConnectionFailedListener mConnectionFailedListener = new OnConnectionFailedListener() {
-
-	    @Override
-	    public void onConnectionFailed(ConnectionResult arg0) {
-	    	Log.i("eswaraj", "Failed to connect to Network");
-	    }
-	};
-
-	private LocationListener mLocationListener = new LocationListener() {
-	    @Override
-        public void onLocationChanged(Location location) {	
-	    	Log.i("eswaraj", "location changed "+ location);
-            if(isResumed) {
-    			lastKnownLocation =  location;
-    			Log.i("Issue", "location changed");
-    			
-    			JanSamparkApplication.getInstance().setLastKnownLocation(location);
-    			if(issueFragment != null) {
-    				issueFragment.showLocation();   
-    			}
-    			
-    			
-    			LocationDataManager dataManager = new LocationDataManager(MainActivity.this, new  ReverseGeoCodingTask.GeoCodingTaskListener() {
-					
-					@Override
-					public void didReceiveGeoCoding(List<Constituency> locations) {
-						JanSamparkApplication.getInstance().setLastKnownConstituency(locations.get(0));
-						if(issueFragment != null) {
-							issueFragment.showLocationName();
-						}
-						if(analyticsFragment != null) {							
-		    				analyticsFragment.setCurrentCity();
-		    			}
-					}
-					
-					@Override
-					public void didFailReceivingGeoCoding() {
-						if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
-							if(issueFragment != null) {
-								issueFragment.showLocationName();
-							}
-							if(analyticsFragment != null) {
-							
-			    				analyticsFragment.setCurrentCity();
-			    			}
-						}						
-					}
-				});
-    			dataManager.fetchAddress(location);
-            }
-	    }
-	};
-	
-	
-	
 	@Override
 	public void onBackPressed() {
 		boolean disabledAutoComplete = false;

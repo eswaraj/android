@@ -163,11 +163,11 @@ public class IssueSummaryActivity extends FragmentActivity {
 	
 	
 	private void fetchAddress() {		
-		if(null == JanSamparkApplication.getInstance().getLastKnownConstituency()) {
+        if (null == ((JanSamparkApplication) getApplication()).getLastKnownConstituency()) {
 			LocationDataManager locationManager = new LocationDataManager(this, geoCodingListener);
 			locationManager.fetchAddress(location);
 		} else {
-			showConstituency(JanSamparkApplication.getInstance().getLastKnownConstituency());
+            showConstituency(((JanSamparkApplication) getApplication()).getLastKnownConstituency());
 		}
 	}
 	

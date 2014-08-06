@@ -76,7 +76,7 @@ public class OtherIssuesActivity extends FragmentActivity {
 	private void startIssueDetailActivity(IssueItem item) {
 		Intent intent = new Intent(this, IssueDetailsActivity.class);
 		intent.putExtra(IssueDetailsActivity.EXTRA_ISSUE_ITEM, item);
-		intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, JanSamparkApplication.getInstance().getLastKnownLocation());
+        intent.putExtra(IssueDetailsActivity.EXTRA_LOCATION, ((JanSamparkApplication) getApplication()).getLastKnownLocation());
 		WindowAnimationHelper.startActivityWithSlideFromRight(this, intent);
 	}
 	

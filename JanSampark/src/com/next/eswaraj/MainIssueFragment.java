@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,9 +45,12 @@ import com.next.eswaraj.helpers.DialogFactory;
 import com.next.eswaraj.helpers.WindowAnimationHelper;
 import com.next.eswaraj.widget.CustomSupportMapFragment;
 
+import de.greenrobot.event.EventBus;
+
 public class MainIssueFragment extends Fragment {
    
     private GoogleMap gMap = null;
+    private ProgressBar progressBar;
     boolean isResumed;
     private RequestQueue mRequestQueue;
     private String requestTag = "Category";
@@ -64,6 +68,7 @@ public class MainIssueFragment extends Fragment {
 		try{
 			Log.i("eswaraj","Creating extra issue type");
 			gridView = (GridView)view.findViewById(R.id.main_layout_for_issue_type_buttons);
+            progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 			OnItemClickListener onItemClickListener =  new OnItemClickListener() {
 
 				@Override
@@ -92,6 +97,11 @@ public class MainIssueFragment extends Fragment {
         mRequestQueue = Volley.newRequestQueue(getActivity()
 				.getApplicationContext());
         executeGetCategoriesRequest();
+        // In case we have already found the location
+        Location location = EventBus.getDefault().getStickyEvent(Location.class);
+        if (location != null) {
+            showLocation(location);
+        }
     }
 			
 	@Override
@@ -103,17 +113,21 @@ public class MainIssueFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     		
-		showLocation();
 	}	
 	
 	@Override
 	public void onResume() {
+
 		super.onResume();
+        Log.i("eswaraj", "Registering Location Event");
+        EventBus.getDefault().register(this);
 		isResumed = true;
 	}
 	
 	@Override
 	public void onPause() {
+        Log.i("eswaraj", "UnRegistering Location Event");
+        EventBus.getDefault().unregister(this);
 		isResumed = false;
 		super.onPause();
 	}
@@ -200,17 +214,22 @@ public class MainIssueFragment extends Fragment {
 	}
 	
 	    
-	public void showLocation() {
-		Location location = JanSamparkApplication.getInstance().getLastKnownLocation();
+    public void onEvent(Location location) {
+        Log.i("eswaraj", "Location hcanged in Main Issue Framegment");
+        showLocation(location);
+
+    }
+
+    public void showLocation(Location location) {
 		if(null != location) {
-			LatLng lastKnownLatLng = new LatLng(location.getLatitude(),
-					location.getLongitude());
+            LatLng lastKnownLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 			if(null != gMap) {
 				gMap.clear();	
 				gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastKnownLatLng, 15));
 				gMap.addMarker(new MarkerOptions().position(lastKnownLatLng).icon(
 						BitmapDescriptorFactory
 								.fromResource(R.drawable.ic_main_annotation)));
+                progressBar.setVisibility(View.INVISIBLE);
 			}
 			
 		}  else {
@@ -219,8 +238,8 @@ public class MainIssueFragment extends Fragment {
 	}
 	
 	public void showLocationName() {
-		if(null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
-			((TextView)getActivity().findViewById(R.id.main_map_location_text)).setText(JanSamparkApplication.getInstance().getLastKnownConstituency().getName());
+        if (null != ((JanSamparkApplication) getActivity().getApplication()).getLastKnownConstituency()) {
+            ((TextView) getActivity().findViewById(R.id.main_map_location_text)).setText(((JanSamparkApplication) getActivity().getApplication()).getLastKnownConstituency().getName());
 		} else {
 			Log.e("ISSUE", "current constituency is null");
 		}

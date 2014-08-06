@@ -29,6 +29,12 @@
                 android:id="@+id/map_blocker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+            <ProgressBar 
+                android:id="@+id/progress_bar"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="40dp"/>
         </FrameLayout>
 
         <TextView

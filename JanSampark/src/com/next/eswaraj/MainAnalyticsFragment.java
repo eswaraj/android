@@ -169,12 +169,6 @@ public class MainAnalyticsFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		setViews(view);
 		view.findViewById(R.id.analytics_chooser_container).setVisibility(View.INVISIBLE);
-		/*
-        overallButton.setVisibility(View.VISIBLE);
-        constituencyButton.setVisibility(View.INVISIBLE);
-        analyticsRadioGroup.setVisibility(View.VISIBLE);
-        overallSpinner.setVisibility(View.VISIBLE);
-        */
 	}
 
 	private void setViews(View view) {
@@ -731,9 +725,8 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	public void setCurrentCity() {
-		if (null != JanSamparkApplication.getInstance().getLastKnownConstituency()) {
-			setCurrentCityResId(Constituency.getCityRefId(JanSamparkApplication
-					.getInstance().getLastKnownConstituency().getAddress()));				
+        if (null != ((JanSamparkApplication) getActivity().getApplication()).getLastKnownConstituency()) {
+            setCurrentCityResId(Constituency.getCityRefId(((JanSamparkApplication) getActivity().getApplication()).getLastKnownConstituency().getAddress()));
 		} 
 	}
 
@@ -789,7 +782,7 @@ public class MainAnalyticsFragment extends Fragment {
 	}
 
 	private void executeCurrentMLAIdRequest() {
-		Location lastKnownLocation = JanSamparkApplication.getInstance()
+        Location lastKnownLocation = ((JanSamparkApplication) getActivity().getApplication())
 				.getLastKnownLocation();
 		if (null != lastKnownLocation) {
 			double lat = lastKnownLocation.getLatitude();
