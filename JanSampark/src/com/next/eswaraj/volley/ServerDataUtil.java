@@ -62,6 +62,7 @@ public class ServerDataUtil {
             @Override
             public void onResponse(JSONArray jsonObject) {
                 try {
+                    Log.i("eswaraj", "Success for categories");
                     Gson gson = new Gson();
                     Type listType = new TypeToken<List<CategoryWithChildCategoryDto>>() {
                     }.getType();
