@@ -132,7 +132,6 @@ public class JanSamparkApplication extends Application {
         @Override
         public void onLocationChanged(Location location) {
             setLastKnownLocation(location);
-            Log.i("eswaraj", "location changed " + location + isLocationActuallyChanged(location));
             EventBus.getDefault().postSticky(location);
             // Send Event on EventBus to update all listeners that Location has
             // changed

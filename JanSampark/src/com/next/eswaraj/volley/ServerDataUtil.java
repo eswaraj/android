@@ -42,7 +42,7 @@ public class ServerDataUtil {
 
     private void initCategories(JanSamparkApplication application) {
         String requestTag = "GetCategory";
-        String url = "http://dev.admin.eswaraj.com/eswaraj-web/mobile/categories";
+        String url = "http://dev.eswaraj.com/mobile/categories";
         JsonArrayRequest request = new JsonArrayRequest(url, createCategoryReqSuccessListener(), createMyReqErrorListener());
         application.submitServerRequest(requestTag, request);
     }

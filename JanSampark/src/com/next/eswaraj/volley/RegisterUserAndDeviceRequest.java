@@ -1,15 +1,13 @@
 package com.next.eswaraj.volley;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import android.text.TextUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.entity.StringEntity;
+
 import android.util.Log;
-import ch.boye.httpclientandroidlib.entity.mime.MultipartEntity;
-import ch.boye.httpclientandroidlib.entity.mime.content.FileBody;
-import ch.boye.httpclientandroidlib.entity.mime.content.StringBody;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -18,17 +16,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
-import com.eswaraj.web.dto.SaveComplaintRequestDto;
+import com.eswaraj.web.dto.RegisterDeviceRequest;
 import com.google.gson.Gson;
 import com.next.eswaraj.config.Constants;
 
-public class IssuePostRequest extends Request<String> {
+public class RegisterUserAndDeviceRequest extends Request<String> {
 
-	private MultipartEntity entity = new MultipartEntity();
-
-	
 	private final Response.Listener<String> mListener;
-	private  File issueImage;
+    HttpEntity entity;
 
 	/*
 	@Override
@@ -39,37 +34,17 @@ public class IssuePostRequest extends Request<String> {
     }
     */
 	
-	public IssuePostRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, 
-			SaveComplaintRequestDto saveComplaintRequestDto, String imageName) throws UnsupportedEncodingException {
-		super(Method.POST, Constants.URL_POST_COMPLAINT, errorListener);
-		
+    public RegisterUserAndDeviceRequest(Response.ErrorListener errorListener, Response.Listener<String> listener, RegisterDeviceRequest registerDeviceRequest) throws UnsupportedEncodingException {
+        super(Method.POST, Constants.URL_POST_SAVE_DEVICE_ANONYMOUS_USER, errorListener);
+
+        entity = new StringEntity(new Gson().toJson(registerDeviceRequest));
 		mListener = listener;
-		addIssueDetail("SaveComplaintRequest", saveComplaintRequestDto);
-		addIssueDetailImage("img", imageName);
-
 	}
 	
-	private void addIssueDetail(String partName, SaveComplaintRequestDto saveComplaintRequestDto) throws UnsupportedEncodingException {
-		String requestBody = new Gson().toJson(saveComplaintRequestDto);
-        Log.i("eswaraj", "requestBody : " + requestBody);
-		entity.addPart(partName, new StringBody(requestBody));
-	}
-	private void addIssueDetailImage(String partName, String issueDetailImage) {
-		if(!TextUtils.isEmpty(issueDetailImage) ) {
-			issueImage = new File(issueDetailImage);
-			if(!issueImage.exists()) {
-				issueImage = null;
-			}else{
-				entity.addPart(partName, new FileBody(issueImage));
-			}
-		}
-	}
-	
-	
-
 	@Override
 	public String getBodyContentType() {
-		return entity.getContentType().getValue();
+        Log.i("eswaraj", "Content Type : " + entity.getContentType().getValue());
+        return "application/json";
 	}
 
 	@Override

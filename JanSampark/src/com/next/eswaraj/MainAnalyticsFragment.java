@@ -900,7 +900,7 @@ public class MainAnalyticsFragment extends Fragment {
 
     private void executeGetCategoriesRequest() {
         mRequestQueue.cancelAll(requestTag);
-        String url = "http://dev.admin.eswaraj.com/eswaraj-web/mobile/categories";
+        String url = "http://dev.eswaraj.com/mobile/categories";
         JsonArrayRequest request = new JsonArrayRequest(url, createCategoryReqSuccessListener(), createMyCategoryReqErrorListener());
         // JsonArrayRequestWithCache request = new
         // JsonArrayRequestWithCache(url, createAnalyticsReqSuccessListener(),
