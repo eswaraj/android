@@ -51,6 +51,7 @@
         <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
                 android:value="AIzaSyA-BViIFzeADzqvUX0Cg0XsKytvPSzEFTs" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <activity
             android:name="com.next.eswaraj.SplashActivity"
             android:theme="@style/SplashTheme"
@@ -62,6 +63,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.facebook.LoginActivity"/>
         <activity
             android:name="com.next.eswaraj.MainActivity"
             android:label="@string/title_activity_main"

@@ -48,6 +48,7 @@
     <string name="issue_summary_address_label">Address</string>
     <string name="issue_summary_another_complaint">Another complaint</string>
     <string name="done">Done</string>
+    <string name="login">Login</string>
     <string name="user_pic_title">Choose Your Picture.</string>
     
     <string name="settings_how_it_works">How it works</string>
@@ -217,4 +218,6 @@
 	<string name="issue_summary_check_web">Please visit www.eswaraj.com, for complaint details in your area.</string>
 	
 	<string name="other_activity_title">Select System Level</string>
+	
+	<string name="facebook_app_id">306847796169444</string> 
 </resources>

@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings.Secure;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -30,6 +29,8 @@ import com.next.eswaraj.adapters.TextPagerAdapter;
 import com.next.eswaraj.helpers.DialogFactory;
 import com.next.eswaraj.helpers.MobileSessionHelper;
 import com.next.eswaraj.helpers.Utils;
+import com.next.eswaraj.util.DeviceUtil;
+import com.next.eswaraj.util.FacebookLoginUtil;
 import com.next.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.next.eswaraj.widget.ViewPagerCustomDuration;
 
@@ -67,10 +68,10 @@ public class SplashActivity extends FragmentActivity {
     private void registerUserAndMobile() {
         UserDto userDto = MobileSessionHelper.getLoggedInUser(this);
         if (userDto == null) {
-            String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+            String android_id = DeviceUtil.getDeviceid(this);
             RegisterDeviceRequest registerDeviceRequest = new RegisterDeviceRequest();
             registerDeviceRequest.setDeviceId(android_id);
-            registerDeviceRequest.setDeviceTypeRef("Android");
+            registerDeviceRequest.setDeviceTypeRef(DeviceUtil.getDeviceTypeRef());
 
             try {
                 RegisterUserAndDeviceRequest registerUserAndDeviceRequest = new RegisterUserAndDeviceRequest(createMyReqErrorListener(), createMyReqSuccessListener(), registerDeviceRequest);
@@ -218,6 +219,16 @@ public class SplashActivity extends FragmentActivity {
 
     public void onDoneClick(View view) {
         checkLocationAndInternetAndStartMainActivity();
+    }
+
+    public void onLoginClick(View view) {
+        FacebookLoginUtil.startFacebookLogin(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        FacebookLoginUtil.onActivityResult(this, requestCode, resultCode, data);
     }
 
     private void checkLocationAndInternetAndStartMainActivity() {

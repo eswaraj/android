@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,43 +23,53 @@
         android:background="#20000000" >
     </FrameLayout>
 
+     <Button
+        android:id="@+id/loginButton"
+        android:layout_width="@dimen/splash_done_button_width"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/splash_done_button_margin"
+        android:background="@drawable/post_button"
+        android:onClick="onLoginClick"
+        android:text="@string/login"
+        android:textColor="@android:color/white" />
+
     <Button
         android:id="@+id/button1"
         android:layout_width="@dimen/splash_done_button_width"
         android:layout_height="wrap_content"
-        
-        android:background="@drawable/post_button"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/splash_done_button_margin"
         android:layout_marginTop="@dimen/splash_done_button_margin"
-        android:text="@string/done"
+        android:background="@drawable/post_button"
         android:onClick="onDoneClick"
+        android:text="@string/done"
         android:textColor="@android:color/white" />
 
     <View
         android:id="@+id/view1"
         android:layout_width="@dimen/splash_seperator_width"
         android:layout_height="2dp"
-        android:layout_centerHorizontal="true"          
-        android:layout_above="@+id/gallery_view_pager" 
+        android:layout_above="@+id/gallery_view_pager"
+        android:layout_centerHorizontal="true"
         android:background="@android:color/white" />
 
     <com.next.eswaraj.widget.ViewPagerCustomDuration
         android:id="@+id/gallery_view_pager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/splash_pager_height"
-        android:layout_alignLeft="@+id/splash_image"       
-        android:layout_above="@+id/gallery_radio_group" >
+        android:layout_above="@+id/gallery_radio_group"
+        android:layout_alignLeft="@+id/splash_image" >
     </com.next.eswaraj.widget.ViewPagerCustomDuration>
 
     <RadioGroup
         android:id="@+id/gallery_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="@dimen/splash_radio_bottom_margin"
         android:orientation="horizontal" >
     </RadioGroup>
