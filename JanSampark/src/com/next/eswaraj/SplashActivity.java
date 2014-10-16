@@ -31,6 +31,7 @@ import com.next.eswaraj.helpers.MobileSessionHelper;
 import com.next.eswaraj.helpers.Utils;
 import com.next.eswaraj.util.DeviceUtil;
 import com.next.eswaraj.util.FacebookLoginUtil;
+import com.next.eswaraj.util.GcmUtil;
 import com.next.eswaraj.volley.RegisterUserAndDeviceRequest;
 import com.next.eswaraj.widget.ViewPagerCustomDuration;
 
@@ -62,6 +63,7 @@ public class SplashActivity extends FragmentActivity {
         setUpPager();
         setUpRadioGroup();
         registerUserAndMobile();
+        GcmUtil.ensureDeviceIsRegistered(this);
 
     }
 
