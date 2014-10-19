@@ -62,6 +62,17 @@
                 android:name="com.google.android.maps.v2.API_KEY"
                 android:value="AIzaSyA-BViIFzeADzqvUX0Cg0XsKytvPSzEFTs" />
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.next.eswaraj" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".GcmIntentService" />
+        
         <activity
             android:name="com.next.eswaraj.SplashActivity"
             android:theme="@style/SplashTheme"

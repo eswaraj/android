@@ -57,6 +57,7 @@ public class MainIssueFragment extends Fragment {
     
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i("eswaraj", "onCreateView");
 		View view = inflater.inflate(R.layout.main_issue, container, false);
 		try{
 			Log.i("eswaraj","Creating extra issue type");
@@ -93,6 +94,7 @@ public class MainIssueFragment extends Fragment {
 		
 	@Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i("eswaraj", "onCreate");
         super.onCreate(savedInstanceState);  
         mRequestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
     }
@@ -104,7 +106,12 @@ public class MainIssueFragment extends Fragment {
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+        Log.i("eswaraj", "onViewCreated ");
 		super.onViewCreated(view, savedInstanceState);
+        Log.i("eswaraj", "CustomSupportMapFragment = " + getFragmentManager().findFragmentById(R.id.map));
+        List<Fragment> fragments = getFragmentManager().getFragments();
+        CustomSupportMapFragment c = (CustomSupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
+        Log.i("eswaraj", "CustomSupportMapFragment = " + c);
 		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     		
 	}	
 	

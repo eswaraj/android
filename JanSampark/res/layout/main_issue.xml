@@ -24,17 +24,17 @@
                 android:name="com.next.eswaraj.widget.CustomSupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
             <View
                 android:id="@+id/map_blocker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            <ProgressBar 
+
+            <ProgressBar
                 android:id="@+id/progress_bar"
                 style="@android:style/Widget.ProgressBar.Large"
                 android:layout_width="fill_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_height="40dp"/>
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical" />
         </FrameLayout>
 
         <TextView
@@ -67,7 +67,7 @@
             android:stretchMode="columnWidth"
             android:verticalSpacing="10dp" >
         </GridView>
-		<!-- 
+        <!--
         <TableLayout
             android:id="@+id/main_layout_for_issue_type_buttons"
             android:layout_width="fill_parent"
@@ -135,7 +135,7 @@
                     issueButton:tertiaryText="@null" />
             </TableRow>
         </TableLayout>
-         -->
+        -->
     </LinearLayout>
 
 </ScrollView>
