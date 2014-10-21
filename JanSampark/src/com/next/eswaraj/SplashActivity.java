@@ -1,6 +1,5 @@
 package com.next.eswaraj;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,6 +68,7 @@ public class SplashActivity extends FragmentActivity {
 
     private void registerUserAndMobile() {
         UserDto userDto = MobileSessionHelper.getLoggedInUser(this);
+        Log.i("eswaraj", "Existing User = " + userDto);
         if (userDto == null) {
             String android_id = DeviceUtil.getDeviceid(this);
             RegisterDeviceRequest registerDeviceRequest = new RegisterDeviceRequest();
@@ -80,7 +80,8 @@ public class SplashActivity extends FragmentActivity {
                 RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
                 registerUserAndDeviceRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, 3));
                 mRequestQueue.add(registerUserAndDeviceRequest);
-            } catch (UnsupportedEncodingException e) {
+            } catch (Exception e) {
+                Log.e("eswaraj", "Unable to register user and device ", e);
                 e.printStackTrace();
             }
         }
@@ -105,6 +106,7 @@ public class SplashActivity extends FragmentActivity {
                 Log.d("details", "response: " + response);
                 Log.i("eswaraj", "Activity returning " + RESULT_OK + ", " + getParent());
                 MobileSessionHelper.setLoggedInUser(SplashActivity.this, response);
+                GcmUtil.ensureDeviceIsRegistered(SplashActivity.this);
             }
         };
     }

@@ -109,7 +109,6 @@ public class MainIssueFragment extends Fragment {
         Log.i("eswaraj", "onViewCreated ");
 		super.onViewCreated(view, savedInstanceState);
         Log.i("eswaraj", "CustomSupportMapFragment = " + getFragmentManager().findFragmentById(R.id.map));
-        List<Fragment> fragments = getFragmentManager().getFragments();
         CustomSupportMapFragment c = (CustomSupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.map);
         Log.i("eswaraj", "CustomSupportMapFragment = " + c);
 		initMap((CustomSupportMapFragment )getActivity().getSupportFragmentManager().findFragmentById(R.id.map));     		
